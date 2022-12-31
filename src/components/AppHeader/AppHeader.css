@@ -1,0 +1,29 @@
+.header{
+  display: grid;
+  grid-template-columns: repeat(3,minmax(min-content, 1fr));
+  min-width: 1920px;
+  box-sizing: border-box;
+  padding: 0px 320px;
+  background: #1C1C21;
+  align-items: center;
+  justify-items: center;
+}
+
+.header__active-btn {
+  color: #F2F2F3;
+}
+
+.header__inactive-btn {
+  color: #8585AD;
+}
+
+.main-menu{
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-self: start;
+}
+
+.main-menu__list-item{
+  list-style: none;
+}
