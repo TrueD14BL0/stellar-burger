@@ -1,0 +1,30 @@
+.elementContent{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.contentWrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  overflow-y: scroll;
+  max-height: calc(600px - 80px - 40px - 64px - 52px);
+}
+
+.contentWrapper::-webkit-scrollbar {
+  width: 8px;
+  box-sizing: border-box;
+  background: #2F2F37;
+  margin-bottom: 52px;
+}
+
+.contentWrapper::-webkit-scrollbar-thumb {
+  height: 292px;
+  background: #8585AD;
+}
+
+.dragBtn{
+  cursor: grab;
+}

@@ -1,0 +1,24 @@
+.orderWrapper{
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: flex-end;
+}
+
+.priceWrapper{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+}
+
+.iconWrapper{
+  width: 33px;
+  height: 33px;
+  box-sizing: border-box;
+}
+
+.iconWrapper>svg{
+  width: 33px;
+  height: 33px;
+}

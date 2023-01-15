@@ -1,7 +1,7 @@
 import './HeaderButton.css'
 
 const HeaderButton = (props) => {
-  const classes = `header__button p-5 ${props.addedClass}`
+  const classes = `header__button p-5 pt-4 pb-4 ${props.addedClass}`
   return (
     <button className={classes}>
       {props.children}

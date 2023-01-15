@@ -21,7 +21,6 @@ const AppHeader = () => {
       <HeaderButton text="Личный кабинет" addedClass="header__inactive-btn">
         <ProfileIcon type='secondary' />
       </HeaderButton>
-
     </header>
   )
 }
