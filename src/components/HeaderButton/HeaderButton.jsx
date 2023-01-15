@@ -1,4 +1,5 @@
 import './HeaderButton.css'
+import PropTypes from 'prop-types';
 
 const HeaderButton = (props) => {
   const classes = `header__button p-5 pt-4 pb-4 ${props.addedClass}`
@@ -9,5 +10,11 @@ const HeaderButton = (props) => {
     </button>
   )
 }
+
+HeaderButton.propTypes = {
+  text: PropTypes.string.isRequired,
+  addedClass: PropTypes.string.isRequired,
+  children: PropTypes.element,
+};
 
 export default HeaderButton;

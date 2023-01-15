@@ -8,7 +8,7 @@ import { ingridientsListProps } from '../../utils/propTypes';
 
 const BurgerIngredients = ({ingridientsList}) => {
   const style = `mt-10`;
-  const [current, setCurrent] = useState('one');
+  const [current, setCurrent] = useState('bun');
   const [dataForModal, setDataForModal] = useState(null);
 
   const buns = useMemo(
@@ -44,20 +44,20 @@ const BurgerIngredients = ({ingridientsList}) => {
     <section className={style}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
       <div style={{ display: 'flex' }} className='mt-5'>
-        <Tab value="one" active={current === 'one'} onClick={setCurrent}>
+        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
           Булки
         </Tab>
-        <Tab value="two" active={current === 'two'} onClick={setCurrent}>
+        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
           Соусы
         </Tab>
-        <Tab value="three" active={current === 'three'} onClick={setCurrent}>
+        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
           Начинки
         </Tab>
       </div>
       <div className={`${styles.content} mt-10`}>
-        <IngridientType data={buns} title='Булки' modal={setDataForModal} anchor='one' />
-        <IngridientType data={sauce} title='Соусы' modal={setDataForModal} anchor='two' />
-        <IngridientType data={main} title='Начинки' modal={setDataForModal} anchor='three' />
+        <IngridientType data={buns} title='Булки' modal={setDataForModal} anchor='bun' />
+        <IngridientType data={sauce} title='Соусы' modal={setDataForModal} anchor='sauce' />
+        <IngridientType data={main} title='Начинки' modal={setDataForModal} anchor='main' />
       </div>
       {dataForModal &&
         <Modal close={setDataForModal}>
@@ -65,7 +65,6 @@ const BurgerIngredients = ({ingridientsList}) => {
         </Modal>
       }
     </section>
-
   )
 }
 

@@ -1,5 +1,7 @@
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './IngridientType.module.css'
+import PropTypes from 'prop-types';
+import { ingridientsListProps } from "../../utils/propTypes";
 
 const IngridientType = ({title, data, modal, anchor}) => {
 
@@ -32,5 +34,12 @@ const IngridientType = ({title, data, modal, anchor}) => {
     </div>
   )
 }
+
+IngridientType.propTypes = {
+  title: PropTypes.string.isRequired,
+  anchor: PropTypes.string.isRequired,
+  modal: PropTypes.func.isRequired,
+  data: ingridientsListProps,
+};
 
 export default IngridientType;

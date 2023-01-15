@@ -9,16 +9,17 @@ function App() {
 
   const [ingridientsList, setIngridientsList] = useState([]);
   const [constructorList, setConstructorList] = useState({
-                                                          content: [],
-                                                          id: 0,
-                                                          bun: null,
-                                                          sum: 0,});
+    content: [],
+    id: 0,
+    bun: null,
+    sum: 0,
+  });
   const order = {
-                  content: [],
-                  id: 0,
-                  bun: null,
-                  sum: 0,
-                };
+    content: [],
+    id: 0,
+    bun: null,
+    sum: 0,
+  };
 
   const fillOrder = (ingridients) => { // сделано временно для загрузки тестовых данных
     order.id = Math.round(Math.random()*100000);
