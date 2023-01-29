@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 import styles from "./Modal.module.css";
 import PropTypes from 'prop-types';
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const Modal = ({children, close}) =>{
 
@@ -17,7 +18,7 @@ const Modal = ({children, close}) =>{
   useEffect(()=>{
     document.addEventListener("keydown", escCloseHandler);
     return () =>{
-      document.addEventListener("keydown", escCloseHandler);
+      document.removeEventListener("keydown", escCloseHandler);
     }
   })
 
@@ -27,6 +28,9 @@ const Modal = ({children, close}) =>{
         <ModalOverlay close={close}/>
         <div className={`${styles.contentWrapper} p-10`}>
           {children}
+          <button className={styles.closeBtn}>
+            <CloseIcon type="primary" onClick={()=>close(null)}/>
+          </button>
         </div>
       </>
     ),

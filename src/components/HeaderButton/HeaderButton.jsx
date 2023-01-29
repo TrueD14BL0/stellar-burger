@@ -1,8 +1,8 @@
-import './HeaderButton.css'
 import PropTypes from 'prop-types';
+import styles from './HeaderButton.module.css';
 
 const HeaderButton = (props) => {
-  const classes = `header__button p-5 pt-4 pb-4 ${props.addedClass}`
+  const classes = `${styles.button} p-5 pt-4 pb-4 ${props.addedClass}`
   return (
     <button className={classes}>
       {props.children}

@@ -1,4 +1,4 @@
-import './App.css';
+import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
 import MainContent from '../MainContent/MainContent';
 import { useEffect, useState } from 'react';
@@ -15,12 +15,14 @@ function App() {
   const [constructorList, setConstructorList] = useState({
     content: [],
     bun: null,
+    id: 0,
     sum: 0,
   });
   const order = {
     content: [],
     bun: null,
     sum: 0,
+    id: 0,
   };
 
   const fillOrder = (ingridients) => { // сделано временно для загрузки тестовых данных
@@ -57,7 +59,7 @@ function App() {
   }, )
 
   return (
-      <div className={`page pt-10`}>
+      <div className={`${styles.page} pt-10`}>
         <AppHeader/>
         <MainContent>
           <BurgerConstructorContext.Provider value={{constructorList, setConstructorList}}>

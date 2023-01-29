@@ -1,12 +1,15 @@
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './BurgerConstructorBottom.module.css';
-import PropTypes from 'prop-types';
 import { BurgerConstructorContext } from "../../context/BurgerConstructorContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Api from "../Api/Api";
+import Modal from '../Modal/Modal';
+import OrderDetails from '../OrderDetails/OrderDetails';
 
-const BurgerConstructorBottom = ({openModal}) => {
-  const { constructorList, setConstructorList } = useContext(BurgerConstructorContext);
+const BurgerConstructorBottom = () => {
+  const { constructorList } = useContext(BurgerConstructorContext);
+  const [isOpen, setModalOpen] = useState(false);
+  const [orderNumber, setOrderNumber] = useState();
 
   const onClickHandler = () => {
     Api.postOrders([constructorList.bun._id,
@@ -14,9 +17,8 @@ const BurgerConstructorBottom = ({openModal}) => {
                     ...constructorList.content.map(item=>item._id)])
       .then((data)=>{
         if(data.success){
-          setConstructorList({...constructorList,
-                              id: data.order.number});
-          openModal(true);
+          setOrderNumber(data.order.number);
+          setModalOpen(true);
         }else{
           console.log('Some trouble with post order to server!');
         }
@@ -37,12 +39,13 @@ const BurgerConstructorBottom = ({openModal}) => {
       <Button htmlType="button" type="primary" size="large" onClick={onClickHandler}>
         Оформить заказ
       </Button>
+      {isOpen &&
+        <Modal close={setModalOpen}>
+          <OrderDetails orderNumber={orderNumber}/>
+        </Modal>
+      }
     </div>
   )
-}
-
-BurgerConstructorBottom.propTypes = {
-  openModal: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructorBottom;

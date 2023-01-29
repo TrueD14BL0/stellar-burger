@@ -7,7 +7,6 @@ import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { IngridientsContext } from '../../context/IngridientsContext';
 
 const BurgerIngredients = () => {
-  const style = `mt-10`;
   const [current, setCurrent] = useState('bun');
   const [dataForModal, setDataForModal] = useState(null);
   const ingridientsList = useContext(IngridientsContext);
@@ -42,9 +41,9 @@ const BurgerIngredients = () => {
   }
 
   return (
-    <section className={style}>
+    <section className={`mt-10`}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
-      <div style={{ display: 'flex' }} className='mt-5'>
+      <div className={`mt-5 ${styles.contentWrapper}`}>
         <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
           Булки
         </Tab>

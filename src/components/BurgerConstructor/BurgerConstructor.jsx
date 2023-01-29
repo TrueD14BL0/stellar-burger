@@ -1,14 +1,12 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import BurgerConstructorBottom from '../BurgerConstructorBottom/BurgerConstructorBottom';
-import Modal from '../Modal/Modal';
-import OrderDetails from '../OrderDetails/OrderDetails';
 import styles from './BurgerConstructor.module.css';
 import { BurgerConstructorContext } from '../../context/BurgerConstructorContext';
 
 
 const BurgerConstructor = () =>{
-  const [isOpen, setModalOpen] = useState(false);
+
   const { constructorList } = useContext(BurgerConstructorContext);
 
   return (
@@ -58,12 +56,7 @@ const BurgerConstructor = () =>{
           />
         )
       }
-      <BurgerConstructorBottom openModal={setModalOpen}/>
-      {isOpen &&
-        <Modal close={setModalOpen}>
-          <OrderDetails ingridient={constructorList} close={setModalOpen} order={constructorList}/>
-        </Modal>
-      }
+      <BurgerConstructorBottom/>
     </div>
   );
 }
