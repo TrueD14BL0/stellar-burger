@@ -4,28 +4,29 @@ import MainContent from '../MainContent/MainContent';
 import { useEffect, useState } from 'react';
 import Api from '../Api/Api';
 import ORDER_CONTENT from '../../utils/data';
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import { BurgerConstructorContext } from '../../context/BurgerConstructorContext';
+import { IngridientsContext } from '../../context/IngridientsContext';
 
 function App() {
 
   const [ingridientsList, setIngridientsList] = useState([]);
   const [constructorList, setConstructorList] = useState({
     content: [],
-    id: 0,
     bun: null,
     sum: 0,
   });
   const order = {
     content: [],
-    id: 0,
     bun: null,
     sum: 0,
   };
 
   const fillOrder = (ingridients) => { // сделано временно для загрузки тестовых данных
-    order.id = Math.round(Math.random()*100000);
     order.bun = ingridients.find(element => {
       if(element._id === ORDER_CONTENT.bun){
-        order.sum+=element.price;
+        order.sum+=element.price*2;
         element.__v+=1;
         return true;
       }
@@ -53,12 +54,19 @@ function App() {
       .catch((err)=>{
         console.log('Some trouble with response from server! \n', err);
       });
-  }, [])
+  }, )
 
   return (
       <div className={`page pt-10`}>
         <AppHeader/>
-        <MainContent ingridientsList={ingridientsList} constructorList={constructorList}/>
+        <MainContent>
+          <BurgerConstructorContext.Provider value={{constructorList, setConstructorList}}>
+            <IngridientsContext.Provider value={ingridientsList}>
+              <BurgerIngredients/>
+            </IngridientsContext.Provider>
+            <BurgerConstructor/>
+          </BurgerConstructorContext.Provider>
+        </MainContent>
       </div>
     )
 }

@@ -1,20 +1,16 @@
-import { constructorListProps, ingridientsListProps } from '../../utils/propTypes';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import styles from './MainContent.module.css';
+import PropTypes from 'prop-types';
 
-const MainContent = ({ingridientsList, constructorList}) => {
+const MainContent = ({children}) => {
   return (
     <main className={styles.content}>
-      <BurgerIngredients ingridientsList={ingridientsList}/>
-      <BurgerConstructor constructorList={constructorList}/>
+      {children}
     </main>
   )
 }
 
 MainContent.propTypes = {
-  ingridientsList: ingridientsListProps,
-  constructorList: constructorListProps,
+  children: PropTypes.element.isRequired,
 }
 
 export default MainContent;

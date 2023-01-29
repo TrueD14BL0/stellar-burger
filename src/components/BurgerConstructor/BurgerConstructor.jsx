@@ -1,13 +1,15 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useState } from 'react';
-import { constructorListProps } from '../../utils/propTypes';
+import { useContext, useState } from 'react';
 import BurgerConstructorBottom from '../BurgerConstructorBottom/BurgerConstructorBottom';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import styles from './BurgerConstructor.module.css';
+import { BurgerConstructorContext } from '../../context/BurgerConstructorContext';
 
-const BurgerConstructor = ({constructorList}) =>{
+
+const BurgerConstructor = () =>{
   const [isOpen, setModalOpen] = useState(false);
+  const { constructorList } = useContext(BurgerConstructorContext);
 
   return (
     <div className='mt-25 pl-4'>
@@ -56,7 +58,7 @@ const BurgerConstructor = ({constructorList}) =>{
           />
         )
       }
-      <BurgerConstructorBottom order={constructorList} openModal={setModalOpen}/>
+      <BurgerConstructorBottom openModal={setModalOpen}/>
       {isOpen &&
         <Modal close={setModalOpen}>
           <OrderDetails ingridient={constructorList} close={setModalOpen} order={constructorList}/>
@@ -64,10 +66,6 @@ const BurgerConstructor = ({constructorList}) =>{
       }
     </div>
   );
-}
-
-BurgerConstructor.propTypes = {
-  constructorList: constructorListProps,
 }
 
 export default BurgerConstructor;

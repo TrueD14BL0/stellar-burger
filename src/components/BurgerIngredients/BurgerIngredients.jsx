@@ -1,15 +1,16 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
-import { ingridientsListProps } from '../../utils/propTypes';
+import { IngridientsContext } from '../../context/IngridientsContext';
 
-const BurgerIngredients = ({ingridientsList}) => {
+const BurgerIngredients = () => {
   const style = `mt-10`;
   const [current, setCurrent] = useState('bun');
   const [dataForModal, setDataForModal] = useState(null);
+  const ingridientsList = useContext(IngridientsContext);
 
   const buns = useMemo(
     () =>
@@ -66,10 +67,6 @@ const BurgerIngredients = ({ingridientsList}) => {
       }
     </section>
   )
-}
-
-BurgerIngredients.propTypes = {
-  ingridientsList: ingridientsListProps,
 }
 
 export default BurgerIngredients;
