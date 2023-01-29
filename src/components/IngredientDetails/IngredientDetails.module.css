@@ -1,0 +1,52 @@
+.title{
+  margin: 0;
+  line-height: 64px;
+  flex: 1;
+}
+
+.img{
+  box-sizing: border-box;
+  width: 520px;
+}
+
+.name{
+  margin-top: 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.infosWrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+.infoWrapper{
+  text-align: center;
+}
+
+.titleWrapper{
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  box-sizing: border-box;
+  width: 640px;
+}
+
+.infoText{
+  margin: 0;
+}
+
+.closeBtn{
+  width: 20px;
+  height: 20px;
+  padding: 1px;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.closeBtn>svg{
+  width: 18px;
+  height: 18px;
+}

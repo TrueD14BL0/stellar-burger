@@ -1,0 +1,9 @@
+.header__button{
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  border-radius: 40px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+}
