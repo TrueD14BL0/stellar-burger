@@ -35,18 +35,3 @@
 .infoText{
   margin: 0;
 }
-
-.closeBtn{
-  width: 20px;
-  height: 20px;
-  padding: 1px;
-  box-sizing: border-box;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.closeBtn>svg{
-  width: 18px;
-  height: 18px;
-}

@@ -2,19 +2,6 @@
   position: relative;
 }
 
-.closeBtn{
-  position: absolute;
-  top: 20px;
-  right: 0;
-  width: 20px;
-  height: 20px;
-  padding: 1px;
-  box-sizing: border-box;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
 .centeredText{
   text-align: center;
 }

@@ -1,17 +1,12 @@
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./IngredientDetails.module.css";
-import PropTypes from 'prop-types';
 import { ingredientProps } from "../../utils/propTypes";
 
-const IngridientDetails = ({ingridient, close}) => {
+const IngridientDetails = ({ingridient}) => {
 
   return (
     <div className={`mb-5`}>
       <div className={styles.titleWrapper}>
         <h2 className={`${styles.title} text text_type_main-large`}>Детали ингридиента</h2>
-        <button className={styles.closeBtn}>
-          <CloseIcon type="primary" onClick={()=>close(null)}/>
-        </button>
       </div>
       <img className={`${styles.img} ml-15 mr-15`} alt={ingridient.name} src={ingridient.image_large}/>
       <h3 className={`${styles.name} text text_type_main-medium ml-15 mr-15 mt-4`}>{ingridient.name}</h3>
@@ -40,7 +35,6 @@ const IngridientDetails = ({ingridient, close}) => {
 
 IngridientDetails.propTypes = {
   ingridient: ingredientProps,
-  close: PropTypes.func.isRequired,
 };
 
 export default IngridientDetails;

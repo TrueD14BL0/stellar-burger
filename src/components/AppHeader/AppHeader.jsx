@@ -1,24 +1,24 @@
-import './AppHeader.css'
+import styles from './AppHeader.module.css'
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import HeaderButton from '../HeaderButton/HeaderButton'
 
 const AppHeader = () => {
   return (
-    <header className='header pl-80 pr-80 pt-4 pb-4'>
-      <nav className='main-menu'>
-        <li className='main-menu__list-item'>
-          <HeaderButton text="Конструктор" addedClass="header__active-btn">
+    <header className={`${styles.header} pl-80 pr-80 pt-4 pb-4`}>
+      <nav className={`${styles.mainMenu}`}>
+        <li className={`${styles.mainMenuListItem}`}>
+          <HeaderButton text="Конструктор" addedClass={`${styles.headerActiveBtn}`}>
             <BurgerIcon type='primary'/>
           </HeaderButton>
         </li>
-        <li className='main-menu__list-item'>
-          <HeaderButton text="Лента заказов" addedClass="header__inactive-btn">
+        <li className={`${styles.mainMenuListItem}`}>
+          <HeaderButton text="Лента заказов" addedClass={`${styles.headerInactiveBtn}`}>
             <ListIcon type='secondary' />
           </HeaderButton>
         </li>
       </nav>
       <Logo />
-      <HeaderButton text="Личный кабинет" addedClass="header__inactive-btn">
+      <HeaderButton text="Личный кабинет" addedClass={`${styles.headerInactiveBtn}`}>
         <ProfileIcon type='secondary' />
       </HeaderButton>
     </header>

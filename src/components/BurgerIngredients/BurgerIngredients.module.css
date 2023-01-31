@@ -18,3 +18,7 @@
   height: 292px;
   background: #8585AD;
 }
+
+.contentWrapper{
+  display: flex;
+}

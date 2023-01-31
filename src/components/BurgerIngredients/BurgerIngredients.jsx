@@ -1,15 +1,15 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import { useMemo, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
-import { ingridientsListProps } from '../../utils/propTypes';
+import { IngridientsContext } from '../../context/IngridientsContext';
 
-const BurgerIngredients = ({ingridientsList}) => {
-  const style = `mt-10`;
+const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
   const [dataForModal, setDataForModal] = useState(null);
+  const ingridientsList = useContext(IngridientsContext);
 
   const buns = useMemo(
     () =>
@@ -41,9 +41,9 @@ const BurgerIngredients = ({ingridientsList}) => {
   }
 
   return (
-    <section className={style}>
+    <section className={`mt-10`}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
-      <div style={{ display: 'flex' }} className='mt-5'>
+      <div className={`mt-5 ${styles.contentWrapper}`}>
         <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
           Булки
         </Tab>
@@ -66,10 +66,6 @@ const BurgerIngredients = ({ingridientsList}) => {
       }
     </section>
   )
-}
-
-BurgerIngredients.propTypes = {
-  ingridientsList: ingridientsListProps,
 }
 
 export default BurgerIngredients;
