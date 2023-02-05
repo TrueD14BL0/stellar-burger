@@ -47,7 +47,7 @@ function App() {
     setConstructorList(order);
   }
 
-  useEffect(()=>{
+  /*useEffect(()=>{
     Api.getIngredients()
       .then((data)=>{
         setIngridientsList(data.data);
@@ -57,7 +57,7 @@ function App() {
         console.log('Some trouble with response from server! \n', err);
       });
   }, )
-
+*/
   return (
       <div className={`${styles.page} pt-10`}>
         <AppHeader/>
