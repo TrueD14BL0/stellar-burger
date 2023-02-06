@@ -8,9 +8,12 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import { BurgerConstructorContext } from '../../context/BurgerConstructorContext';
 import { IngridientsContext } from '../../context/IngridientsContext';
+import { useDispatch } from 'react-redux';
+import { addIngridients } from '../../services/actions/ingridientList';
 
 function App() {
 
+  const dispatch = useDispatch();
   const [ingridientsList, setIngridientsList] = useState([]);
   const [constructorList, setConstructorList] = useState({
     content: [],
@@ -25,7 +28,7 @@ function App() {
     id: 0,
   };
 
-  const fillOrder = (ingridients) => { // сделано временно для загрузки тестовых данных
+/*  const fillOrder = (ingridients) => { // сделано временно для загрузки тестовых данных
     order.bun = ingridients.find(element => {
       if(element._id === ORDER_CONTENT.bun){
         order.sum+=element.price*2;
@@ -46,18 +49,20 @@ function App() {
     });
     setConstructorList(order);
   }
-
-  /*useEffect(()=>{
+*/
+  useEffect(()=>{
     Api.getIngredients()
       .then((data)=>{
-        setIngridientsList(data.data);
-        fillOrder(data.data);
+        console.log('вызвалось дважды');
+        dispatch(addIngridients(data.data));
+        //setIngridientsList(data.data);
+        //fillOrder(data.data);
       })
       .catch((err)=>{
         console.log('Some trouble with response from server! \n', err);
       });
   }, )
-*/
+
   return (
       <div className={`${styles.page} pt-10`}>
         <AppHeader/>

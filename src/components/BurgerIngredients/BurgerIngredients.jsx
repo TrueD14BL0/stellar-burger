@@ -1,33 +1,19 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
-import { IngridientsContext } from '../../context/IngridientsContext';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import Api from '../Api/Api';
-import { addIngridient } from '../../services/action/ingridientList';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
   const [dataForModal, setDataForModal] = useState(null);
   //const ingridientsList = useContext(IngridientsContext);
-  const dispatch = useDispatch();
+
   const { ingridientsList } = useSelector(store => ({
     ingridientsList: store.ingridientsListReducer,
   }), shallowEqual);
-
-  useEffect(()=>{
-    Api.getIngredients()
-      .then((data)=>{
-        console.log(data.data);
-        dispatch(addIngridient)
-      })
-      .catch((err)=>{
-        console.log('Some trouble with response from server! \n', err);
-      });
-  }, )
 
   const buns = useMemo(
     () =>
