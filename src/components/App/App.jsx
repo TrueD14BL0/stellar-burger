@@ -53,7 +53,6 @@ function App() {
   useEffect(()=>{
     Api.getIngredients()
       .then((data)=>{
-        console.log('вызвалось дважды');
         dispatch(addIngridients(data.data));
         //setIngridientsList(data.data);
         //fillOrder(data.data);
