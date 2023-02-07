@@ -1,7 +1,11 @@
 import styles from "./IngredientDetails.module.css";
-import { ingredientProps } from "../../utils/propTypes";
+import { shallowEqual, useSelector } from "react-redux";
 
-const IngridientDetails = ({ingridient}) => {
+const IngridientDetails = () => {
+
+  const { ingridient } = useSelector(store => ({
+    ingridient: store.ingridientObjReducer,
+  }), shallowEqual);
 
   return (
     <div className={`mb-5`}>
@@ -32,9 +36,5 @@ const IngridientDetails = ({ingridient}) => {
   )
 
 }
-
-IngridientDetails.propTypes = {
-  ingridient: ingredientProps,
-};
 
 export default IngridientDetails;

@@ -1,3 +1,5 @@
+import { CLOSE_INGRIDIENT, OPEN_INGRIDIENT } from "../../utils/const";
+
 const initialState = {
   _id: "",
   name: "",
@@ -14,6 +16,16 @@ const initialState = {
 }
 
 export const ingridientObjReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case OPEN_INGRIDIENT:
+      state = action.ingridient;
+      break;
+    case CLOSE_INGRIDIENT:
+      state = initialState;
+    break;
+    default:
+      return state;
+  }
   return state;
 }
 

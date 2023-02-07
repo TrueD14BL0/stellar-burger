@@ -5,14 +5,15 @@ import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
+import { closeIngridient } from '../../services/actions/ingridientObj';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
-  const [dataForModal, setDataForModal] = useState(null);
-  //const ingridientsList = useContext(IngridientsContext);
+  const dispatch = useDispatch();
 
-  const { ingridientsList } = useSelector(store => ({
+  const { ingridientsList, modal } = useSelector(store => ({
     ingridientsList: store.ingridientsListReducer,
+    modal: store.ingridientObjReducer,
   }), shallowEqual);
 
   const buns = useMemo(
@@ -44,6 +45,10 @@ const BurgerIngredients = () => {
     elToScroll.scrollIntoView({ block: 'start',  behavior: 'smooth' });
   }
 
+  const closeModal = ()=>{
+    dispatch(closeIngridient());
+  }
+
   return (
     <section className={`mt-10`}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
@@ -59,13 +64,13 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
       <div className={`${styles.content} mt-10`}>
-        <IngridientType data={buns} title='Булки' modal={setDataForModal} anchor='bun' />
-        <IngridientType data={sauce} title='Соусы' modal={setDataForModal} anchor='sauce' />
-        <IngridientType data={main} title='Начинки' modal={setDataForModal} anchor='main' />
+        <IngridientType data={buns} title='Булки' anchor='bun' />
+        <IngridientType data={sauce} title='Соусы' anchor='sauce' />
+        <IngridientType data={main} title='Начинки' anchor='main' />
       </div>
-      {dataForModal &&
-        <Modal close={setDataForModal}>
-          <IngridientDetails ingridient={dataForModal} close={setDataForModal}/>
+      {modal._id !== '' &&
+        <Modal close={closeModal}>
+          <IngridientDetails/>
         </Modal>
       }
     </section>
