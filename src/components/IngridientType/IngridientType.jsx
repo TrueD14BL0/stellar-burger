@@ -5,13 +5,13 @@ import { ingridientsListProps } from "../../utils/propTypes";
 import { useDispatch } from "react-redux";
 import { openIngridient } from "../../services/actions/ingridientObj";
 
-const IngridientType = ({title, data, modal, anchor}) => {
+const IngridientType = ({title, data, anchor}) => {
 
   const dispatch = useDispatch();
 
   return (
-    <div >
-      <h2 className="text text_type_main-medium mb-6" id={anchor}>
+    <div ref={anchor}>
+      <h2 className="text text_type_main-medium mb-6">
         {title}
       </h2>
       <ul className={`${styles.content} pl-4 pr-4`}>
@@ -41,7 +41,7 @@ const IngridientType = ({title, data, modal, anchor}) => {
 
 IngridientType.propTypes = {
   title: PropTypes.string.isRequired,
-  anchor: PropTypes.string.isRequired,
+  anchor: PropTypes.object.isRequired,
   data: ingridientsListProps,
 };
 

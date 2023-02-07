@@ -1,6 +1,6 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useRef } from 'react';
 import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
@@ -10,6 +10,9 @@ import { closeIngridient } from '../../services/actions/ingridientObj';
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
   const dispatch = useDispatch();
+  const bunsRef = useRef(null);
+  const saucesRef = useRef(null);
+  const mainsRef = useRef(null);
 
   const { ingridientsList, modal } = useSelector(store => ({
     ingridientsList: store.ingridientsListReducer,
@@ -40,9 +43,25 @@ const BurgerIngredients = () => {
     [ingridientsList]
   );
 
-  const elToScroll = document.getElementById(current);
-  if(elToScroll){
-    elToScroll.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+  const setCurrentScroll = (elToScroll) =>{
+    elToScroll.current.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+  }
+
+  const scrollHandler = (evt)=>{
+    const parentTop = evt.target.offsetTop;
+    const scrollSize = evt.target.scrollTop;
+    const bunsTop = Math.abs(bunsRef.current.offsetTop - scrollSize - parentTop);
+    const saucesTop = Math.abs(saucesRef.current.offsetTop - scrollSize - parentTop);
+    const mainsTop = Math.abs(mainsRef.current.offsetTop - scrollSize - parentTop);
+    const minCoord = Math.min(bunsTop, saucesTop, mainsTop)
+
+    if(minCoord===bunsTop){
+      setCurrent('bun');
+    }else if(minCoord===saucesTop){
+      setCurrent('sauce');
+    }else{
+      setCurrent('main');
+    }
   }
 
   const closeModal = ()=>{
@@ -53,20 +72,20 @@ const BurgerIngredients = () => {
     <section className={`mt-10`}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
       <div className={`mt-5 ${styles.contentWrapper}`}>
-        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+        <Tab value="bun" active={current === 'bun'} onClick={()=>setCurrentScroll(bunsRef)}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+        <Tab value="sauce" active={current === 'sauce'} onClick={()=>setCurrentScroll(saucesRef)}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+        <Tab value="main" active={current === 'main'} onClick={()=>setCurrentScroll(mainsRef)}>
           Начинки
         </Tab>
       </div>
-      <div className={`${styles.content} mt-10`}>
-        <IngridientType data={buns} title='Булки' anchor='bun' />
-        <IngridientType data={sauce} title='Соусы' anchor='sauce' />
-        <IngridientType data={main} title='Начинки' anchor='main' />
+      <div className={`${styles.content} mt-10`} onScroll={scrollHandler}>
+        <IngridientType data={buns} title='Булки' anchor={bunsRef} />
+        <IngridientType data={sauce} title='Соусы' anchor={saucesRef} />
+        <IngridientType data={main} title='Начинки' anchor={mainsRef} />
       </div>
       {modal._id !== '' &&
         <Modal close={closeModal}>
