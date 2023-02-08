@@ -1,16 +1,31 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useContext } from 'react';
 import BurgerConstructorBottom from '../BurgerConstructorBottom/BurgerConstructorBottom';
 import styles from './BurgerConstructor.module.css';
-import { BurgerConstructorContext } from '../../context/BurgerConstructorContext';
+import { useDrop } from 'react-dnd/dist/hooks';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { addIngridientToConstructor, delIngridientFromConstructor } from '../../services/actions/constructorList';
 
 
 const BurgerConstructor = () =>{
 
-  const { constructorList } = useContext(BurgerConstructorContext);
+  const dispatch = useDispatch();
+  const { constructorList } = useSelector(store => ({
+    constructorList: store.constructorListReducer,
+  }), shallowEqual);
+
+  const [, dropTarget] = useDrop({
+                                    accept:'ingridient',
+                                    drop(item) {
+                                        dispatch(addIngridientToConstructor(item));
+                                    },
+                                  });
+
+  const handleDel = (index)=>{
+    dispatch(delIngridientFromConstructor(index));
+  }
 
   return (
-    <div className='mt-25 pl-4'>
+    <div className='mt-25 pl-4' ref={dropTarget}>
       {constructorList.bun &&
         (
           <ConstructorElement
@@ -20,7 +35,6 @@ const BurgerConstructor = () =>{
             price={constructorList.bun.price}
             thumbnail={constructorList.bun.image}
             extraClass='ml-8 mb-4'
-            key={0}
           />
         )
       }
@@ -28,7 +42,7 @@ const BurgerConstructor = () =>{
         {constructorList.content &&
           constructorList.content.map((item, index)=>{
             return (
-              <div className={styles.elementContent} key={index+1}>
+              <div className={styles.elementContent} key={index}>
                 <div className={styles.dragBtn}>
                   <DragIcon type="primary" />
                 </div>
@@ -38,6 +52,7 @@ const BurgerConstructor = () =>{
                   price={item.price}
                   thumbnail={item.image}
                   extraClass='ml-2'
+                  handleClose={()=>handleDel(index)}
                 />
               </div>
           )})
@@ -51,8 +66,7 @@ const BurgerConstructor = () =>{
             text={`${constructorList.bun.name} (низ)`}
             price={constructorList.bun.price}
             thumbnail={constructorList.bun.image}
-            extraClass='ml-8 mt-4'
-            key={constructorList.content?constructorList.content.length+1:1}
+            extraClass='ml-8 mb-4'
           />
         )
       }

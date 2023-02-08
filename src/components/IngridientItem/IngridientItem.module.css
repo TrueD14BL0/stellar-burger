@@ -1,0 +1,16 @@
+.ingridient_card{
+  position: relative;
+  width: 272px;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+.price{
+  text-align: center;
+}
+
+.title{
+  display: block;
+  width: 100%;
+  text-align: center;
+}

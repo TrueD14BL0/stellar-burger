@@ -10,7 +10,7 @@ const MainContent = ({children}) => {
 }
 
 MainContent.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.array.isRequired,
 }
 
 export default MainContent;

@@ -9,8 +9,8 @@
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  height: calc(650px - 80px - 40px - 64px - 52px);
   overflow-y: scroll;
-  max-height: calc(600px - 80px - 40px - 64px - 52px);
 }
 
 .contentWrapper::-webkit-scrollbar {
@@ -27,4 +27,9 @@
 
 .dragBtn{
   cursor: grab;
+}
+
+.static{
+  min-height: 80px;
+  box-sizing: border-box;
 }

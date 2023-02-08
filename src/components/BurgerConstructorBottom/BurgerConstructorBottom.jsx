@@ -1,17 +1,23 @@
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './BurgerConstructorBottom.module.css';
-import { BurgerConstructorContext } from "../../context/BurgerConstructorContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Api from "../Api/Api";
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
+import { shallowEqual, useSelector } from "react-redux";
 
 const BurgerConstructorBottom = () => {
-  const { constructorList } = useContext(BurgerConstructorContext);
   const [isOpen, setModalOpen] = useState(false);
   const [orderNumber, setOrderNumber] = useState();
 
+  const { constructorList } = useSelector(store => ({
+    constructorList: store.constructorListReducer,
+  }), shallowEqual);
+
   const onClickHandler = () => {
+    if(!constructorList.bun){
+      return;
+    }
     Api.postOrders([constructorList.bun._id,
                     constructorList.bun._id,
                     ...constructorList.content.map(item=>item._id)])

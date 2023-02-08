@@ -1,11 +1,12 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import { useMemo, useState, useRef } from 'react';
+import { useMemo, useState, useRef, useEffect } from 'react';
 import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { closeIngridient } from '../../services/actions/ingridientObj';
+import { addIngridientToConstructor } from '../../services/actions/constructorList';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
@@ -17,6 +18,10 @@ const BurgerIngredients = () => {
   const { ingridientsList, modal } = useSelector(store => ({
     ingridientsList: store.ingridientsListReducer,
     modal: store.ingridientObjReducer,
+  }), shallowEqual);
+
+  const { constructorList } = useSelector(store => ({
+    constructorList: store.constructorListReducer,
   }), shallowEqual);
 
   const buns = useMemo(
@@ -67,6 +72,12 @@ const BurgerIngredients = () => {
   const closeModal = ()=>{
     dispatch(closeIngridient());
   }
+
+  useEffect(()=>{
+    if(constructorList.bun===null && buns.length>0){
+      dispatch(addIngridientToConstructor(buns[0]));
+    }
+  });
 
   return (
     <section className={`mt-10`}>

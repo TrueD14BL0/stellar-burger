@@ -1,29 +1,18 @@
 import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
 import MainContent from '../MainContent/MainContent';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Api from '../Api/Api';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import { BurgerConstructorContext } from '../../context/BurgerConstructorContext';
 import { useDispatch } from 'react-redux';
 import { addIngridients } from '../../services/actions/ingridientList';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd/dist/core';
 
 function App() {
 
   const dispatch = useDispatch();
-  const [constructorList, setConstructorList] = useState({
-    content: [],
-    bun: null,
-    id: 0,
-    sum: 0,
-  });
-  const order = {
-    content: [],
-    bun: null,
-    sum: 0,
-    id: 0,
-  };
 
   useEffect(()=>{
     Api.getIngredients()
@@ -38,12 +27,12 @@ function App() {
   return (
       <div className={`${styles.page} pt-10`}>
         <AppHeader/>
-        <MainContent>
-          <BurgerConstructorContext.Provider value={{constructorList, setConstructorList}}>
+        <DndProvider backend={HTML5Backend}>
+          <MainContent>
             <BurgerIngredients/>
             <BurgerConstructor/>
-          </BurgerConstructorContext.Provider>
-        </MainContent>
+          </MainContent>
+        </DndProvider>
       </div>
     )
 }
