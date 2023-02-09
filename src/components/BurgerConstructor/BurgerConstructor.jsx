@@ -1,15 +1,16 @@
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerConstructorBottom from '../BurgerConstructorBottom/BurgerConstructorBottom';
 import styles from './BurgerConstructor.module.css';
 import { useDrop } from 'react-dnd/dist/hooks';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addIngridientToConstructor, delIngridientFromConstructor } from '../../services/actions/constructorList';
+import { addIngridientToConstructor } from '../../services/actions/constructorList';
 import { decrimentIngridientCount, incrimentIngridientCount } from '../../services/actions/ingridientList';
-
+import BurgerElement from '../BurgerElement/BurgerElement';
 
 const BurgerConstructor = () =>{
 
   const dispatch = useDispatch();
+
   const { constructorList } = useSelector(store => ({
     constructorList: store.constructorListReducer,
   }), shallowEqual);
@@ -26,17 +27,11 @@ const BurgerConstructor = () =>{
     dispatch(addIngridientToConstructor(item));
   }
 
-  const [, dropTarget] = useDrop({
-                                    accept:'ingridient',
-                                    drop(item) {
-                                      handleAddIngridient(item);
-                                    },
-                                  });
-
-  const handleDel = (index, item)=>{
-    dispatch(delIngridientFromConstructor(index));
-    dispatch(decrimentIngridientCount(item));
-  }
+  const [, dropTarget] = useDrop({accept:'ingridient',
+                                  drop(item) {
+                                    handleAddIngridient(item);
+                                  },
+                                });
 
   return (
     <div className='mt-25 pl-4' ref={dropTarget}>
@@ -54,22 +49,9 @@ const BurgerConstructor = () =>{
       }
       <div className={styles.contentWrapper}>
         {constructorList.content &&
-          constructorList.content.map((item, index)=>{
-            return (
-              <div className={styles.elementContent} key={index}>
-                <div className={styles.dragBtn}>
-                  <DragIcon type="primary" />
-                </div>
-                <ConstructorElement
-                  isLocked={false}
-                  text={`${item.name}`}
-                  price={item.price}
-                  thumbnail={item.image}
-                  extraClass='ml-2'
-                  handleClose={()=>handleDel(index, item)}
-                />
-              </div>
-          )})
+          constructorList.content.map((item, index)=>
+              (<BurgerElement item={item} index={index} key={`${item._id}${index}`}/>)
+            )
         }
       </div>
       {constructorList.bun &&

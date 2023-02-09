@@ -1,0 +1,14 @@
+.elementContent{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: scale .3s ease-in-out;
+}
+
+.dragBtn{
+  cursor: grab;
+}
+
+.highlighted{
+  scale: .9;
+}

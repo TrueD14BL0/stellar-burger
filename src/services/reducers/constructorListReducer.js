@@ -1,4 +1,4 @@
-import { ADD_INGRIDIENT_TO_CONSTRUCTOR, DEL_INGRIDIENT_FROM_CONSTRUCTOR } from "../../utils/const";
+import { ADD_INGRIDIENT_TO_CONSTRUCTOR, DEL_INGRIDIENT_FROM_CONSTRUCTOR, SWAP_INGRIDIENT_IN_CONSTRUCTOR } from "../../utils/const";
 
 const initialState = {
   content: [],
@@ -26,8 +26,22 @@ const constructorListReducer = (state = initialState, action) => {
       const delEl = state.content[action.index];
       state.content.splice(action.index,1);
       state = {...state,
-              sum: state.sum - delEl.price,
-              }
+        sum: state.sum - delEl.price,
+      }
+      break;
+    case SWAP_INGRIDIENT_IN_CONSTRUCTOR:
+      if(action.firstEl.index>action.secondEl.index){
+        const firstEl = state.content[action.firstEl.index];
+        const secondEl = state.content[action.secondEl.index];
+        state.content.splice(action.secondEl.index,1,firstEl);
+        state.content.splice(action.firstEl.index,1,secondEl);
+      }else{
+        const firstEl = state.content[action.firstEl.index];
+        const secondEl = state.content[action.secondEl.index];
+        state.content.splice(action.firstEl.index,1,secondEl);
+        state.content.splice(action.secondEl.index,1,firstEl);
+      }
+      state = {...state};
       break;
     default:
       return state;

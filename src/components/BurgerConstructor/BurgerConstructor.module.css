@@ -1,9 +1,3 @@
-.elementContent{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .contentWrapper{
   display: flex;
   flex-direction: column;
@@ -23,13 +17,4 @@
 .contentWrapper::-webkit-scrollbar-thumb {
   height: 292px;
   background: #8585AD;
-}
-
-.dragBtn{
-  cursor: grab;
-}
-
-.static{
-  min-height: 80px;
-  box-sizing: border-box;
 }

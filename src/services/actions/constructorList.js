@@ -1,4 +1,4 @@
-import { ADD_INGRIDIENT_TO_CONSTRUCTOR, DEL_INGRIDIENT_FROM_CONSTRUCTOR } from "../../utils/const";
+import { ADD_INGRIDIENT_TO_CONSTRUCTOR, DEL_INGRIDIENT_FROM_CONSTRUCTOR, SWAP_INGRIDIENT_IN_CONSTRUCTOR } from "../../utils/const";
 
 export function addIngridientToConstructor(ingridient){
   return {
@@ -11,5 +11,13 @@ export function delIngridientFromConstructor(index){
   return {
       type: DEL_INGRIDIENT_FROM_CONSTRUCTOR,
       index
+  }
+}
+
+export function swapIngridient(firstEl, secondEl){
+  return {
+      type: SWAP_INGRIDIENT_IN_CONSTRUCTOR,
+      firstEl,
+      secondEl,
   }
 }
