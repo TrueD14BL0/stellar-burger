@@ -7,6 +7,7 @@ import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { closeIngridient } from '../../services/actions/ingridientObj';
 import { addIngridientToConstructor } from '../../services/actions/constructorList';
+import { incrimentIngridientCount } from '../../services/actions/ingridientList';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
@@ -76,6 +77,7 @@ const BurgerIngredients = () => {
   useEffect(()=>{
     if(constructorList.bun===null && buns.length>0){
       dispatch(addIngridientToConstructor(buns[0]));
+      dispatch(incrimentIngridientCount(buns[0]));
     }
   });
 

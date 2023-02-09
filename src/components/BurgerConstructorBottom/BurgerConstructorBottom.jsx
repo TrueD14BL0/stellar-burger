@@ -4,14 +4,18 @@ import { useState } from "react";
 import Api from "../Api/Api";
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 const BurgerConstructorBottom = () => {
-  const [isOpen, setModalOpen] = useState(false);
-  const [orderNumber, setOrderNumber] = useState();
+
+  const dispatch = useDispatch();
 
   const { constructorList } = useSelector(store => ({
     constructorList: store.constructorListReducer,
+  }), shallowEqual);
+
+  const { orderObj } = useSelector(store => ({
+    orderObj: store.orderObjReducer,
   }), shallowEqual);
 
   const onClickHandler = () => {
@@ -23,8 +27,8 @@ const BurgerConstructorBottom = () => {
                     ...constructorList.content.map(item=>item._id)])
       .then((data)=>{
         if(data.success){
+          dispatch();
           setOrderNumber(data.order.number);
-          setModalOpen(true);
         }else{
           console.log('Some trouble with post order to server!');
         }
@@ -45,7 +49,7 @@ const BurgerConstructorBottom = () => {
       <Button htmlType="button" type="primary" size="large" onClick={onClickHandler}>
         Оформить заказ
       </Button>
-      {isOpen &&
+      {orderObj.number &&
         <Modal close={setModalOpen}>
           <OrderDetails orderNumber={orderNumber}/>
         </Modal>

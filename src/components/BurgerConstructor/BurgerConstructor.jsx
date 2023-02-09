@@ -4,6 +4,7 @@ import styles from './BurgerConstructor.module.css';
 import { useDrop } from 'react-dnd/dist/hooks';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addIngridientToConstructor, delIngridientFromConstructor } from '../../services/actions/constructorList';
+import { decrimentIngridientCount, incrimentIngridientCount } from '../../services/actions/ingridientList';
 
 
 const BurgerConstructor = () =>{
@@ -13,15 +14,28 @@ const BurgerConstructor = () =>{
     constructorList: store.constructorListReducer,
   }), shallowEqual);
 
+  const handleAddIngridient = (item)=>{
+    if(item.type === 'bun'){
+      if(item !== constructorList.bun){
+        dispatch(incrimentIngridientCount(item));
+        dispatch(decrimentIngridientCount(constructorList.bun));
+      }
+    }else{
+      dispatch(incrimentIngridientCount(item));
+    }
+    dispatch(addIngridientToConstructor(item));
+  }
+
   const [, dropTarget] = useDrop({
                                     accept:'ingridient',
                                     drop(item) {
-                                        dispatch(addIngridientToConstructor(item));
+                                      handleAddIngridient(item);
                                     },
                                   });
 
-  const handleDel = (index)=>{
+  const handleDel = (index, item)=>{
     dispatch(delIngridientFromConstructor(index));
+    dispatch(decrimentIngridientCount(item));
   }
 
   return (
@@ -52,7 +66,7 @@ const BurgerConstructor = () =>{
                   price={item.price}
                   thumbnail={item.image}
                   extraClass='ml-2'
-                  handleClose={()=>handleDel(index)}
+                  handleClose={()=>handleDel(index, item)}
                 />
               </div>
           )})
