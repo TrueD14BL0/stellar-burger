@@ -1,28 +1,37 @@
 import { ORDER_CLEAR, ORDER_ERROR, ORDER_REQUEST, ORDER_SUCCESS } from "../../utils/const";
 
 const initialState = {
-  "number": 0
+  loading: false,
+  error: false,
+  number: null
 }
 
 const orderObjReducer = (state = initialState, action) => {
   switch (action.type) {
     case ORDER_REQUEST:
-      /*здесь запускаем лоадер, которого нет*/
-      break;
+      return {
+        ...state,
+        loading: true,
+      }
     case ORDER_SUCCESS:
-      state = action.order;
-      break;
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        number: action.order.number,
+      }
     case ORDER_ERROR:
       console.log(`Some error with order: ${action.err}`);
       state = initialState;
-      break;
+      return {
+        ...initialState,
+        error: true,
+      }
     case ORDER_CLEAR:
-      state = initialState;
-      break;
+      return initialState;
     default:
-      break;
+      return state;
   }
-  return state;
 }
 
 export default orderObjReducer;

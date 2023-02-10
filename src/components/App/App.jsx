@@ -15,7 +15,7 @@ function App() {
 
   useEffect(()=>{
     dispatch(getIngridientsList());
-  }, )
+  }, [])
 
   return (
     <div className={`${styles.page} pt-10`}>

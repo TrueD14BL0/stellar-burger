@@ -6,8 +6,7 @@ import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import { closeIngridient } from '../../services/actions/ingridientObj';
-import { addIngridientToConstructor } from '../../services/actions/constructorList';
-import { incrimentIngridientCount } from '../../services/actions/ingridientList';
+import { Tabs } from '../../utils/const';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
@@ -16,18 +15,14 @@ const BurgerIngredients = () => {
   const saucesRef = useRef(null);
   const mainsRef = useRef(null);
 
-  const { ingridientsList, modal } = useSelector(store => ({
+  const { ingridientsList, ingridient } = useSelector(store => ({
     ingridientsList: store.ingridientsListReducer,
-    modal: store.ingridientObjReducer,
-  }), shallowEqual);
-
-  const { constructorList } = useSelector(store => ({
-    constructorList: store.constructorListReducer,
+    ingridient: store.ingridientObjReducer,
   }), shallowEqual);
 
   const buns = useMemo(
     () =>
-    ingridientsList.filter((item) => {
+    ingridientsList.content.filter((item) => {
         return item.type === "bun"
       }),
     [ingridientsList]
@@ -35,7 +30,7 @@ const BurgerIngredients = () => {
 
   const sauce = useMemo(
     () =>
-    ingridientsList.filter((item) => {
+    ingridientsList.content.filter((item) => {
         return item.type === "sauce"
       }),
     [ingridientsList]
@@ -43,7 +38,7 @@ const BurgerIngredients = () => {
 
   const main = useMemo(
     () =>
-    ingridientsList.filter((item) => {
+    ingridientsList.content.filter((item) => {
         return item.type === "main"
       }),
     [ingridientsList]
@@ -62,11 +57,11 @@ const BurgerIngredients = () => {
     const minCoord = Math.min(bunsTop, saucesTop, mainsTop)
 
     if(minCoord===bunsTop){
-      setCurrent('bun');
+      setCurrent(Tabs.BUN);
     }else if(minCoord===saucesTop){
-      setCurrent('sauce');
+      setCurrent(Tabs.SAUCE);
     }else{
-      setCurrent('main');
+      setCurrent(Tabs.MAIN);
     }
   }
 
@@ -74,24 +69,17 @@ const BurgerIngredients = () => {
     dispatch(closeIngridient());
   }
 
-  useEffect(()=>{
-    if(constructorList.bun===null && buns.length>0){
-      dispatch(addIngridientToConstructor(buns[0]));
-      dispatch(incrimentIngridientCount(buns[0]));
-    }
-  });
-
   return (
     <section className={`mt-10`}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
       <div className={`mt-5 ${styles.contentWrapper}`}>
-        <Tab value="bun" active={current === 'bun'} onClick={()=>setCurrentScroll(bunsRef)}>
+        <Tab value={Tabs.BUN} active={current === Tabs.BUN} onClick={()=>setCurrentScroll(bunsRef)}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={()=>setCurrentScroll(saucesRef)}>
+        <Tab value={Tabs.SAUCE} active={current === Tabs.SAUCE} onClick={()=>setCurrentScroll(saucesRef)}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === 'main'} onClick={()=>setCurrentScroll(mainsRef)}>
+        <Tab value={Tabs.MAIN} active={current === Tabs.MAIN} onClick={()=>setCurrentScroll(mainsRef)}>
           Начинки
         </Tab>
       </div>
@@ -100,7 +88,7 @@ const BurgerIngredients = () => {
         <IngridientType data={sauce} title='Соусы' anchor={saucesRef} />
         <IngridientType data={main} title='Начинки' anchor={mainsRef} />
       </div>
-      {modal._id !== '' &&
+      {ingridient.ingridient &&
         <Modal close={closeModal}>
           <IngridientDetails/>
         </Modal>

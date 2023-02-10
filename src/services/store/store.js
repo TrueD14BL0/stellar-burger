@@ -1,5 +1,4 @@
-import { applyMiddleware } from "@reduxjs/toolkit";
-import { legacy_createStore as createStore } from "redux";
+import { applyMiddleware, legacy_createStore as createStore } from "redux";
 import thunk from "redux-thunk";
 import composeEnhanters from "../enhancers/composeEnhancers";
 import rootReducer from "../reducers/rootReducer";

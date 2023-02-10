@@ -9,8 +9,10 @@ const BurgerConstructorBottom = () => {
 
   const dispatch = useDispatch();
 
-  const { constructorList } = useSelector(store => ({
+  const { constructorList, sum } = useSelector(store => ({
     constructorList: store.constructorListReducer,
+    sum: store.constructorListReducer.content.reduce((partialSum, a) => partialSum + a.price, 0)
+      + (store.constructorListReducer.bun ? store.constructorListReducer.bun.price*2 : 0),
   }), shallowEqual);
 
   const { orderObj } = useSelector(store => ({
@@ -27,7 +29,7 @@ const BurgerConstructorBottom = () => {
   return (
     <div className={`${styles.orderWrapper} mt-10`}>
       <div className={styles.priceWrapper}>
-        <span className='text text_type_digits-medium'>{constructorList.sum}</span>
+        <span className='text text_type_digits-medium'>{sum}</span>
         <div className={styles.iconWrapper}>
           <CurrencyIcon type="primary" />
         </div>
@@ -35,7 +37,7 @@ const BurgerConstructorBottom = () => {
       <Button htmlType="button" type="primary" size="large" onClick={onClickHandler}>
         Оформить заказ
       </Button>
-      {orderObj.number !== 0 &&
+      {orderObj.number &&
         <Modal close={()=>dispatch(clearOrder())}>
           <OrderDetails />
         </Modal>

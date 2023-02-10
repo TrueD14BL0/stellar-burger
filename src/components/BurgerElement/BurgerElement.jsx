@@ -1,31 +1,32 @@
 import styles from './BurgerElement.module.css'
 import PropTypes from 'prop-types';
+import { burgerIngredientProps } from '../../utils/propTypes';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { delIngridientFromConstructor, swapIngridient } from '../../services/actions/constructorList';
-import { decrimentIngridientCount } from '../../services/actions/ingridientList';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const BurgerElement = ({index, item}) =>{
 
   const dispatch = useDispatch();
-  const [{isDrag}, dragRef] = useDrag({type:'constructor_ingridient',
-                                      item: {index},
-                                      collect: monitor => ({
-                                                            isDrag: monitor.isDragging(),
-                                                            })
-                                      });
-  const [{isOver}, dropRef] = useDrop({accept:'constructor_ingridient',
-                                drop(dropElIdex) {
-                                  dispatch(swapIngridient(dropElIdex, {index}));
-                                },
-                                collect: monitor =>({
-                                                      isOver: monitor.isOver()
-                                                    }),
-                              });
+  const [{isDrag}, dragRef] = useDrag({
+    type:'constructor_ingridient',
+    item: {index},
+    collect: monitor => ({
+      isDrag: monitor.isDragging(),
+    })
+  });
+  const [{isOver}, dropRef] = useDrop({
+    accept:'constructor_ingridient',
+    drop(dropElIdex) {
+      dispatch(swapIngridient(dropElIdex, {index}));
+    },
+    collect: monitor =>({
+      isOver: monitor.isOver()
+    }),
+  });
   const handleDel = (index, item)=>{
-    dispatch(delIngridientFromConstructor(index));
-    dispatch(decrimentIngridientCount(item));
+    dispatch(delIngridientFromConstructor(item, index));
   }
 
   const style = isOver ? styles.highlighted : null;
@@ -49,7 +50,7 @@ const BurgerElement = ({index, item}) =>{
 }
 
 BurgerElement.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: burgerIngredientProps,
   index: PropTypes.number.isRequired,
 };
 

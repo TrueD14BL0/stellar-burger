@@ -1,5 +1,5 @@
 import Api from "../../components/Api/Api";
-import { DECRIMENT_INGRIDIENT_COUNT, INCRIMENT_INGRIDIENT_COUNT, INGRIDIENTS_LIST_ERROR, INGRIDIENTS_LIST_REQUEST, INGRIDIENTS_LIST_SUCCESS } from "../../utils/const";
+import { DECRIMENT_INGRIDIENT_COUNT, INGRIDIENTS_LIST_ERROR, INGRIDIENTS_LIST_REQUEST, INGRIDIENTS_LIST_SUCCESS } from "../../utils/const";
 
 export function getIngridientsList(){
   return (dispatch) => {
@@ -20,13 +20,6 @@ export function getIngridientsList(){
           err,
         });
       });
-  }
-}
-
-export function incrimentIngridientCount(ingridient){
-  return {
-      type: INCRIMENT_INGRIDIENT_COUNT,
-      ingridient
   }
 }
 

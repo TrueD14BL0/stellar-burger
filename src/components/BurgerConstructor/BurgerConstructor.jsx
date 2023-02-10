@@ -4,7 +4,7 @@ import styles from './BurgerConstructor.module.css';
 import { useDrop } from 'react-dnd/dist/hooks';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addIngridientToConstructor } from '../../services/actions/constructorList';
-import { decrimentIngridientCount, incrimentIngridientCount } from '../../services/actions/ingridientList';
+import { decrimentIngridientCount } from '../../services/actions/ingridientList';
 import BurgerElement from '../BurgerElement/BurgerElement';
 
 const BurgerConstructor = () =>{
@@ -18,20 +18,22 @@ const BurgerConstructor = () =>{
   const handleAddIngridient = (item)=>{
     if(item.type === 'bun'){
       if(item !== constructorList.bun){
-        dispatch(incrimentIngridientCount(item));
-        dispatch(decrimentIngridientCount(constructorList.bun));
+        if(constructorList.bun){
+          dispatch(decrimentIngridientCount(constructorList.bun))
+        };
       }
-    }else{
-      dispatch(incrimentIngridientCount(item));
     }
     dispatch(addIngridientToConstructor(item));
   }
 
-  const [, dropTarget] = useDrop({accept:'ingridient',
-                                  drop(item) {
-                                    handleAddIngridient(item);
-                                  },
-                                });
+  const [, dropTarget] = useDrop(
+    {
+      accept:'ingridient',
+      drop(item) {
+        handleAddIngridient(item);
+      },
+    }
+  );
 
   return (
     <div className='mt-25 pl-4' ref={dropTarget}>
@@ -50,7 +52,7 @@ const BurgerConstructor = () =>{
       <div className={styles.contentWrapper}>
         {constructorList.content &&
           constructorList.content.map((item, index)=>
-              (<BurgerElement item={item} index={index} key={`${item._id}${index}`}/>)
+              (<BurgerElement item={item} index={index} key={item.key}/>)
             )
         }
       </div>

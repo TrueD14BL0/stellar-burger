@@ -7,9 +7,11 @@ export function getOrderInfo(constructorList){
       type: ORDER_REQUEST,
     })
 
-    Api.postOrders([constructorList.bun._id,
-                    constructorList.bun._id,
-                    ...constructorList.content.map(item=>item._id)])
+    Api.postOrders([
+      constructorList.bun._id,
+      ...constructorList.content.map(item=>item._id),
+      constructorList.bun._id,
+    ])
     .then((data)=>{
       if(data.success){
         dispatch(setOrder(data.order));
