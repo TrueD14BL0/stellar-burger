@@ -1,4 +1,4 @@
-import { DEL_ORDER, SET_ORDER } from "../../utils/const";
+import { ORDER_CLEAR, ORDER_ERROR, ORDER_REQUEST, ORDER_SUCCESS } from "../../utils/const";
 
 const initialState = {
   "number": 0
@@ -6,10 +6,17 @@ const initialState = {
 
 const orderObjReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_ORDER:
+    case ORDER_REQUEST:
+      /*здесь запускаем лоадер, которого нет*/
+      break;
+    case ORDER_SUCCESS:
       state = action.order;
       break;
-    case DEL_ORDER:
+    case ORDER_ERROR:
+      console.log(`Some error with order: ${action.err}`);
+      state = initialState;
+      break;
+    case ORDER_CLEAR:
       state = initialState;
       break;
     default:

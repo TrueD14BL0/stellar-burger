@@ -30,17 +30,10 @@ const constructorListReducer = (state = initialState, action) => {
       }
       break;
     case SWAP_INGRIDIENT_IN_CONSTRUCTOR:
-      if(action.firstEl.index>action.secondEl.index){
-        const firstEl = state.content[action.firstEl.index];
-        const secondEl = state.content[action.secondEl.index];
-        state.content.splice(action.secondEl.index,1,firstEl);
-        state.content.splice(action.firstEl.index,1,secondEl);
-      }else{
-        const firstEl = state.content[action.firstEl.index];
-        const secondEl = state.content[action.secondEl.index];
-        state.content.splice(action.firstEl.index,1,secondEl);
-        state.content.splice(action.secondEl.index,1,firstEl);
-      }
+      const firstEl = state.content[action.firstEl.index];
+      const secondEl = state.content[action.secondEl.index];
+      state.content.splice(action.secondEl.index,1,firstEl);
+      state.content.splice(action.firstEl.index,1,secondEl);
       state = {...state};
       break;
     default:

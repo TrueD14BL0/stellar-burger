@@ -1,10 +1,9 @@
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './BurgerConstructorBottom.module.css';
-import Api from "../Api/Api";
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { delOrder, setOrder } from "../../services/actions/orderObj";
+import { clearOrder, getOrderInfo } from "../../services/actions/orderObj";
 
 const BurgerConstructorBottom = () => {
 
@@ -22,19 +21,7 @@ const BurgerConstructorBottom = () => {
     if(!constructorList.bun){
       return;
     }
-    Api.postOrders([constructorList.bun._id,
-                    constructorList.bun._id,
-                    ...constructorList.content.map(item=>item._id)])
-      .then((data)=>{
-        if(data.success){
-          dispatch(setOrder(data.order));
-        }else{
-          console.log('Some trouble with post order to server!');
-        }
-      })
-      .catch((err)=>{
-        console.log('Some trouble with response from server! \n', err);
-      });
+    dispatch(getOrderInfo(constructorList));
   }
 
   return (
@@ -49,7 +36,7 @@ const BurgerConstructorBottom = () => {
         Оформить заказ
       </Button>
       {orderObj.number !== 0 &&
-        <Modal close={()=>dispatch(delOrder())}>
+        <Modal close={()=>dispatch(clearOrder())}>
           <OrderDetails />
         </Modal>
       }
