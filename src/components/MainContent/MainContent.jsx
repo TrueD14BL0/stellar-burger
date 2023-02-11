@@ -1,5 +1,5 @@
 import styles from './MainContent.module.css';
-import PropTypes from 'prop-types';
+import PropTypes, { element } from 'prop-types';
 
 const MainContent = ({children}) => {
   return (
@@ -10,7 +10,7 @@ const MainContent = ({children}) => {
 }
 
 MainContent.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.arrayOf(element).isRequired,
 }
 
 export default MainContent;

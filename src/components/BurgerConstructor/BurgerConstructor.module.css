@@ -1,16 +1,10 @@
-.elementContent{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .contentWrapper{
   display: flex;
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  height: calc(650px - 80px - 40px - 64px - 52px);
   overflow-y: scroll;
-  max-height: calc(600px - 80px - 40px - 64px - 52px);
 }
 
 .contentWrapper::-webkit-scrollbar {
@@ -23,8 +17,4 @@
 .contentWrapper::-webkit-scrollbar-thumb {
   height: 292px;
   background: #8585AD;
-}
-
-.dragBtn{
-  cursor: grab;
 }

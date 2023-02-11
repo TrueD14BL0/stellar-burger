@@ -13,6 +13,7 @@ export const ingredientProps = PropTypes.shape({
   image_mobile: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
+  qty: PropTypes.number.isRequired,
 }).isRequired;
 
 export const ingridientsListProps = PropTypes.arrayOf(
@@ -28,3 +29,19 @@ export const constructorListProps = PropTypes.shape({
   id: PropTypes.number.isRequired,
 }).isRequired
 
+export const burgerIngredientProps = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired,
+  qty: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
+  proteins: PropTypes.number.isRequired,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  calories: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  image_mobile: PropTypes.string.isRequired,
+  image_large: PropTypes.string.isRequired,
+  __v: PropTypes.number.isRequired,
+}).isRequired;

@@ -1,37 +1,35 @@
 import { Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './BurgerConstructorBottom.module.css';
-import { BurgerConstructorContext } from "../../context/BurgerConstructorContext";
-import { useContext, useState } from "react";
-import Api from "../Api/Api";
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { clearOrder, getOrderInfo } from "../../services/actions/orderObj";
 
 const BurgerConstructorBottom = () => {
-  const { constructorList } = useContext(BurgerConstructorContext);
-  const [isOpen, setModalOpen] = useState(false);
-  const [orderNumber, setOrderNumber] = useState();
+
+  const dispatch = useDispatch();
+
+  const { constructorList, sum } = useSelector(store => ({
+    constructorList: store.constructorListReducer,
+    sum: store.constructorListReducer.content.reduce((partialSum, a) => partialSum + a.price, 0)
+      + (store.constructorListReducer.bun ? store.constructorListReducer.bun.price*2 : 0),
+  }), shallowEqual);
+
+  const { orderObj } = useSelector(store => ({
+    orderObj: store.orderObjReducer,
+  }), shallowEqual);
 
   const onClickHandler = () => {
-    Api.postOrders([constructorList.bun._id,
-                    constructorList.bun._id,
-                    ...constructorList.content.map(item=>item._id)])
-      .then((data)=>{
-        if(data.success){
-          setOrderNumber(data.order.number);
-          setModalOpen(true);
-        }else{
-          console.log('Some trouble with post order to server!');
-        }
-      })
-      .catch((err)=>{
-        console.log('Some trouble with response from server! \n', err);
-      });
+    if(!constructorList.bun){
+      return;
+    }
+    dispatch(getOrderInfo(constructorList));
   }
 
   return (
     <div className={`${styles.orderWrapper} mt-10`}>
       <div className={styles.priceWrapper}>
-        <span className='text text_type_digits-medium'>{constructorList.sum}</span>
+        <span className='text text_type_digits-medium'>{sum}</span>
         <div className={styles.iconWrapper}>
           <CurrencyIcon type="primary" />
         </div>
@@ -39,9 +37,9 @@ const BurgerConstructorBottom = () => {
       <Button htmlType="button" type="primary" size="large" onClick={onClickHandler}>
         Оформить заказ
       </Button>
-      {isOpen &&
-        <Modal close={setModalOpen}>
-          <OrderDetails orderNumber={orderNumber}/>
+      {orderObj.number &&
+        <Modal close={()=>dispatch(clearOrder())}>
+          <OrderDetails />
         </Modal>
       }
     </div>

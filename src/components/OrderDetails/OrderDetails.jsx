@@ -1,12 +1,16 @@
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./OrderDetails.module.css"
-import PropTypes from 'prop-types';
+import { shallowEqual, useSelector } from "react-redux";
 
-const OrderDetails = ({orderNumber}) => {
-  const orderId = "000000" + orderNumber;
+const OrderDetails = () => {
+
+  const { orderObj } = useSelector(store => ({
+    orderObj: store.orderObjReducer,
+  }), shallowEqual);
+
   return (
     <div className={`${styles.contentWrapper} pt-20 pb-20`}>
-      <h2 className={`text text_type_digits-large ml-15 mr-15 ${styles.centeredText}`}>{orderId.substring(orderId.length-6)}</h2>
+      <h2 className={`text text_type_digits-large ml-15 mr-15 ${styles.centeredText}`}>{orderObj.number}</h2>
       <h3 className={`text text_type_main-medium ml-15 mr-15 mt-8 ${styles.centeredText}`}>идентификатор заказа</h3>
       <div className={`${styles.pic}`}>
         <CheckMarkIcon type="primary" />
@@ -16,9 +20,5 @@ const OrderDetails = ({orderNumber}) => {
     </div>
   )
 }
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
-};
 
 export default OrderDetails;

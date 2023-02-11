@@ -1,16 +1,42 @@
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useContext } from 'react';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerConstructorBottom from '../BurgerConstructorBottom/BurgerConstructorBottom';
 import styles from './BurgerConstructor.module.css';
-import { BurgerConstructorContext } from '../../context/BurgerConstructorContext';
-
+import { useDrop } from 'react-dnd/dist/hooks';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { addIngridientToConstructor } from '../../services/actions/constructorList';
+import { decrimentIngridientCount } from '../../services/actions/ingridientList';
+import BurgerElement from '../BurgerElement/BurgerElement';
 
 const BurgerConstructor = () =>{
 
-  const { constructorList } = useContext(BurgerConstructorContext);
+  const dispatch = useDispatch();
+
+  const { constructorList } = useSelector(store => ({
+    constructorList: store.constructorListReducer,
+  }), shallowEqual);
+
+  const handleAddIngridient = (item)=>{
+    if(item.type === 'bun'){
+      if(item !== constructorList.bun){
+        if(constructorList.bun){
+          dispatch(decrimentIngridientCount(constructorList.bun))
+        };
+      }
+    }
+    dispatch(addIngridientToConstructor(item));
+  }
+
+  const [, dropTarget] = useDrop(
+    {
+      accept:'ingridient',
+      drop(item) {
+        handleAddIngridient(item);
+      },
+    }
+  );
 
   return (
-    <div className='mt-25 pl-4'>
+    <div className='mt-25 pl-4' ref={dropTarget}>
       {constructorList.bun &&
         (
           <ConstructorElement
@@ -20,27 +46,14 @@ const BurgerConstructor = () =>{
             price={constructorList.bun.price}
             thumbnail={constructorList.bun.image}
             extraClass='ml-8 mb-4'
-            key={0}
           />
         )
       }
       <div className={styles.contentWrapper}>
         {constructorList.content &&
-          constructorList.content.map((item, index)=>{
-            return (
-              <div className={styles.elementContent} key={index+1}>
-                <div className={styles.dragBtn}>
-                  <DragIcon type="primary" />
-                </div>
-                <ConstructorElement
-                  isLocked={false}
-                  text={`${item.name}`}
-                  price={item.price}
-                  thumbnail={item.image}
-                  extraClass='ml-2'
-                />
-              </div>
-          )})
+          constructorList.content.map((item, index)=>
+              (<BurgerElement item={item} index={index} key={item.key}/>)
+            )
         }
       </div>
       {constructorList.bun &&
@@ -51,8 +64,7 @@ const BurgerConstructor = () =>{
             text={`${constructorList.bun.name} (низ)`}
             price={constructorList.bun.price}
             thumbnail={constructorList.bun.image}
-            extraClass='ml-8 mt-4'
-            key={constructorList.content?constructorList.content.length+1:1}
+            extraClass='ml-8 mb-4'
           />
         )
       }
