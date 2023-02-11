@@ -13,15 +13,11 @@ const ingridientsListReducer = (state = initialState, action) => {
         ...state,
         loading: true};
     case INGRIDIENTS_LIST_SUCCESS:
-      const newArr = []
-      action.ingridientList.forEach(element => {
-        newArr.push(
-          {
-            ...element,
-            qty: 0
-          }
-        )
-      });
+      const newArr = action.ingridientList.map(element => ({
+          ...element,
+          qty: 0
+        })
+      );
       return {
         ...state,
         error: false,

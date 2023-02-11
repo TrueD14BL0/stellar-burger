@@ -22,14 +22,14 @@ const constructorListReducer = (state = initialState, action) => {
               }
       }
     case DEL_INGRIDIENT_FROM_CONSTRUCTOR:
-      const copy = state.content;
+      const copy = [...state.content];
       copy.splice(action.index,1);
       return {
         ...state,
         content: copy
       }
     case SWAP_INGRIDIENT_IN_CONSTRUCTOR:
-      const copyArr = state.content;
+      const copyArr = [...state.content];
       const firstEl = copyArr[action.firstEl.index];
       const secondEl = copyArr[action.secondEl.index];
       copyArr.splice(action.secondEl.index,1,firstEl);
