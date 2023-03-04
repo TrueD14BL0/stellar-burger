@@ -1,13 +1,15 @@
-import styles from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
-import MainContent from '../MainContent/MainContent';
 import { useEffect } from 'react';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import { useDispatch } from 'react-redux';
 import { getIngridientsList } from '../../services/actions/ingridientList';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd/dist/core';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import LoginPage from '../../pages/LoginPage/LoginPage';
+import RegistrationPage from '../../pages/RegistrationPage/RegistrationPage';
+import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+import StartPage from '../../pages/StartPage/StartPage';
+import AccountPage from '../../pages/AccountPage/AccountPage';
+import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 
 function App() {
 
@@ -18,15 +20,20 @@ function App() {
   }, [])
 
   return (
-    <div className={`${styles.page} pt-10`}>
-      <AppHeader/>
-      <DndProvider backend={HTML5Backend}>
-        <MainContent>
-          <BurgerIngredients/>
-          <BurgerConstructor/>
-        </MainContent>
-      </DndProvider>
-    </div>
+    <BrowserRouter>
+      <AppHeader />
+      <Routes>
+        <Route path="/" element={<StartPage/>}/>
+        <Route path="/login" element={<LoginPage />}/>
+        <Route path="/register" element={<RegistrationPage />}/>
+        <Route path="/forgot-password" element={<ForgotPassword />}/>
+        <Route path="/reset-password" element={<ResetPassword />}/>
+        <Route path="/profile" element={<AccountPage/>}>
+          <Route path="" element={<ProfilePage/>}/>
+          <Route path="orders" element={<></>}/>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 

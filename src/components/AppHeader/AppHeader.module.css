@@ -9,14 +9,6 @@
   justify-items: center;
 }
 
-.headerActiveBtn {
-  color: #F2F2F3;
-}
-
-.headerInactiveBtn {
-  color: #8585AD;
-}
-
 .mainMenu{
   display: flex;
   flex-direction: row;

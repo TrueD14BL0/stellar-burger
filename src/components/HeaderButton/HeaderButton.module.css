@@ -4,6 +4,13 @@
   gap: 8px;
   border-radius: 40px;
   cursor: pointer;
-  background: transparent;
-  border: 0;
+  text-decoration: none;
+}
+
+.headerActiveBtn {
+  color: #F2F2F3;
+}
+
+.headerInactiveBtn {
+  color: #8585AD;
 }

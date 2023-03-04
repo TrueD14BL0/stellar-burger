@@ -1,0 +1,23 @@
+.content{
+  display: flex;
+  flex-direction: row;
+}
+
+.navLinks{
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar{
+  width: 320px;
+}
+
+.link{
+  padding-top: 17px;
+  padding-bottom: 17px;
+  text-decoration: none;
+}
+
+.headerActiveBtn{
+  color:#F2F2F3;
+}

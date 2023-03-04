@@ -1,25 +1,29 @@
 import styles from './AppHeader.module.css'
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import HeaderButton from '../HeaderButton/HeaderButton'
+import { useLocation } from 'react-router-dom'
 
 const AppHeader = () => {
+
+  const location = useLocation();
+
   return (
     <header className={`${styles.header} pl-80 pr-80 pt-4 pb-4`}>
       <nav className={`${styles.mainMenu}`}>
         <li className={`${styles.mainMenuListItem}`}>
-          <HeaderButton text="Конструктор" addedClass={`${styles.headerActiveBtn}`}>
-            <BurgerIcon type='primary'/>
+          <HeaderButton text="Конструктор" linkTo="/">
+            <BurgerIcon type={location.pathname==="/"?'primary':'secondary'}/>
           </HeaderButton>
         </li>
         <li className={`${styles.mainMenuListItem}`}>
-          <HeaderButton text="Лента заказов" addedClass={`${styles.headerInactiveBtn}`}>
-            <ListIcon type='secondary' />
+          <HeaderButton text="Лента заказов" linkTo="/">
+            <ListIcon type={location.pathname==="/"?'primary':'secondary'} />
           </HeaderButton>
         </li>
       </nav>
       <Logo />
-      <HeaderButton text="Личный кабинет" addedClass={`${styles.headerInactiveBtn}`}>
-        <ProfileIcon type='secondary' />
+      <HeaderButton text="Личный кабинет" linkTo="/profile">
+        <ProfileIcon type={location.pathname==="/profile"?'primary':'secondary'} />
       </HeaderButton>
     </header>
   )
