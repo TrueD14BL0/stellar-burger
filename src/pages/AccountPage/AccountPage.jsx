@@ -6,7 +6,7 @@ const AccountPage = () => {
   const inactiveClass = `${'text text_type_main-medium text_color_inactive'} ${styles.link}`;
   return (
     <div className={styles.content}>
-      <div className='navbar'>
+      <div className={styles.navbar}>
         <ul className={styles.navLinks}>
           <NavLink
             end to={'/profile'}
@@ -21,12 +21,13 @@ const AccountPage = () => {
             История заказов
           </NavLink>
           <NavLink
-            end to={'/'}
+            end to={'/logout'}
             className={({ isActive }) => isActive ? activeClass : inactiveClass}
           >
             Выход
           </NavLink>
         </ul>
+        <p className={`${styles.annotation} pt-20 text text_type_main-default text_color_inactive`}>В этом разделе вы можете изменить&nbsp;свои персональные данные</p>
       </div>
       <Outlet />
     </div>

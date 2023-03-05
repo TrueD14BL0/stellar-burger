@@ -2,6 +2,8 @@ import styles from './LoginPage.module.css';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../../services/actions/authActions';
 
 const LoginPage = () => {
 
@@ -11,9 +13,14 @@ const LoginPage = () => {
   };
 
   const [value, setValue] = useState(initState);
+  const dispatch = useDispatch();
+
+  const clickHandler = () => {
+    dispatch(loginAction(value));
+  }
 
   return (
-    <form className={styles.main}>
+    <form className={styles.main} onSubmit={(e)=>e.preventDefaut()}>
       <h2 className={`${styles.text} text text_type_main-medium`}>Вход</h2>
       <Input
         type={'email'}
@@ -36,7 +43,7 @@ const LoginPage = () => {
           password:e.target.value}
         )}
       />
-      <Button htmlType="button" type="primary" size="large" extraClass="mt-6">
+      <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={clickHandler}>
         Войти
       </Button>
       <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вы - новый пользователь? </span><Link to='/register'>Зарегистрироваться</Link></p>

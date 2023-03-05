@@ -6,6 +6,7 @@ import orderObjReducer from './orderObjReducer';
 import forgotPasswordReducer from './forgotPasswordReducer';
 import registerUserReducer from './registerUserReducer';
 import resetPasswordReducer from './resetPasswordReducer';
+import loginReducer from './loginReducer';
 
 const rootReducer = combineReducers({
   constructorListReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   forgotPasswordReducer,
   registerUserReducer,
   resetPasswordReducer,
+  loginReducer,
 });
 
 export default rootReducer;

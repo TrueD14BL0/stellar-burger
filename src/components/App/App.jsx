@@ -10,6 +10,7 @@ import ResetPassword from '../../pages/ResetPassword/ResetPassword';
 import StartPage from '../../pages/StartPage/StartPage';
 import AccountPage from '../../pages/AccountPage/AccountPage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="" element={<ProfilePage/>}/>
           <Route path="orders" element={<></>}/>
         </Route>
+        <Route path="*" element={<NotFoundPage />}/>
       </Routes>
     </BrowserRouter>
   )

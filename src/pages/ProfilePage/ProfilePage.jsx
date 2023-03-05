@@ -17,28 +17,31 @@ const ProfilePage = () => {
         type={'text'}
         placeholder={'Имя'}
         size={'default'}
-        extraClass="ml-1 pt-6"
+        extraClass="ml-1"
         value={value.name}
+        icon={'EditIcon'}
         onChange={e => setValue({...value,
           name:e.target.value}
         )}
       />
       <Input
-        type={'text'}
-        placeholder={'Имя'}
+        type={'email'}
+        placeholder={'Логин'}
         size={'default'}
         extraClass="ml-1 pt-6"
         value={value.name}
+        icon={'EditIcon'}
         onChange={e => setValue({...value,
           name:e.target.value}
         )}
       />
       <Input
-        type={'text'}
-        placeholder={'Имя'}
+        type={'password'}
+        placeholder={'Пароль'}
         size={'default'}
         extraClass="ml-1 pt-6"
         value={value.name}
+        icon={'EditIcon'}
         onChange={e => setValue({...value,
           name:e.target.value}
         )}

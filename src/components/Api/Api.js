@@ -61,4 +61,50 @@ export default class Api{
     });
   }
 
+  static getAuthLogin(loginData){
+    return this._request(`${apiAddress}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    });
+  }
+
+  static getAuthRegistration(ingredients){
+    return this._request(`${apiAddress}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ingredients: ingredients,
+      }),
+    });
+  }
+
+  static getAuthLogout(ingredients){
+    return this._request(`${apiAddress}/auth/logout`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ingredients: ingredients,
+      }),
+    });
+  }
+
+  static getAuthToken(ingredients){
+    return this._request(`${apiAddress}/auth/token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ingredients: ingredients,
+      }),
+    });
+  }
+
 }
