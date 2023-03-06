@@ -11,17 +11,12 @@ import StartPage from '../../pages/StartPage/StartPage';
 import AccountPage from '../../pages/AccountPage/AccountPage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
+import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
+import { deleteCookie } from '../utils/utils';
 
 function App() {
 
   const dispatch = useDispatch();
-  const { loggedIn } = useSelector(store => ({
-    loggedIn: store.loginReducer,
-  }), shallowEqual);
-
-  if(!getCookie('token')&&!getCookie('token')){
-    navigate('/login', { replace: true })
-  }
 
   useEffect(()=>{
     dispatch(getIngridientsList());
@@ -36,7 +31,7 @@ function App() {
         <Route path="/register" element={<RegistrationPage />}/>
         <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="/reset-password" element={<ResetPassword />}/>
-        <Route path="/profile" element={<AccountPage/>}>
+        <Route path="/profile" element={<ProtectedRouteElement element={<AccountPage/>}/>}>
           <Route path="" element={<ProfilePage/>}/>
           <Route path="orders" element={<></>}/>
         </Route>

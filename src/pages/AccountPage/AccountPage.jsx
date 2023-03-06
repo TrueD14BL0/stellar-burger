@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate} from 'react-router-dom';
+import { NavLink, Outlet} from 'react-router-dom';
 import styles from './AccountPage.module.css';
 
 const AccountPage = () => {

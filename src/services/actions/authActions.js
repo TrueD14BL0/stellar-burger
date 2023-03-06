@@ -21,10 +21,9 @@ export function loginAction(loginData){
   }
 }
 
-export function loginSuccess(user, token, refreshToken){
+export function loginSuccess(token, refreshToken){
   return {
       type: LOGIN_SUCCESS,
-      user,
       token,
       refreshToken,
   }
