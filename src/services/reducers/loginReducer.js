@@ -1,13 +1,20 @@
 import { LOGIN_ERROR, LOGIN_SUCCESS } from "../../utils/const";
 
 const initialState = {
-  status: null
+  status: null,
+  token: null,
+  refreshToken: null,
 };
 
 export const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_SUCCESS:
-      return {status: true};
+      return {
+        ...state,
+        status: true,
+        token: action.token,
+        refreshToken: action.refreshToken,
+      };
     case LOGIN_ERROR:
       return initialState;
     default:

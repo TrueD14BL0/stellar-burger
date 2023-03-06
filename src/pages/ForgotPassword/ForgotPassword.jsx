@@ -20,8 +20,8 @@ const ForgotPassword = () => {
 
   useEffect(()=>{
     if(forgotPassStatus.status){
-      navigate('/reset-password');
       setValue('');
+      navigate('/reset-password');
     }
   }, [forgotPassStatus])
 

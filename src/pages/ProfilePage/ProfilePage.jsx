@@ -1,5 +1,4 @@
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './ProfilePage.module.css';
 import { useState } from 'react';
 
 const ProfilePage = () => {
@@ -7,7 +6,7 @@ const ProfilePage = () => {
   const initState = {
     name:'',
     email:'',
-    password:'',
+    password:'***************',
   };
   const [value, setValue] = useState(initState);
 
@@ -29,7 +28,7 @@ const ProfilePage = () => {
         placeholder={'Логин'}
         size={'default'}
         extraClass="ml-1 pt-6"
-        value={value.name}
+        value={value.email}
         icon={'EditIcon'}
         onChange={e => setValue({...value,
           name:e.target.value}
@@ -40,7 +39,7 @@ const ProfilePage = () => {
         placeholder={'Пароль'}
         size={'default'}
         extraClass="ml-1 pt-6"
-        value={value.name}
+        value={value.password}
         icon={'EditIcon'}
         onChange={e => setValue({...value,
           name:e.target.value}

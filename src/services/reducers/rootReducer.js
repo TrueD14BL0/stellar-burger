@@ -7,6 +7,7 @@ import forgotPasswordReducer from './forgotPasswordReducer';
 import registerUserReducer from './registerUserReducer';
 import resetPasswordReducer from './resetPasswordReducer';
 import loginReducer from './loginReducer';
+import userReducer from './userReducer';
 
 const rootReducer = combineReducers({
   constructorListReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   registerUserReducer,
   resetPasswordReducer,
   loginReducer,
+  userReducer,
 });
 
 export default rootReducer;

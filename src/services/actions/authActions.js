@@ -10,8 +10,7 @@ export function loginAction(loginData){
     Api.getAuthLogin(loginData)
     .then((data)=>{
       if(data.success){
-        console.log(data);
-        dispatch(loginSuccess());
+        dispatch(loginSuccess(data.accessToken, data.refreshToken));
       }else{
         dispatch(loginErr('Some trouble with received data.'))
       }
@@ -22,9 +21,12 @@ export function loginAction(loginData){
   }
 }
 
-export function loginSuccess(){
+export function loginSuccess(user, token, refreshToken){
   return {
       type: LOGIN_SUCCESS,
+      user,
+      token,
+      refreshToken,
   }
 }
 

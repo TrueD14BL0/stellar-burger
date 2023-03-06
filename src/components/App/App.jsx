@@ -15,6 +15,13 @@ import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 function App() {
 
   const dispatch = useDispatch();
+  const { loggedIn } = useSelector(store => ({
+    loggedIn: store.loginReducer,
+  }), shallowEqual);
+
+  if(!getCookie('token')&&!getCookie('token')){
+    navigate('/login', { replace: true })
+  }
 
   useEffect(()=>{
     dispatch(getIngridientsList());
