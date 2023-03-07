@@ -95,18 +95,26 @@ export default class Api{
     });
   }
 
-  static getAuthToken(ingredients){
+  static getAccessToken(refreshToken){
     return this._request(`${apiAddress}/auth/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ingredients: ingredients,
+        "token": refreshToken,
       }),
     });
   }
 
-
+  static getUserInfo(token){
+    return this._request(`${apiAddress}/auth/user`, {
+      method: "GET",
+      headers: {
+        authorization : `${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+  }
 
 }

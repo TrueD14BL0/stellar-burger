@@ -1,4 +1,4 @@
-import { SET_USER, CLEAR_USER } from "../../utils/const";
+import { SET_USER, CLEAR_USER, USER_REQUEST_ERROR } from "../../utils/const";
 
 const initialState = {
     email: null,
@@ -13,6 +13,9 @@ export const userReducer = (state = initialState, action) => {
         name: action.user.name,
       };
     case CLEAR_USER:
+      return initialState;
+    case USER_REQUEST_ERROR:
+      console.log(`Cannot get user info: ${action.err}`);
       return initialState;
     default:
       return state;

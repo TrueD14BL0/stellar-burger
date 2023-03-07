@@ -12,7 +12,6 @@ import AccountPage from '../../pages/AccountPage/AccountPage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
-import { deleteCookie } from '../utils/utils';
 
 function App() {
 

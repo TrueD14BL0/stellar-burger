@@ -16,7 +16,7 @@ const AppHeader = () => {
           </HeaderButton>
         </li>
         <li className={`${styles.mainMenuListItem}`}>
-          <HeaderButton text="Лента заказов" linkTo="/">
+          <HeaderButton text="Лента заказов" linkTo="/feed">
             <ListIcon type={location.pathname==="/"?'primary':'secondary'} />
           </HeaderButton>
         </li>

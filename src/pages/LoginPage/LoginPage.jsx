@@ -1,10 +1,10 @@
 import styles from './LoginPage.module.css';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { loginAction } from '../../services/actions/authActions';
-import { deleteCookie, getCookie, setCookie } from '../../components/utils/utils';
+import { loginAction } from '../../services/actions/loginActions';
+import { getCookie, setCookie, setTokenCookies } from '../../components/utils/utils';
 
 const LoginPage = () => {
 
@@ -16,6 +16,8 @@ const LoginPage = () => {
   const [value, setValue] = useState(initState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { loginData } = useSelector(store => ({
     loginData: store.loginReducer,
   }), shallowEqual);
@@ -30,11 +32,8 @@ const LoginPage = () => {
       setLogin(true);
     };
     if(loginData.status){
-      setCookie('token', loginData.token, {
-        'max-age': 1200
-      });
-      setCookie('refreshToken', loginData.refreshToken);
-      navigate('/');
+      setTokenCookies(loginData.token, loginData.refreshToken);
+      navigate(location.state.prev ? location.state.prev : '/');
     }
   }, [loginData])
 
@@ -66,8 +65,8 @@ const LoginPage = () => {
         <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={clickHandler}>
           Войти
         </Button>
-        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вы - новый пользователь? </span><Link to='/register'>Зарегистрироваться</Link></p>
-        <p className={`${styles.text} pt-4`}><span className={`text text_type_main-default text_color_inactive`}>Забыли пароль? </span><Link to='/forgot-password'>Восстановить пароль</Link></p>
+        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вы - новый пользователь? </span><Link to='/register' className={styles.link}>Зарегистрироваться</Link></p>
+        <p className={`${styles.text} pt-4`}><span className={`text text_type_main-default text_color_inactive`}>Забыли пароль? </span><Link to='/forgot-password' className={styles.link}>Восстановить пароль</Link></p>
       </form>
     )
     : <Navigate to="/" replace/>;

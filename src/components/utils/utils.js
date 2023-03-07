@@ -22,8 +22,6 @@ export function setCookie(name, value, options = {}) {
   document.cookie = updatedCookie;
 }
 
-// возвращает куки с указанным name,
-// или undefined, если ничего не найдено
 export function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1') + "=([^;]*)"
@@ -35,4 +33,11 @@ export function deleteCookie(name) {
   setCookie(name, "", {
     'max-age': -1
   })
+}
+
+export function setTokenCookies(token, refreshToken){
+  setCookie('token', token, {
+    'max-age': 1200
+  });
+  setCookie('refreshToken', refreshToken);
 }

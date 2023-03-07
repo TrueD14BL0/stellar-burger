@@ -1,14 +1,41 @@
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { Button, CloseIcon, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect, useState, useRef } from 'react';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { userRequest } from '../../services/actions/userRequest';
 
 const ProfilePage = () => {
 
   const initState = {
-    name:'',
-    email:'',
+    name:'some',
+    email:'some',
     password:'***************',
   };
-  const [value, setValue] = useState(initState);
+
+  const nameRef = useRef(null);
+  const emailRef = useRef(null);
+  const passRef = useRef(null);
+
+  const [values, setValues] = useState(initState);
+  const dispatch = useDispatch();
+  const { userData } = useSelector(store => ({
+    userData: store.userReducer,
+  }), shallowEqual);
+
+  useEffect(()=>{
+    dispatch(userRequest());
+  }, [])
+  useEffect(()=>{
+    setValues(
+      {...values,
+        name:userData.name,
+        email:userData.email,
+      }
+    );
+  }, [userData])
+
+  const inputClickHandler = (ref) =>{
+    console.log(ref);
+  }
 
   return (
     <div>
@@ -17,34 +44,43 @@ const ProfilePage = () => {
         placeholder={'Имя'}
         size={'default'}
         extraClass="ml-1"
-        value={value.name}
+        value={values.name}
         icon={'EditIcon'}
-        onChange={e => setValue({...value,
+        disabled = {true}
+        ref={nameRef}
+        onChange={e => setValues({...values,
           name:e.target.value}
         )}
+        onIconClick={()=>inputClickHandler(nameRef)}
       />
-      <Input
-        type={'email'}
-        placeholder={'Логин'}
-        size={'default'}
+      <EmailInput
+        onChange={e => setValues({...values,
+          email:e.target.value}
+        )}
+        value={values.email}
+        name={'email'}
+        placeholder="Логин"
+        isIcon={true}
         extraClass="ml-1 pt-6"
-        value={value.email}
-        icon={'EditIcon'}
-        onChange={e => setValue({...value,
-          name:e.target.value}
-        )}
       />
-      <Input
-        type={'password'}
-        placeholder={'Пароль'}
-        size={'default'}
+      <PasswordInput
+        onChange={e => setValues({...values,
+          password:e.target.value}
+        )}
+        value={values.password}
+        name={'password'}
+        icon="EditIcon"
         extraClass="ml-1 pt-6"
-        value={value.password}
-        icon={'EditIcon'}
-        onChange={e => setValue({...value,
-          name:e.target.value}
-        )}
+        ref={passRef}
       />
+      <div className='pt-6'>
+        <Button htmlType="button" type="secondary" size="medium">
+          Отмена
+        </Button>
+        <Button htmlType="button" type="primary" size="medium" onClick={()=>null}>
+          Сохранить
+        </Button>
+      </div>
     </div>
   )
 }

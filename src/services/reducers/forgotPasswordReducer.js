@@ -9,6 +9,7 @@ export const forgotPasswordReducer = (state = initialState, action) => {
     case PASSWORD_FORGOT_SUCCESS:
       return {status: true};
     case PASSWORD_FORGOT_ERROR:
+      console.log(`Cannot reset password: ${action.err}`);
       return initialState;
     default:
       return state;
