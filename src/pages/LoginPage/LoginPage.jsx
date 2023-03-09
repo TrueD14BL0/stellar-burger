@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../services/actions/loginActions';
 import { getCookie, setTokenCookies } from '../../components/utils/utils';
+import { LOGIN_CLEAR } from '../../utils/const';
 
 const LoginPage = () => {
 
@@ -36,6 +37,7 @@ const LoginPage = () => {
   useEffect(()=>{
     if(loginData.status){
       setTokenCookies(loginData.token, loginData.refreshToken);
+      dispatch({type: LOGIN_CLEAR,});
       navigate(location.state.prev ? location.state.prev : '/');
     }
   }, [loginData]);

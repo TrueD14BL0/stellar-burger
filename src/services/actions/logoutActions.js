@@ -11,7 +11,6 @@ export function logoutAction(){
     Api.getLogout(getCookie('refreshToken'))
     .then((data)=>{
       if(data.success){
-        console.log(data);
         dispatch(logoutSuccess());
       }else{
         dispatch(logoutErr('Some trouble with received data.'))
