@@ -1,4 +1,6 @@
-import { CLEAR_USER, SET_USER } from "../../utils/const";
+import { CLEAR_USER, SET_USER, USER_DATA_PATCH_REQUEST, USER_REQUEST, USER_REQUEST_ERROR } from "../../utils/const";
+import Api from "../../components/Api/Api";
+import { deleteCookie, getCookie, setTokenCookies } from "../../components/utils/utils";
 
 export function setUserAction(user){
   return {
@@ -12,3 +14,66 @@ export function clearUserAction(){
       type: CLEAR_USER,
   }
 }
+
+function userRequestErr(err){
+  return {
+      type: USER_REQUEST_ERROR,
+      err,
+  }
+}
+
+function refreshToken(){
+  return (dispatch) => {
+    Api.getAccessToken(getCookie('refreshToken'))
+    .then((data)=>{
+      setTokenCookies(data.accessToken, data.refreshToken)
+      userRequest();
+    })
+    .catch((err)=>{
+      deleteCookie('token');
+      deleteCookie('refreshToken');
+      dispatch(userRequestErr(err));
+    });
+  }
+}
+
+function requestToServerWithToken(funcRequest, param, funcToDispatch){
+  return (dispatch) => {
+    if(getCookie('token')){
+      Api[funcRequest](getCookie('token'), param)
+        .then((data)=>{
+          if(data.success){
+            dispatch(funcToDispatch(data.user));
+          }else{
+            dispatch(refreshToken());
+          }
+        })
+        .catch((err)=>{
+          dispatch(userRequestErr(err));
+        }
+      );
+    }else{
+      dispatch(refreshToken());
+    }
+  }
+}
+
+export function userRequest(){
+  return (dispatch) => {
+    dispatch({
+      type: USER_REQUEST,
+    });
+    dispatch(requestToServerWithToken('getUserInfo', null, setUserAction));
+  }
+}
+
+export function userDataPatch(userNewData){
+  return (dispatch) => {
+    dispatch({
+      type: USER_DATA_PATCH_REQUEST,
+    });
+    dispatch(requestToServerWithToken('patchUserInfo', userNewData, setUserAction));
+  }
+}
+
+

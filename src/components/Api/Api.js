@@ -83,14 +83,14 @@ export default class Api{
     });
   }
 
-  static getAuthLogout(ingredients){
+  static getLogout(refreshToken){
     return this._request(`${apiAddress}/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ingredients: ingredients,
+        token: refreshToken,
       }),
     });
   }
@@ -114,6 +114,17 @@ export default class Api{
         authorization : `${token}`,
         "Content-Type": "application/json",
       },
+    });
+  }
+
+  static patchUserInfo(token, userData){
+    return this._request(`${apiAddress}/auth/user`, {
+      method: "PATCH",
+      headers: {
+        authorization : `${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
     });
   }
 

@@ -4,7 +4,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../services/actions/loginActions';
-import { getCookie, setCookie, setTokenCookies } from '../../components/utils/utils';
+import { getCookie, setTokenCookies } from '../../components/utils/utils';
 
 const LoginPage = () => {
 
@@ -30,12 +30,15 @@ const LoginPage = () => {
   useEffect(()=>{
     if(getCookie('refreshToken')){
       setLogin(true);
-    };
+    }
+  },[]);
+
+  useEffect(()=>{
     if(loginData.status){
       setTokenCookies(loginData.token, loginData.refreshToken);
       navigate(location.state.prev ? location.state.prev : '/');
     }
-  }, [loginData])
+  }, [loginData]);
 
   return !isLogin ?
     (

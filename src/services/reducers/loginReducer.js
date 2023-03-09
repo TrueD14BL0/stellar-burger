@@ -1,4 +1,4 @@
-import { LOGIN_ERROR, LOGIN_SUCCESS } from "../../utils/const";
+import { LOGIN_ERROR, LOGIN_SUCCESS, LOGOUT_SUCCESS } from "../../utils/const";
 
 const initialState = {
   status: null,
@@ -15,7 +15,10 @@ export const loginReducer = (state = initialState, action) => {
         token: action.token,
         refreshToken: action.refreshToken,
       };
+    case LOGOUT_SUCCESS:
+      return initialState;
     case LOGIN_ERROR:
+      console.log(`Cannot login: ${action.err}`);
       return initialState;
     default:
       return state;

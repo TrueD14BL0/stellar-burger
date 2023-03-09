@@ -1,0 +1,4 @@
+.buttonsBar{
+  display: flex;
+  justify-content: flex-end;
+}

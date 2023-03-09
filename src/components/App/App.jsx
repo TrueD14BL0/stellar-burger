@@ -12,6 +12,7 @@ import AccountPage from '../../pages/AccountPage/AccountPage';
 import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
+import LogoutPage from '../../pages/LogoutPage/LogoutPage';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<StartPage/>}/>
         <Route path="/login" element={<LoginPage />}/>
+        <Route path="/logout" element={<LogoutPage />}/>
         <Route path="/register" element={<RegistrationPage />}/>
         <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="/reset-password" element={<ResetPassword />}/>

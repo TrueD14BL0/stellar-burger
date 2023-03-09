@@ -1,13 +1,35 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { getCookie } from "../../components/utils/utils";
+import { useEffect } from 'react';
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { deleteCookie, getCookie } from "../../components/utils/utils";
+import { logoutAction } from '../../services/actions/logoutActions';
 
-const LogoutPage = () =>{
+const LogoutPage = () => {
 
-  const [refreshToken, setValue] = useState(getCookie('refreshToken'));
+  const refreshToken = getCookie('refreshToken');
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  return !refreshToken ? null : <Navigate to="/" replace/>;
+  const { logoutData } = useSelector(store => ({
+    logoutData: store.logoutReducer,
+  }), shallowEqual);
+
+  useEffect(()=>{
+    if(refreshToken){
+      dispatch(logoutAction());
+    }
+  },[]);
+
+  useEffect(()=>{
+    if(logoutData&&logoutData.status){
+      deleteCookie('token');
+      deleteCookie('refreshToken');
+      navigate('/', {replace:true})
+    }
+  },[logoutData]);
+
+  return <h1>типа беда</h1>;
 
 }
 

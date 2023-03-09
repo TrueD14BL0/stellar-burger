@@ -1,25 +1,27 @@
-import { Button, CloseIcon, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState, useRef } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { userRequest } from '../../services/actions/userRequest';
+import { userDataPatch, userRequest } from '../../services/actions/userActions';
+import styles from './ProfilePage.module.css';
 
 const ProfilePage = () => {
 
-  const initState = {
-    name:'some',
-    email:'some',
-    password:'***************',
-  };
-
   const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passRef = useRef(null);
-
-  const [values, setValues] = useState(initState);
+  const [nameVal, setNameVal] = useState('');
+  const [emailVal, setEmailVal] = useState('');
+  const [passVal, setPassVal] = useState('*************');
+  const [userDataChange, setUserDataChange] = useState(null);
+  const [values, setValues] = useState({});
   const dispatch = useDispatch();
   const { userData } = useSelector(store => ({
     userData: store.userReducer,
   }), shallowEqual);
+
+  const setValuesFromUserData = () => {
+    setNameVal(userData.name);
+    setEmailVal(userData.email);
+    setPassVal('*************');
+  }
 
   useEffect(()=>{
     dispatch(userRequest());
@@ -29,58 +31,91 @@ const ProfilePage = () => {
       {...values,
         name:userData.name,
         email:userData.email,
+        password: '*************',
       }
     );
+    setValuesFromUserData();
+    setUserDataChange(null);
   }, [userData])
 
-  const inputClickHandler = (ref) =>{
-    console.log(ref);
+  const inputClickHandler = (curRef) => {
+    curRef.current.disabled = false;
+    curRef.current.focus();
+    curRef.current.classList.remove('input__textfield-disabled');
+  }
+
+  const onFocusHandler = () => {
+    if(passVal==='*************'){
+      setPassVal('');
+    }
+  }
+
+  const onChangeHandler = (val, func) => {
+    setUserDataChange(true);
+    func(val);
+  }
+
+  const cancelBtnHandler = () => {
+    setValuesFromUserData();
+    setUserDataChange(null);
+  }
+
+  const saveBtnHandler = () => {
+    const newUserData = {};
+    if(nameVal!==values.name){
+      newUserData.name = nameVal;
+    }
+    if(emailVal!==values.email){
+      newUserData.email = emailVal;
+    }
+    if(passVal!==values.password){
+      newUserData.password = passVal;
+    }
+    dispatch(userDataPatch(newUserData));
   }
 
   return (
     <div>
       <Input
         type={'text'}
+        ref={nameRef}
         placeholder={'Имя'}
         size={'default'}
         extraClass="ml-1"
-        value={values.name}
+        value={nameVal}
         icon={'EditIcon'}
         disabled = {true}
-        ref={nameRef}
-        onChange={e => setValues({...values,
-          name:e.target.value}
-        )}
+        onChange={e => onChangeHandler(e.target.value, setNameVal)}
         onIconClick={()=>inputClickHandler(nameRef)}
+        onBlur={()=>{
+          nameRef.current.disabled = true;
+          nameRef.current.classList.add('input__textfield-disabled');
+        }}
       />
       <EmailInput
-        onChange={e => setValues({...values,
-          email:e.target.value}
-        )}
-        value={values.email}
+        onChange={e => onChangeHandler(e.target.value, setEmailVal)}
+        value={emailVal}
         name={'email'}
         placeholder="Логин"
         isIcon={true}
         extraClass="ml-1 pt-6"
       />
       <PasswordInput
-        onChange={e => setValues({...values,
-          password:e.target.value}
-        )}
-        value={values.password}
+        onChange={e => onChangeHandler(e.target.value, setPassVal)}
+        value={passVal}
         name={'password'}
         icon="EditIcon"
         extraClass="ml-1 pt-6"
-        ref={passRef}
+        onFocus={()=>onFocusHandler()}
       />
-      <div className='pt-6'>
-        <Button htmlType="button" type="secondary" size="medium">
+      {userDataChange && <div className={`${styles.buttonsBar} pt-6`}>
+        <Button htmlType="button" type="secondary" size="medium" onClick={cancelBtnHandler}>
           Отмена
         </Button>
-        <Button htmlType="button" type="primary" size="medium" onClick={()=>null}>
+        <Button htmlType="button" type="primary" size="medium" onClick={saveBtnHandler}>
           Сохранить
         </Button>
-      </div>
+      </div>}
     </div>
   )
 }

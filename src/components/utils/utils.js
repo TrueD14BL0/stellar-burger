@@ -1,7 +1,6 @@
 export function setCookie(name, value, options = {}) {
 
   options = {
-    path: '/',
     ...options
   };
 
@@ -30,6 +29,7 @@ export function getCookie(name) {
 }
 
 export function deleteCookie(name) {
+  console.log('delete', name);
   setCookie(name, "", {
     'max-age': -1
   })
