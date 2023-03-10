@@ -56,7 +56,7 @@ const ResetPassword = () => {
       <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={clickHandler}>
         Сохранить
       </Button>
-      <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to='/login'>Войти</Link></p>
+      <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to='/login' className={styles.link}>Войти</Link></p>
     </form>
   )
 }

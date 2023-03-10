@@ -4,20 +4,22 @@ import { useMemo, useState, useRef } from 'react';
 import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
-import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { closeIngridient } from '../../services/actions/ingridientObj';
+import { useSelector, shallowEqual } from 'react-redux';
 import { Tabs } from '../../utils/const';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
-  const dispatch = useDispatch();
   const bunsRef = useRef(null);
   const saucesRef = useRef(null);
   const mainsRef = useRef(null);
+  const navigation = useNavigate();
+  const params = useParams();
+  const location = useLocation();
+  const modal = params.id&&location.state&&location.state.modal;
 
-  const { ingridientsList, ingridient } = useSelector(store => ({
+  const { ingridientsList } = useSelector(store => ({
     ingridientsList: store.ingridientsListReducer,
-    ingridient: store.ingridientObjReducer,
   }), shallowEqual);
 
   const buns = useMemo(
@@ -66,7 +68,7 @@ const BurgerIngredients = () => {
   }
 
   const closeModal = ()=>{
-    dispatch(closeIngridient());
+    navigation('/');
   }
 
   return (
@@ -88,11 +90,10 @@ const BurgerIngredients = () => {
         <IngridientType data={sauce} title='Соусы' anchor={saucesRef} />
         <IngridientType data={main} title='Начинки' anchor={mainsRef} />
       </div>
-      {ingridient.ingridient &&
+      {modal &&
         <Modal close={closeModal}>
           <IngridientDetails/>
-        </Modal>
-      }
+        </Modal>}
     </section>
   )
 }

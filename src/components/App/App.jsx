@@ -13,6 +13,8 @@ import ProfilePage from '../../pages/ProfilePage/ProfilePage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElement';
 import LogoutPage from '../../pages/LogoutPage/LogoutPage';
+import IngridientsPage from '../../pages/IngridientsPage/IngridientsPage';
+import UnauthRouteElement from '../UnauthRouteElement/UnauthRouteElement';
 
 function App() {
 
@@ -26,12 +28,14 @@ function App() {
     <BrowserRouter>
       <AppHeader />
       <Routes>
-        <Route path="/" element={<StartPage/>}/>
-        <Route path="/login" element={<LoginPage />}/>
+        <Route exact path="/" element={<StartPage />}>
+          <Route path="ingredients/:id" element={<IngridientsPage />}/>
+        </Route>
+        <Route path="/login" element={<UnauthRouteElement element={<LoginPage />}/>}/>
         <Route path="/logout" element={<LogoutPage />}/>
-        <Route path="/register" element={<RegistrationPage />}/>
-        <Route path="/forgot-password" element={<ForgotPassword />}/>
-        <Route path="/reset-password" element={<ResetPassword />}/>
+        <Route path="/register" element={<UnauthRouteElement element={<RegistrationPage />}/>}/>
+        <Route path="/forgot-password" element={<UnauthRouteElement element={<ForgotPassword />}/>}/>
+        <Route path="/reset-password" element={<UnauthRouteElement element={<ResetPassword />}/>}/>
         <Route path="/profile" element={<ProtectedRouteElement element={<AccountPage/>}/>}>
           <Route path="" element={<ProfilePage/>}/>
           <Route path="orders" element={<></>}/>

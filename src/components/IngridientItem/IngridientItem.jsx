@@ -1,17 +1,18 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
-import { openIngridient } from '../../services/actions/ingridientObj';
 import styles from './IngridientItem.module.css'
 import { useDrag } from 'react-dnd';
 import { ingredientProps } from '../../utils/propTypes';
+import { useNavigate } from 'react-router-dom';
 
 const IngridientItem = ({item}) => {
-  const dispatch = useDispatch();
   const [, dragRef] = useDrag({type:'ingridient',
                               item});
+  const navigation = useNavigate();
 
   return (
-    <li ref={dragRef} className={styles.ingridient_card} onClick={()=>dispatch(openIngridient(item))}>
+    <li ref={dragRef} className={styles.ingridient_card} onClick={()=>{
+      navigation(`/ingredients/${item._id}`, {state:{modal:true}});
+    }}>
       <img src={item.image} alt={item.image} className="pb-1 ml-4 mr-4"></img>
       {item.qty
         ?<Counter count={item.qty} size="default" extraClass="m-1" />

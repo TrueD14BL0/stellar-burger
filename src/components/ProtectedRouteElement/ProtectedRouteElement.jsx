@@ -4,12 +4,9 @@ import { getCookie } from '../utils/utils';
 
 const ProtectedRouteElement = ({element}) =>{
 
-  let isLogin = false;
   const location = useLocation();
 
-  if(getCookie('refreshToken')){
-    isLogin = true;
-  };
+  const isLogin = getCookie('refreshToken');
 
   return isLogin ? element : <Navigate to="/login" state={{prev: location.pathname}} replace={true}/>;
 

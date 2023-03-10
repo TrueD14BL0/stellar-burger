@@ -4,9 +4,15 @@ import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstruc
 import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredients";
 import MainContent from "../../components/MainContent/MainContent";
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 
 const StartPage = () => {
-  return (
+  const location = useLocation();
+  const params = useParams();
+
+  return (params.id&&!(location.state&&location.state.modal))?
+  (<Outlet/>):
+  (
     <div className={`${styles.page} pt-10`}>
       <DndProvider backend={HTML5Backend}>
         <MainContent>

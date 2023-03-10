@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loader from '../../components/Loader/Loader';
 import { deleteCookie, getCookie } from "../../components/utils/utils";
 import { logoutAction } from '../../services/actions/logoutActions';
 
@@ -29,7 +30,7 @@ const LogoutPage = () => {
     }
   },[logoutData]);
 
-  return <h1>типа беда</h1>;
+  return (<Loader />);
 
 }
 

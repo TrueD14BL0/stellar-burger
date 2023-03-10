@@ -1,5 +1,5 @@
 import styles from './LoginPage.module.css';
-import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
@@ -46,26 +46,22 @@ const LoginPage = () => {
     (
       <form className={styles.main} onSubmit={(e)=>e.preventDefaut()}>
         <h2 className={`${styles.text} text text_type_main-medium`}>Вход</h2>
-        <Input
-          type={'email'}
-          placeholder={'E-mail'}
-          size={'default'}
-          extraClass="ml-1 pt-6"
-          value={value.email}
+        <EmailInput
           onChange={e => setValue({...value,
             email:e.target.value}
           )}
-        />
-        <Input
-          type={'password'}
-          placeholder={'Пароль'}
-          size={'default'}
+          value={value.email}
+          name={'email'}
+          isIcon={false}
           extraClass="ml-1 pt-6"
-          icon={'ShowIcon'}
-          value={value.password}
+        />
+        <PasswordInput
           onChange={e => setValue({...value,
             password:e.target.value}
           )}
+          value={value.password}
+          name={'password'}
+          extraClass="ml-1 pt-6"
         />
         <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={clickHandler}>
           Войти
