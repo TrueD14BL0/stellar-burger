@@ -8,8 +8,6 @@ export function logoutAction(){
       type: LOGOUT_REQUEST,
     })
 
-    console.log('exit');
-
     Api.getLogout(getCookie('refreshToken'))
     .then((data)=>{
       if(data.success){

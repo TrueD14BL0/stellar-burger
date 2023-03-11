@@ -18,7 +18,6 @@ const LogoutPage = () => {
   }), shallowEqual);
 
   useEffect(()=>{
-    console.log('start exit');
     if(refreshToken){
       dispatch(logoutAction());
     }
