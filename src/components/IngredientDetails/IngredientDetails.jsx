@@ -44,7 +44,6 @@ const IngridientDetails = () => {
       </div>
     </div>
   )
-
 }
 
 export default IngridientDetails;

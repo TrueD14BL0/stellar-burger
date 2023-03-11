@@ -6,7 +6,6 @@ import { forgotPasswordAction } from '../../services/actions/forgotPassword';
 import { useState, useEffect } from 'react';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/Loader/Loader';
-import { getCookie } from '../../components/utils/utils';
 
 const ForgotPassword = () => {
 
@@ -18,7 +17,7 @@ const ForgotPassword = () => {
   }), shallowEqual);
 
   const clickHandler = () => {
-    dispatch(forgotPasswordAction(value));
+
   }
 
   useEffect(()=>{
@@ -30,17 +29,20 @@ const ForgotPassword = () => {
 
   return (
     <>
-      <form className={styles.main} onSubmit={(e)=>e.preventDefaut()}>
+      <form className={styles.main} onSubmit={(e)=>{
+        e.preventDefaut();
+        dispatch(forgotPasswordAction(value));
+      }}>
         <h2 className={`${styles.text} text text_type_main-medium`}>Восстановление пароля</h2>
         <EmailInput
           onChange={e => setValue(e.target.value)}
-          value={value}
+          value={value||''}
           name={'email'}
           isIcon={false}
           extraClass="ml-1 pt-6"
           placeholder={'Укажите e-mail'}
         />
-        <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={clickHandler}>
+        <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
           Восстановить
         </Button>
         <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to='/login' className={styles.link}>Войти</Link></p>

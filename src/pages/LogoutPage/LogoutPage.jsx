@@ -26,7 +26,7 @@ const LogoutPage = () => {
     if(logoutData&&logoutData.status){
       deleteCookie('token');
       deleteCookie('refreshToken');
-      navigate('/', {replace:true})
+      navigate('/login', {replace:true})
     }
   },[logoutData]);
 

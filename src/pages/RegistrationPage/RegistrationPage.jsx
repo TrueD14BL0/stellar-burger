@@ -20,10 +20,6 @@ const RegistrationPage = () => {
     registrationStatus: store.registerUserReducer,
   }), shallowEqual);
 
-  const clickHandler = () => {
-    dispatch(registerUser(value));
-  }
-
   useEffect(()=>{
     if(registrationStatus.status){
       navigate('/login');
@@ -32,7 +28,10 @@ const RegistrationPage = () => {
   }, [registrationStatus])
 
   return (
-    <form className={styles.main} onSubmit={(e)=>e.preventDefaut()}>
+    <form className={styles.main} onSubmit={(e)=>{
+      e.preventDefault();
+      dispatch(registerUser(value));
+    }}>
       <h2 className={`${styles.text} text text_type_main-medium`}>Регистрация</h2>
       <Input
         type={'text'}
@@ -65,7 +64,7 @@ const RegistrationPage = () => {
           password:e.target.value}
         )}
       />
-      <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={clickHandler}>
+      <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
         Зарегистрироваться
       </Button>
       <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Уже зарегистрированы? </span><Link to='/login'>Войти</Link></p>

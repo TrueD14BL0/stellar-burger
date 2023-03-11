@@ -23,9 +23,6 @@ const LoginPage = () => {
     loginData: store.loginReducer,
   }), shallowEqual);
 
-  const clickHandler = () => {
-    dispatch(loginAction(value));
-  }
   const [isLogin, setLogin] = useState(false);
 
   useEffect(()=>{
@@ -38,13 +35,16 @@ const LoginPage = () => {
     if(loginData.status){
       setTokenCookies(loginData.token, loginData.refreshToken);
       dispatch({type: LOGIN_CLEAR,});
-      navigate(location.state.prev ? location.state.prev : '/');
+      navigate(location.state&&location.state.prev ? location.state.prev : '/');
     }
   }, [loginData]);
 
   return !isLogin ?
     (
-      <form className={styles.main} onSubmit={(e)=>e.preventDefaut()}>
+      <form className={styles.main} onSubmit={(e)=>{
+        e.preventDefault();
+        dispatch(loginAction(value));
+      }}>
         <h2 className={`${styles.text} text text_type_main-medium`}>Вход</h2>
         <EmailInput
           onChange={e => setValue({...value,
@@ -63,7 +63,7 @@ const LoginPage = () => {
           name={'password'}
           extraClass="ml-1 pt-6"
         />
-        <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={clickHandler}>
+        <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
           Войти
         </Button>
         <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вы - новый пользователь? </span><Link to='/register' className={styles.link}>Зарегистрироваться</Link></p>

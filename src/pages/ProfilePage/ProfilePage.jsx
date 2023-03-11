@@ -60,7 +60,7 @@ const ProfilePage = () => {
     setUserDataChange(null);
   }
 
-  const saveBtnHandler = () => {
+  const submitHandler = () => {
     const newUserData = {};
     if(nameVal!==values.name){
       newUserData.name = nameVal;
@@ -75,14 +75,17 @@ const ProfilePage = () => {
   }
 
   return (
-    <div>
+    <form onSubmit={(e)=>{
+      e.preventDefault();
+      submitHandler();
+    }}>
       <Input
         type={'text'}
         ref={nameRef}
         placeholder={'Имя'}
         size={'default'}
         extraClass="ml-1"
-        value={nameVal}
+        value={nameVal||''}
         icon={'EditIcon'}
         disabled = {true}
         onChange={e => onChangeHandler(e.target.value, setNameVal)}
@@ -94,7 +97,7 @@ const ProfilePage = () => {
       />
       <EmailInput
         onChange={e => onChangeHandler(e.target.value, setEmailVal)}
-        value={emailVal}
+        value={emailVal||''}
         name={'email'}
         placeholder="Логин"
         isIcon={true}
@@ -102,7 +105,7 @@ const ProfilePage = () => {
       />
       <PasswordInput
         onChange={e => onChangeHandler(e.target.value, setPassVal)}
-        value={passVal}
+        value={passVal||'*************'}
         name={'password'}
         icon="EditIcon"
         extraClass="ml-1 pt-6"
@@ -112,11 +115,11 @@ const ProfilePage = () => {
         <Button htmlType="button" type="secondary" size="medium" onClick={cancelBtnHandler}>
           Отмена
         </Button>
-        <Button htmlType="button" type="primary" size="medium" onClick={saveBtnHandler}>
+        <Button htmlType="submit" type="primary" size="medium">
           Сохранить
         </Button>
       </div>}
-    </div>
+    </form>
   )
 }
 
