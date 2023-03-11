@@ -37,3 +37,16 @@ export const LOGOUT_ERROR = 'LOGOUT_ERROR';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGIN_CLEAR = 'LOGIN_CLEAR';
+
+/* Pages Constants*/
+export const MAIN_PAGE ="/";
+export const INGRIDIENTS_PAGE = "ingredients";
+export const LOGIN_PAGE = "/login";
+export const LOGOUT_PAGE = "/logout";
+export const REGISTER_PAGE = "/register";
+export const FORGOT_PAGE = "/forgot-password";
+export const RESET_PAGE = "/reset-password";
+export const PROFILE_PAGE = "/profile";
+export const ORDERS_PAGE = "orders";
+export const ANOTHER_PAGE = "*";
+export const FEED_PAGE = "/feed";

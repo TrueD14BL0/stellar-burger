@@ -1,6 +1,6 @@
 import { CLEAR_USER, SET_USER, USER_DATA_PATCH_REQUEST, USER_REQUEST, USER_REQUEST_ERROR } from "../../utils/const";
 import Api from "../../components/Api/Api";
-import { deleteCookie, getCookie, setTokenCookies } from "../../components/utils/utils";
+import { deleteCookie, getCookie, setTokenCookies } from "../../utils/utils";
 
 export function setUserAction(user){
   return {
@@ -22,12 +22,12 @@ function userRequestErr(err){
   }
 }
 
-function refreshToken(){
+function refreshToken(funcRequest, param, funcToDispatch){
   return (dispatch) => {
     Api.getAccessToken(getCookie('refreshToken'))
     .then((data)=>{
       setTokenCookies(data.accessToken, data.refreshToken)
-      userRequest();
+      dispatch(requestToServerWithToken(funcRequest, param, funcToDispatch));
     })
     .catch((err)=>{
       deleteCookie('token');
@@ -45,7 +45,7 @@ function requestToServerWithToken(funcRequest, param, funcToDispatch){
           if(data.success){
             dispatch(funcToDispatch(data.user));
           }else{
-            dispatch(refreshToken());
+            dispatch(refreshToken(funcRequest, param, funcToDispatch));
           }
         })
         .catch((err)=>{
@@ -53,7 +53,7 @@ function requestToServerWithToken(funcRequest, param, funcToDispatch){
         }
       );
     }else{
-      dispatch(refreshToken());
+      dispatch(refreshToken(funcRequest, param, funcToDispatch));
     }
   }
 }

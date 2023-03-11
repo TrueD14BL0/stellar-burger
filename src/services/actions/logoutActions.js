@@ -1,5 +1,5 @@
 import Api from "../../components/Api/Api";
-import { getCookie } from "../../components/utils/utils";
+import { getCookie } from "../../utils/utils";
 import { LOGOUT_ERROR, LOGOUT_REQUEST, LOGOUT_SUCCESS } from "../../utils/const";
 
 export function logoutAction(){
@@ -7,6 +7,8 @@ export function logoutAction(){
     dispatch({
       type: LOGOUT_REQUEST,
     })
+
+    console.log('exit');
 
     Api.getLogout(getCookie('refreshToken'))
     .then((data)=>{

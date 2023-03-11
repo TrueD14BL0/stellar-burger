@@ -15,6 +15,7 @@ import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElemen
 import LogoutPage from '../../pages/LogoutPage/LogoutPage';
 import IngridientsPage from '../../pages/IngridientsPage/IngridientsPage';
 import UnauthRouteElement from '../UnauthRouteElement/UnauthRouteElement';
+import { ANOTHER_PAGE, FORGOT_PAGE, INGRIDIENTS_PAGE, LOGIN_PAGE, LOGOUT_PAGE, MAIN_PAGE, ORDERS_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PAGE } from '../../utils/const';
 
 function App() {
 
@@ -28,19 +29,19 @@ function App() {
     <BrowserRouter>
       <AppHeader />
       <Routes>
-        <Route exact path="/" element={<StartPage />}>
-          <Route path="ingredients/:id" element={<IngridientsPage />}/>
+        <Route exact path={MAIN_PAGE} element={<StartPage />}>
+          <Route path={`${INGRIDIENTS_PAGE}/:id`} element={<IngridientsPage />}/>
         </Route>
-        <Route path="/login" element={<UnauthRouteElement element={<LoginPage />}/>}/>
-        <Route path="/logout" element={<LogoutPage />}/>
-        <Route path="/register" element={<UnauthRouteElement element={<RegistrationPage />}/>}/>
-        <Route path="/forgot-password" element={<UnauthRouteElement element={<ForgotPassword />}/>}/>
-        <Route path="/reset-password" element={<UnauthRouteElement element={<ResetPassword />}/>}/>
-        <Route path="/profile" element={<ProtectedRouteElement element={<AccountPage/>}/>}>
+        <Route path={LOGIN_PAGE} element={<UnauthRouteElement element={<LoginPage />}/>}/>
+        <Route path={LOGOUT_PAGE} element={<LogoutPage />}/>
+        <Route path={REGISTER_PAGE} element={<UnauthRouteElement element={<RegistrationPage />}/>}/>
+        <Route path={FORGOT_PAGE} element={<UnauthRouteElement element={<ForgotPassword />}/>}/>
+        <Route path={RESET_PAGE} element={<UnauthRouteElement element={<ResetPassword />}/>}/>
+        <Route path={PROFILE_PAGE} element={<ProtectedRouteElement element={<AccountPage/>}/>}>
           <Route path="" element={<ProfilePage/>}/>
-          <Route path="orders" element={<></>}/>
+          <Route path={ORDERS_PAGE} element={<></>}/>
         </Route>
-        <Route path="*" element={<NotFoundPage />}/>
+        <Route path={ANOTHER_PAGE} element={<NotFoundPage />}/>
       </Routes>
     </BrowserRouter>
   )

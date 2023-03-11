@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../services/actions/registerUser';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { LOGIN_PAGE } from '../../utils/const';
 
 const RegistrationPage = () => {
 
@@ -22,7 +23,7 @@ const RegistrationPage = () => {
 
   useEffect(()=>{
     if(registrationStatus.status){
-      navigate('/login');
+      navigate(LOGIN_PAGE);
       setValue(initState);
     }
   }, [registrationStatus])
@@ -67,7 +68,7 @@ const RegistrationPage = () => {
       <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
         Зарегистрироваться
       </Button>
-      <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Уже зарегистрированы? </span><Link to='/login'>Войти</Link></p>
+      <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Уже зарегистрированы? </span><Link to={LOGIN_PAGE} className={styles.link}>Войти</Link></p>
     </form>
   )
 }

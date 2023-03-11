@@ -4,8 +4,9 @@ import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { clearOrder, getOrderInfo } from "../../services/actions/orderObj";
-import { getCookie } from "../utils/utils";
+import { getCookie } from "../../utils/utils";
 import { useLocation, useNavigate } from "react-router-dom";
+import { LOGIN_PAGE } from "../../utils/const";
 
 const BurgerConstructorBottom = () => {
 
@@ -25,7 +26,7 @@ const BurgerConstructorBottom = () => {
 
   const onClickHandler = () => {
     if(!getCookie('refreshToken')){
-      navigation('/login', {
+      navigation(LOGIN_PAGE, {
         replace:true,
         state:{prev: location.pathname}
       });

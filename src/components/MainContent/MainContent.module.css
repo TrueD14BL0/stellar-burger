@@ -1,8 +1,8 @@
 .content{
-  min-width: 1920px;
+  margin: auto;
+  max-width: 1240px;
   max-height: 889px;
   box-sizing: border-box;
-  padding: 0px 340px;
   display: grid;
   grid-template-columns: repeat(2, 600px);
   column-gap: 40px;

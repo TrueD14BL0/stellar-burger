@@ -3,6 +3,7 @@ import styles from './IngridientItem.module.css'
 import { useDrag } from 'react-dnd';
 import { ingredientProps } from '../../utils/propTypes';
 import { useNavigate } from 'react-router-dom';
+import { INGRIDIENTS_PAGE } from '../../utils/const';
 
 const IngridientItem = ({item}) => {
   const [, dragRef] = useDrag({type:'ingridient',
@@ -11,7 +12,7 @@ const IngridientItem = ({item}) => {
 
   return (
     <li ref={dragRef} className={styles.ingridient_card} onClick={()=>{
-      navigation(`/ingredients/${item._id}`, {state:{modal:true}});
+      navigation(`${INGRIDIENTS_PAGE}/${item._id}`, {state:{modal:true}});
     }}>
       <img src={item.image} alt={item.image} className="pb-1 ml-4 mr-4"></img>
       {item.qty

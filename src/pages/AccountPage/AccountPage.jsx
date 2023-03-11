@@ -1,4 +1,5 @@
 import { NavLink, Outlet} from 'react-router-dom';
+import { LOGOUT_PAGE, ORDERS_PAGE, PROFILE_PAGE } from '../../utils/const';
 import styles from './AccountPage.module.css';
 
 const AccountPage = () => {
@@ -10,17 +11,17 @@ const AccountPage = () => {
       <div className={styles.navbar}>
         <ul className={styles.navLinks}>
           <NavLink
-            end to={'/profile'}
+            end to={PROFILE_PAGE}
             className={({ isActive }) => isActive ? activeClass : inactiveClass}>
             Профиль
           </NavLink>
           <NavLink
-            end to={'orders'}
+            end to={ORDERS_PAGE}
             className={({ isActive }) => isActive ? activeClass : inactiveClass}>
             История заказов
           </NavLink>
           <NavLink
-            end to={'/logout'}
+            end to={LOGOUT_PAGE}
             className={({ isActive }) => isActive ? activeClass : inactiveClass}>
             Выход
           </NavLink>

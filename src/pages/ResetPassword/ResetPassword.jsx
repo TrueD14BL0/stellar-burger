@@ -4,6 +4,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { resetPasswordAction } from '../../services/actions/resetPassword';
+import { FORGOT_PAGE, LOGIN_PAGE } from '../../utils/const';
 
 const ResetPassword = () => {
 
@@ -20,19 +21,18 @@ const ResetPassword = () => {
     resetPassStatus: store.resetPasswordReducer,
   }), shallowEqual);
 
-  const clickHandler = () => {
-    dispatch(resetPasswordAction(value));
-  }
-
   useEffect(()=>{
     if(resetPassStatus.status){
-      navigate('/login');
+      navigate(LOGIN_PAGE);
       setValue(initState);
     }
   }, [resetPassStatus])
 
   return accessGranted?
-      <form className={styles.main} onSubmit={(e)=>e.preventDefaut()}>
+      <form className={styles.main} onSubmit={(e)=>{
+        e.preventDefault();
+        dispatch(resetPasswordAction(value));
+      }}>
         <h2 className={`${styles.text} text text_type_main-medium`}>Восстановление пароля</h2>
         <PasswordInput
           onChange={e => setValue({...value,
@@ -53,12 +53,12 @@ const ResetPassword = () => {
             token:e.target.value}
           )}
         />
-        <Button htmlType="button" type="primary" size="large" extraClass="mt-6" onClick={clickHandler}>
+        <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
           Сохранить
         </Button>
-        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to='/login' className={styles.link}>Войти</Link></p>
+        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to={LOGIN_PAGE} className={styles.link}>Войти</Link></p>
       </form>:
-      <Navigate to="/forgot-password" replace/>
+      <Navigate to={FORGOT_PAGE} replace/>
 }
 
 export default ResetPassword;

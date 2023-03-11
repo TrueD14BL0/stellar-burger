@@ -5,7 +5,7 @@ import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, shallowEqual } from 'react-redux';
-import { Tabs } from '../../utils/const';
+import { MAIN_PAGE, Tabs } from '../../utils/const';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const BurgerIngredients = () => {
@@ -68,7 +68,7 @@ const BurgerIngredients = () => {
   }
 
   const closeModal = ()=>{
-    navigation('/');
+    navigation(MAIN_PAGE);
   }
 
   return (

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Navigate, useLocation } from 'react-router-dom';
-import { getCookie } from '../utils/utils';
+import { LOGIN_PAGE } from '../../utils/const';
+import { getCookie } from '../../utils/utils';
 
 const ProtectedRouteElement = ({element}) =>{
 
@@ -8,7 +9,7 @@ const ProtectedRouteElement = ({element}) =>{
 
   const isLogin = getCookie('refreshToken');
 
-  return isLogin ? element : <Navigate to="/login" state={{prev: location.pathname}} replace={true}/>;
+  return isLogin ? element : <Navigate to={LOGIN_PAGE} state={{prev: location.pathname}} replace={true}/>;
 
 }
 
