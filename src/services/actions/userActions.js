@@ -77,5 +77,3 @@ export function userDataPatch(userNewData){
     dispatch(requestToServerWithToken('patchUserInfo', userNewData, setUserAction));
   }
 }
-
-
