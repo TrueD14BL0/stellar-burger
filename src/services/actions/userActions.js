@@ -44,12 +44,14 @@ function requestToServerWithToken(funcRequest, param, funcToDispatch){
         .then((data)=>{
           if(data.success){
             dispatch(funcToDispatch(data.user));
-          }else{
-            dispatch(refreshToken(funcRequest, param, funcToDispatch));
           }
         })
         .catch((err)=>{
-          dispatch(userRequestErr(err));
+          if(err===401||err===403){
+            dispatch(refreshToken(funcRequest, param, funcToDispatch));
+          }else{
+            dispatch(userRequestErr(err));
+          }
         }
       );
     }else{

@@ -3,14 +3,15 @@ const apiAddress = "https://norma.nomoreparties.space/api";
 export default class Api{
 
   static _request(url, options) {
-    return fetch(url, options).then(this._testRes)
+    return fetch(url, options)
+      .then((res)=>{return this._testRes(res)});
   }
 
   static _testRes(res) {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(res.status);
   }
 
   static getIngredients(){
