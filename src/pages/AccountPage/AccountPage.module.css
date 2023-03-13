@@ -1,0 +1,34 @@
+.content{
+  margin: 120px auto 0;
+  padding-right: 380px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 60px;
+  max-width: 860px;
+}
+
+.navLinks{
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.navbar{
+  width: 320px;
+}
+
+.link{
+  padding-top: 17px;
+  padding-bottom: 17px;
+  text-decoration: none;
+}
+
+.headerActiveBtn{
+  color:#F2F2F3;
+}
+
+.annotation{
+  opacity: .4;
+}

@@ -16,3 +16,37 @@ export const Tabs = {
   SAUCE:'sauce',
   MAIN:'main',
 };
+export const PASSWORD_RESET_REQUEST = 'PASSWORD_RESET_REQUEST';
+export const PASSWORD_RESET_SUCCESS = 'PASSWORD_RESET_SUCCESS';
+export const PASSWORD_RESET_ERROR = 'PASSWORD_RESET_ERROR';
+export const USER_REGISTRATION_REQUEST = 'USER_REGISTRATION_REQUEST';
+export const USER_REGISTRATION_SUCCESS = 'USER_REGISTRATION_SUCCESS';
+export const USER_REGISTRATION_ERROR = 'USER_REGISTRATION_ERROR';
+export const PASSWORD_FORGOT_REQUEST = 'PASSWORD_FORGOT_REQUEST';
+export const PASSWORD_FORGOT_SUCCESS = 'PASSWORD_FORGOT_SUCCESS';
+export const PASSWORD_FORGOT_ERROR = 'PASSWORD_FORGOT_ERROR';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const SET_USER = 'SET_USER';
+export const CLEAR_USER = 'CLEAR_USER';
+export const USER_REQUEST = 'USER_REQUEST';
+export const USER_DATA_PATCH_REQUEST = 'USER_DATA_PATCH_REQUEST';
+export const USER_REQUEST_ERROR = 'USER_REQUEST_ERROR';
+export const LOGOUT_ERROR = 'LOGOUT_ERROR';
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGIN_CLEAR = 'LOGIN_CLEAR';
+
+/* Pages Constants*/
+export const MAIN_PAGE ="/";
+export const INGRIDIENTS_PAGE = "ingredients";
+export const LOGIN_PAGE = "/login";
+export const LOGOUT_PAGE = "/logout";
+export const REGISTER_PAGE = "/register";
+export const FORGOT_PAGE = "/forgot-password";
+export const RESET_PAGE = "/reset-password";
+export const PROFILE_PAGE = "/profile";
+export const ORDERS_PAGE = "orders";
+export const ANOTHER_PAGE = "*";
+export const FEED_PAGE = "/feed";

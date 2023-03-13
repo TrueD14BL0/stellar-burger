@@ -1,20 +1,15 @@
 .header{
+  background: #1C1C21;
+}
+
+.content{
+  margin: auto;
   display: grid;
   grid-template-columns: repeat(3,minmax(min-content, 1fr));
-  min-width: 1920px;
+  max-width: 1280px;
   box-sizing: border-box;
-  padding: 0px 320px;
-  background: #1C1C21;
   align-items: center;
   justify-items: center;
-}
-
-.headerActiveBtn {
-  color: #F2F2F3;
-}
-
-.headerInactiveBtn {
-  color: #8585AD;
 }
 
 .mainMenu{

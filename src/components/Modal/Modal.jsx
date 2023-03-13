@@ -16,9 +16,11 @@ const Modal = ({children, close}) =>{
   }
 
   useEffect(()=>{
-    document.addEventListener("keydown", escCloseHandler);
-    return () =>{
-      document.removeEventListener("keydown", escCloseHandler);
+    if(close){
+      document.addEventListener("keydown", escCloseHandler);
+      return () =>{
+        document.removeEventListener("keydown", escCloseHandler);
+      }
     }
   })
 
@@ -29,7 +31,12 @@ const Modal = ({children, close}) =>{
         <div className={`${styles.contentWrapper} p-10`}>
           {children}
           <button className={styles.closeBtn}>
-            <CloseIcon type="primary" onClick={()=>close(null)}/>
+            <CloseIcon type="primary" onClick={()=>{
+              if(close){
+                close(null)
+                }
+              }
+            }/>
           </button>
         </div>
       </>
@@ -40,7 +47,7 @@ const Modal = ({children, close}) =>{
 
 Modal.propTypes = {
   children: PropTypes.element.isRequired,
-  close: PropTypes.func.isRequired,
+  close: PropTypes.func,
 };
 
 export default Modal
