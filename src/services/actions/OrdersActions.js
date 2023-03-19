@@ -1,0 +1,16 @@
+export const INIT_ORDERS_SOCKET = "INIT_ORDERS_SOCKET";
+export const SUCCESS_ORDERS_SOCKET = "SUCCESS_ORDERS_SOCKET";
+export const CLOSE_ORDERS_SOCKET = "CLOSE_ORDERS_SOCKET";
+export const SET_ORDERS_DATA = "SET_ORDERS_DATA";
+export const GET_ORDERS_DATA = "GET_ORDERS_DATA";
+export const ON_ERROR_SOCKET = "ON_ERROR_SOCKET";
+export const ON_CLOSE_SOCKET = "ON_CLOSE_SOCKET";
+
+export const wsOrdersActions = {
+  init: INIT_ORDERS_SOCKET,
+  onOpen: SUCCESS_ORDERS_SOCKET,
+  onMessage: GET_ORDERS_DATA,
+  close: CLOSE_ORDERS_SOCKET,
+  onClose: ON_CLOSE_SOCKET,
+  onError: ON_ERROR_SOCKET,
+};

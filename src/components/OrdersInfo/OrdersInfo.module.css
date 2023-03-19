@@ -1,0 +1,33 @@
+.content{
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.top{
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+}
+
+.topOrders{
+  width: 272px;
+}
+
+.list{
+  margin: 0;
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: repeat(10, 1fr);
+  grid-auto-flow: column;
+  max-height: 310px;
+  list-style: none;
+  gap: 8px;
+  max-width: 272px;
+  overflow: hidden;
+}
+
+.done{
+  color: #00CCCC;
+}

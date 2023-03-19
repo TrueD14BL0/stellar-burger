@@ -24,7 +24,7 @@ const AppHeader = () => {
           </li>
         </nav>
         <Logo />
-        <HeaderButton text="Личный кабинет" linkTo={PROFILE_PAGE}>
+        <HeaderButton text="Личный кабинет" linkTo={PROFILE_PAGE} addClass="toRight">
           <ProfileIcon type={location.pathname===PROFILE_PAGE?'primary':'secondary'} />
         </HeaderButton>
       </div>

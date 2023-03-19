@@ -1,0 +1,22 @@
+.content{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  overflow-y: scroll;
+  max-height: 810px;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+  box-sizing: border-box;
+  background: #2F2F37;
+  margin-bottom: 52px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  height: 292px;
+  background: #8585AD;
+}

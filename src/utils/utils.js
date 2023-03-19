@@ -41,3 +41,18 @@ export function setTokenCookies(token, refreshToken){
   });
   setCookie('refreshToken', refreshToken);
 }
+
+export function diffDateInDays(first, second) {
+  return Math.round((second - first) / (1000 * 60 * 60 * 24));
+}
+
+export function diffToString(diff){
+  switch (diff) {
+    case 0:
+      return 'Сегодня';
+    case 1:
+      return 'Вчера';
+    default:
+      return `${diff} дня назад`; //в идеале написать обработку склонений
+  }
+}

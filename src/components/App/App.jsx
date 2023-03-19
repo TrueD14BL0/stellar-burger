@@ -16,6 +16,8 @@ import LogoutPage from '../../pages/LogoutPage/LogoutPage';
 import IngridientsPage from '../../pages/IngridientsPage/IngridientsPage';
 import UnauthRouteElement from '../UnauthRouteElement/UnauthRouteElement';
 import { ANOTHER_PAGE, FEED_PAGE, FORGOT_PAGE, INGRIDIENTS_PAGE, LOGIN_PAGE, LOGOUT_PAGE, MAIN_PAGE, ORDERS_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PAGE } from '../../utils/const';
+import FeedPage from '../../pages/FeedPage/FeedPage';
+import OrderDetailsPage from '../../pages/OrderDetailsPage/OrderDetailsPage';
 
 function App() {
 
@@ -43,8 +45,8 @@ function App() {
             <Route path={`${ORDERS_PAGE}/:id`} element={<></>}/>
           </Route>
         </Route>
-        <Route path={FEED_PAGE} element={<></>}>
-          <Route path={`${FEED_PAGE}/:id`} element={<></>}/>
+        <Route path={FEED_PAGE} element={<FeedPage />}>
+          <Route path={`${FEED_PAGE}/:id`} element={<OrderDetailsPage />}/>
         </Route>
         <Route path={ANOTHER_PAGE} element={<NotFoundPage />}/>
       </Routes>

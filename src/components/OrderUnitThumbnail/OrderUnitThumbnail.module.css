@@ -1,0 +1,18 @@
+.roundedBorder{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  box-sizing: border-box;
+  background:
+    linear-gradient(#131316 0 0) padding-box,
+    linear-gradient(#801AB2, #4C4CFF) border-box;
+  border: 2px solid transparent;
+  border-radius: 50%;
+}
+
+.ingridientsImage{
+  display: block;
+  height: 100%;
+}

@@ -37,6 +37,7 @@ export const LOGOUT_ERROR = 'LOGOUT_ERROR';
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGIN_CLEAR = 'LOGIN_CLEAR';
+export const WS_URL = 'wss://norma.nomoreparties.space/orders';
 
 /* Pages Constants*/
 export const MAIN_PAGE ="/";
@@ -50,3 +51,16 @@ export const PROFILE_PAGE = "/profile";
 export const ORDERS_PAGE = "orders";
 export const ANOTHER_PAGE = "*";
 export const FEED_PAGE = "/feed";
+
+/* WS Action types*/
+export const WS_CONNECTION_START = 'WS_CONNECTION_START';
+export const WS_CONNECTION_SUCCESS = 'WS_CONNECTION_SUCCESS';
+export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR';
+export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED';
+export const WS_GET_MESSAGE = 'WS_GET_MESSAGE';
+export const WS_SEND_MESSAGE = 'WS_SEND_MESSAGE';
+export const WS_USER_NAME_UPDATE = 'WS_USER_NAME_UPDATE';
+
+/* Main content */
+export const MAIN_CONTENT_GAP_FEED = 'MAIN_CONTENT_GAP_FEED';
+export const MAIN_CONTENT_GAP_STD = 'MAIN_CONTENT_GAP_STD';
