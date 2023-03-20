@@ -1,5 +1,5 @@
 import styles from "./OrderDetailInfo.module.css";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { diffDateInDays, diffToString } from "../../utils/utils";
