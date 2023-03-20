@@ -50,10 +50,11 @@ export default class Api{
     });
   }
 
-  static postOrders(ingredients){
+  static postOrders(ingredients, token){
     return this._request(`${apiAddress}/orders`, {
       method: "POST",
       headers: {
+        authorization : `${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

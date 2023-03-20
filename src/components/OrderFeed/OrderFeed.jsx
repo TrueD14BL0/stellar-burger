@@ -1,6 +1,6 @@
 import { shallowEqual, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { FEED_PAGE } from "../../utils/const";
+import { FEED_PAGE, ORDERS_PAGE } from "../../utils/const";
 import Modal from "../Modal/Modal";
 import OrderDetailInfo from "../OrderDetailInfo/OrderDetailInfo";
 import OrderUnit from "../OrderUnit/OrderUnit";
@@ -22,7 +22,7 @@ const OrderFeed = () => {
   }
 
   return !connected ?
-    (<></>) :
+    (null) :
     (
       <>
         <ul className={`${styles.content} pr-2`}>

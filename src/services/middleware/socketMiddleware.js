@@ -1,13 +1,67 @@
+import Api from "../../components/Api/Api";
+import { deleteCookie, getCookie, setTokenCookies } from "../../utils/utils";
+
 export const socketMiddleware = (wsUrl, wsActions) => {
   return store => {
     let socket = null;
+    let userSocket = null;
     return next => action => {
       const { dispatch } = store;
-      const { type, payload } = action;
-      const { init, sendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+      const { type } = action;
+      const { init, onOpen, onClose, close, onError, onMessage,
+        initUserOrder, onOpenUserOrder, onCloseUserOrder, closeUserOrder,onErrorUserOrder, onMessageUserOrder } = wsActions;
+
+      const updateToken = () =>{
+        Api.getAccessToken(getCookie('refreshToken'))
+          .then((data)=>{
+            setTokenCookies(data.accessToken, data.refreshToken)
+            dispatch({ type: initUserOrder, payload:`` });
+          })
+          .catch((err)=>{
+            deleteCookie('token');
+            deleteCookie('refreshToken');
+            dispatch({ type: onErrorUserOrder, payload: err });
+          }
+        );
+      }
 
       if (type === init) {
         socket = new WebSocket(`${wsUrl}/all`);
+      };
+      if(type === initUserOrder){
+        if(getCookie('token')){
+          userSocket = new WebSocket(`${wsUrl}?token=${getCookie('token').replace(`Bearer `,'')}`);
+        }else{
+          updateToken();
+        }
+      }
+
+      if (userSocket) {
+
+        userSocket.onopen = event => {
+          dispatch({ type: onOpenUserOrder, payload: event });
+        };
+
+        userSocket.onerror = event => {
+          dispatch({ type: onErrorUserOrder, payload: event });
+        };
+
+        userSocket.onmessage = event => {
+          const message = JSON.parse(event.data);
+          if(message.success){
+            dispatch({ type: onMessageUserOrder, payload: message });
+          }else{
+            updateToken();
+          }
+        };
+
+        userSocket.onclose = event => {
+          dispatch({ type: onCloseUserOrder, payload: event.data });
+        };
+
+        if (type === closeUserOrder) {
+          userSocket.close();
+        }
       }
       if (socket) {
 
@@ -24,11 +78,11 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         socket.onclose = event => {
-          console.log('on close', event);
+          dispatch({ type: onClose, payload: event.data });
         };
 
-        if (type === sendMessage) {
-          console.log('on send mess');
+        if (type === close) {
+          socket.close();
         }
       }
 

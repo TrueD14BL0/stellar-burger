@@ -1,5 +1,6 @@
 import Api from "../../components/Api/Api";
 import { ORDER_CLEAR, ORDER_ERROR, ORDER_REQUEST, ORDER_SUCCESS } from "../../utils/const"
+import { deleteCookie, getCookie, setTokenCookies } from "../../utils/utils";
 
 export function getOrderInfo(constructorList){
   return (dispatch) => {
@@ -7,21 +8,45 @@ export function getOrderInfo(constructorList){
       type: ORDER_REQUEST,
     })
 
-    Api.postOrders([
-      constructorList.bun._id,
-      ...constructorList.content.map(item=>item._id),
-      constructorList.bun._id,
-    ])
-    .then((data)=>{
-      if(data.success){
-        dispatch(setOrder(data.order));
-      }else{
-        dispatch(setOrderErr('Some trouble with received data.'))
+    function refreshToken(){
+      return (dispatch) => {
+        Api.getAccessToken(getCookie('refreshToken'))
+        .then((data)=>{
+          setTokenCookies(data.accessToken, data.refreshToken)
+          dispatch(getOrderInfo(constructorList));
+        })
+        .catch((err)=>{
+          deleteCookie('token');
+          deleteCookie('refreshToken');
+          dispatch(setOrderErr(err));
+        });
       }
-    })
-    .catch((err)=>{
-      dispatch(setOrderErr(err))
-    });
+    }
+
+    if(getCookie('token')){
+      Api.postOrders([
+          constructorList.bun._id,
+          ...constructorList.content.map(item=>item._id),
+          constructorList.bun._id,
+        ], getCookie('token'))
+        .then((data)=>{
+          if(data.success){
+            dispatch(setOrder(data.order));
+          }else{
+            dispatch(setOrderErr('Some trouble with received data.'))
+          }
+        })
+        .catch((err)=>{
+          if(err===401||err===403){
+            dispatch(refreshToken());
+          }else{
+            dispatch(setOrderErr(err));
+          }
+        }
+      );
+    }else{
+      dispatch(refreshToken());
+    }
   }
 }
 
