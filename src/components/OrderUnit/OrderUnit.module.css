@@ -119,3 +119,11 @@
   align-items: center;
   gap: 8px;
 }
+
+.done{
+  color: #00CCCC;
+}
+
+.canceled{
+  color: #CD3D2A;
+}

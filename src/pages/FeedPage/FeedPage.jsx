@@ -16,6 +16,7 @@ const FeedPage = () => {
   useEffect(() => {
     dispatch({ type: INIT_ORDERS_SOCKET });
     return () => {
+      console.log('close');
       dispatch({ type: CLOSE_ORDERS_SOCKET });
     };
   }, []);

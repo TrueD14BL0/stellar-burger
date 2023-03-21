@@ -6,7 +6,7 @@
   padding-left: 0;
   list-style: none;
   overflow-y: scroll;
-  max-height: 810px;
+  max-height: calc(100vh - 200px);
 }
 
 .content::-webkit-scrollbar {

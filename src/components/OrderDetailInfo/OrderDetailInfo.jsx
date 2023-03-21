@@ -7,25 +7,30 @@ import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetailInfoUnit from "../OrderDetailInfoUnit/OrderDetailInfoUnit";
 import { ordersStatus } from "../../utils/data";
+import { FEED_PAGE, ORDERS_PAGE, ORDER_REDUCER, PROFILE_PAGE, USER_ORDER_REDUCER } from "../../utils/const";
 
 const OrderDetailInfo = () => {
 
   const [element, setElement] = useState(null);
   const params = useParams();
   const location = useLocation();
+  let orderReducer = null;
+
+  if(location.pathname.startsWith(`${PROFILE_PAGE}/${ORDERS_PAGE}`)){
+    orderReducer = USER_ORDER_REDUCER;
+  }else if(location.pathname.startsWith(`${FEED_PAGE}`)){
+    orderReducer = ORDER_REDUCER;
+  }
+
   let orderDate = new Date();
   let today = new Date();
   let differenceDate = diffDateInDays(orderDate, today);
   let orderSum = 0;
   const orderContent = [];
   const { order, ingredientsList } = useSelector(store => ({
-    order: store.ordersReducer.orders.find(element=>element._id===params.id),
+    order: store[orderReducer].orders.find(element=>element._id===params.id),
     ingredientsList: store.ingridientsListReducer,
   }), shallowEqual);
-
-  useEffect(()=>{
-    setElement(order);
-  }, [order]);
 
   if(element){
     orderDate = new Date(Date.parse(element.createdAt));
@@ -51,6 +56,10 @@ const OrderDetailInfo = () => {
       }
     });
   }
+
+  useEffect(()=>{
+    setElement(order);
+  }, [order]);
 
   return element&&(
     <div className={`${styles.content} mt-5`}>

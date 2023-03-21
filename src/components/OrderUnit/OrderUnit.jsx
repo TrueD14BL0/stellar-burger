@@ -5,10 +5,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { orderProps } from "../../utils/propTypes";
 import { useNavigate } from "react-router-dom";
-import { FEED_PAGE } from "../../utils/const";
 import OrderUnitThumbnail from "../OrderUnitThumbnail/OrderUnitThumbnail";
+import PropTypes from 'prop-types';
+import { ordersStatus } from "../../utils/data";
 
-const OrderUnit = ({itemInfo}) => {
+const OrderUnit = ({ itemInfo, page, withStatus }) => {
 
   const { ingredientsList } = useSelector(store => ({
     ingredientsList: store.ingridientsListReducer,
@@ -21,14 +22,19 @@ const OrderUnit = ({itemInfo}) => {
 
   return (
     <li className={`${styles.content} p-6`} onClick={()=>{
-      navigation(`${FEED_PAGE}/${itemInfo._id}`, {state:{modal:true}});
+      navigation(`${page}/${itemInfo._id}`, {state:{modal:true}});
     }}>
       <p className={`${styles.title} text text_type_digits-default`}>#{itemInfo.number}
         <span className={`${styles.updatedAt} text text_type_main-default text_color_inactive`}>
           {`${diffToString(differenceDate)},${orderDate.getHours()}:${orderDate.getMinutes()}
           i-GMT${orderDate.getTimezoneOffset()>0?`+${orderDate.getTimezoneOffset()/60}`
           :orderDate.getTimezoneOffset()/60}`}</span></p>
-      <p className={`text text_type_main-medium`}>{itemInfo.name}</p>
+      <div>
+        <p className={`text text_type_main-medium`}>{itemInfo.name}</p>
+        {withStatus&&
+          <p className={`text text_type_main-small pt-2 pb-5 ${styles[itemInfo.status]}`}>{ordersStatus[itemInfo.status]}</p>
+        }
+      </div>
       <div className={styles.bottom}>
         <ul className={styles.list}>
           {itemInfo.ingredients.map((element, index) => {
@@ -66,6 +72,8 @@ const OrderUnit = ({itemInfo}) => {
 
 OrderUnit.propTypes = {
   itemInfo: orderProps,
+  page: PropTypes.string.isRequired,
+  withStatus: PropTypes.bool,
 };
 
 export default OrderUnit;

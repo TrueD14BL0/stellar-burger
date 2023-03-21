@@ -43,7 +43,11 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         userSocket.onerror = event => {
-          dispatch({ type: onErrorUserOrder, payload: event });
+          if(event==='401'){
+            updateToken();
+          }else{
+            dispatch({ type: onErrorUserOrder, payload: event });
+          }
         };
 
         userSocket.onmessage = event => {
@@ -60,9 +64,10 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         if (type === closeUserOrder) {
-          userSocket.close();
+          userSocket.close(1000, 'work done');
         }
       }
+
       if (socket) {
 
         socket.onopen = event => {
@@ -82,7 +87,8 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         if (type === close) {
-          socket.close();
+          console.log('try to close');
+          socket.close(1000, 'work done');
         }
       }
 

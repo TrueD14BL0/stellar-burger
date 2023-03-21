@@ -64,3 +64,7 @@ export const WS_USER_NAME_UPDATE = 'WS_USER_NAME_UPDATE';
 /* Main content */
 export const MAIN_CONTENT_GAP_FEED = 'MAIN_CONTENT_GAP_FEED';
 export const MAIN_CONTENT_GAP_STD = 'MAIN_CONTENT_GAP_STD';
+
+/* Order reducers */
+export const ORDER_REDUCER = 'ordersReducer';
+export const USER_ORDER_REDUCER = 'userOrdersReducer';

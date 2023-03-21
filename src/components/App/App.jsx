@@ -43,7 +43,7 @@ function App() {
         <Route path={PROFILE_PAGE} element={<ProtectedRouteElement element={<AccountPage/>}/>}>
           <Route path="" element={<ProfilePage/>}/>
           <Route path={ORDERS_PAGE} element={<UserOrderFeed />}>
-            <Route path={`${ORDERS_PAGE}/:id`} element={<></>}/>
+            <Route path={`:id`} element={<OrderDetailsPage />}/>
           </Route>
         </Route>
         <Route path={FEED_PAGE} element={<FeedPage />}>

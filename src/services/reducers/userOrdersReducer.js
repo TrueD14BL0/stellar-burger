@@ -23,9 +23,10 @@ const userOrdersReducer = (state = initialState, action) => {
         ...state,
         total: action.payload.total,
         totalToday: action.payload.totalToday,
-        orders: action.payload.orders,
+        orders: action.payload.orders.reverse(),
       };
     case ON_USER_ERROR_SOCKET:
+      console.log("Cannot get user orders, error: ", action.payload);
       return {
         ...state,
         error: action.payload,
