@@ -87,7 +87,6 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         };
 
         if (type === close) {
-          console.log('try to close');
           socket.close(1000, 'work done');
         }
       }

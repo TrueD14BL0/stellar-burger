@@ -8,17 +8,57 @@ import { useNavigate } from "react-router-dom";
 import OrderUnitThumbnail from "../OrderUnitThumbnail/OrderUnitThumbnail";
 import PropTypes from 'prop-types';
 import { ordersStatus } from "../../utils/data";
+import { MAX_VISIBLE_INGREDIENTS_IN_ORDER } from "../../utils/const";
+import { useMemo } from "react";
 
 const OrderUnit = ({ itemInfo, page, withStatus }) => {
 
-  const { ingredientsList } = useSelector(store => ({
-    ingredientsList: store.ingridientsListReducer,
-  }), shallowEqual);
-  let orderSum = 0;
+  const ingredientsList = useSelector(store => store.ingridientsListReducer, shallowEqual);
+  const orderSum = useMemo(() => {
+    let sum = 0;
+    itemInfo.ingredients.forEach(element => {
+      const ingredientEl = ingredientsList.content.find(ingr => ingr._id === element);
+      if(ingredientEl){
+        sum+=ingredientEl.price;
+      }
+    });
+    return sum;
+  },
+    [ingredientsList.content, itemInfo.ingredients]
+  );
+
   const navigation = useNavigate();
   const orderDate = new Date(Date.parse(itemInfo.createdAt));
   const today = new Date();
   const differenceDate = diffDateInDays(orderDate, today);
+
+  const orderIngridients = useMemo(()=>{
+    return itemInfo.ingredients.map((element, index) => {
+      const uuid = uuidv4(); {/* А вот тут все таки uuid - так как здесь могут попасться полностью идентичные экземпляры */}
+      const ingredientEl = ingredientsList.content.find(ingr => ingr._id === element);
+      let el = null;
+      if(ingredientEl){
+        if(index < MAX_VISIBLE_INGREDIENTS_IN_ORDER){
+          el = (
+            <li key={uuid} className={`${styles.ingridientsImageContainer} ${styles.roundedBorder} p-1`}>
+              <OrderUnitThumbnail image={ingredientEl.image} name={ingredientEl.name} />
+            </li>
+          );
+        }else if(index===MAX_VISIBLE_INGREDIENTS_IN_ORDER){
+          el =  (
+            <li key={uuid} className={`${styles.ingridientsImageContainer} p-1`}>
+              <OrderUnitThumbnail image={ingredientEl.image} name={ingredientEl.name} />
+              <div className={styles.mask}></div>
+              <p className={`${styles.remainsQty} ${styles.mainPosition} text text_type_main-small`}>+{itemInfo.ingredients.length-5}</p>
+            </li>
+          );
+        }
+      }
+      return el;
+    })
+  },
+    [ingredientsList.content, itemInfo.ingredients]
+  );
 
   return (
     <li className={`${styles.content} p-6`} onClick={()=>{
@@ -37,37 +77,15 @@ const OrderUnit = ({ itemInfo, page, withStatus }) => {
       </div>
       <div className={styles.bottom}>
         <ul className={styles.list}>
-          {itemInfo.ingredients.map((element, index) => {
-            const uuid = uuidv4();
-            const ingredientEl = ingredientsList.content.find(ingr => ingr._id === element);
-            let el = null;
-            if(ingredientEl){
-              orderSum+=ingredientEl.price;
-              if(index<5){
-                el = (
-                  <li key={uuid} className={`${styles.ingridientsImageContainer} ${styles.roundedBorder} p-1`}>
-                    <OrderUnitThumbnail image={ingredientEl.image} name={ingredientEl.name} />
-                  </li>
-                );
-              }else if(index===5){
-                el =  (
-                  <li key={uuid} className={`${styles.ingridientsImageContainer} p-1`}>
-                    <OrderUnitThumbnail image={ingredientEl.image} name={ingredientEl.name} />
-                    <div className={styles.mask}></div>
-                    <p className={`${styles.remainsQty} ${styles.mainPosition} text text_type_main-small`}>+{itemInfo.ingredients.length-5}</p>
-                  </li>
-                );
-              }
-            }
-            return el;
-          })}
+          {orderIngridients.map(element=>element)}
         </ul>
         <div className={styles.total}>
           <p className='text text_type_digits-default'>{orderSum}</p>
           <CurrencyIcon type="primary" />
         </div>
       </div>
-    </li>);
+    </li>
+  );
 }
 
 OrderUnit.propTypes = {

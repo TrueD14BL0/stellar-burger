@@ -12,17 +12,15 @@ const OrderFeed = () => {
   const location = useLocation();
   const navigation = useNavigate();
   const modal = params.id&&location.state&&location.state.modal;
-  const { orders, connected } = useSelector(store => ({
-    orders: store.ordersReducer.orders,
-    connected: store.ordersReducer.connected,
-  }), shallowEqual);
+  const orders = useSelector(store => store.ordersReducer.orders, shallowEqual);
+  const connected = useSelector(store => store.ordersReducer.connected, shallowEqual);
 
   const closeModal = ()=>{
     navigation(FEED_PAGE);
   }
 
   return !connected ?
-    (null) :
+    null :
     (
       <>
         <ul className={`${styles.content} pr-2`}>

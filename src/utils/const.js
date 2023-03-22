@@ -38,6 +38,7 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGIN_CLEAR = 'LOGIN_CLEAR';
 export const WS_URL = 'wss://norma.nomoreparties.space/orders';
+export const MAX_VISIBLE_INGREDIENTS_IN_ORDER = 5;
 
 /* Pages Constants*/
 export const MAIN_PAGE ="/";

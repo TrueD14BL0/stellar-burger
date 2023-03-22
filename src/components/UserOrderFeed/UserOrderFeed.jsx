@@ -16,10 +16,9 @@ const UserOrderFeed = () => {
   const dispatch = useDispatch();
 
   const modal = params.id&&location.state&&location.state.modal;
-  const { userOrders, connected } = useSelector(store => ({
-    userOrders: store.userOrdersReducer.orders,
-    connected: store.userOrdersReducer.connected,
-  }), shallowEqual);
+
+  const connected = useSelector(store => (store.userOrdersReducer.connected), shallowEqual);
+  const userOrders = useSelector(store => (store.userOrdersReducer.orders), shallowEqual);
 
   useEffect(() => {
     if(!connected){

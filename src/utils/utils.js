@@ -1,3 +1,5 @@
+import { FEED_PAGE, ORDERS_PAGE, ORDER_REDUCER, PROFILE_PAGE, USER_ORDER_REDUCER } from "./const";
+
 export function setCookie(name, value, options = {}) {
 
   options = {
@@ -55,4 +57,13 @@ export function diffToString(diff){
     default:
       return `${diff} дня назад`; //в идеале написать обработку склонений
   }
+}
+
+export function chooseOrderReducer(location){
+  if(location.pathname.startsWith(`${PROFILE_PAGE}/${ORDERS_PAGE}`)){
+    return USER_ORDER_REDUCER;
+  }else if(location.pathname.startsWith(`${FEED_PAGE}`)){
+    return ORDER_REDUCER;
+  }
+  return null;
 }
