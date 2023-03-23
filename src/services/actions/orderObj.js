@@ -37,6 +37,14 @@ export function getOrderInfo(constructorList){
           }
         })
         .catch((err)=>{
+
+          /*
+            TODO: Исправить перед следующим спринтом!!!
+            Можно лучше: лучше вынести в утилиту проверку ошибки и обновление токена, дабы не дублировать в коде.
+            Так же после обновления токена стоит сделать перезапрос текущего запроса.
+            Можно написать универсальную утилиту для запросов, требующих авторизацию:
+            (url) => fetch(url).then(checkResponse).catch( refreshToken, fetch(url).then(checkResponse) )
+          */
           if(err===401||err===403){
             dispatch(refreshToken());
           }else{
