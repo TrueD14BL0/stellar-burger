@@ -1,9 +1,16 @@
 .content{
   margin: auto;
-  max-width: 1240px;
-  max-height: 889px;
-  box-sizing: border-box;
   display: grid;
-  grid-template-columns: repeat(2, 600px);
+  max-width: 1240px;
+  box-sizing: border-box;
+}
+
+.MAIN_CONTENT_GAP_FEED{
+  column-gap: 60px;
+  grid-template-columns: 600px 580px;
+}
+
+.MAIN_CONTENT_GAP_STD{
   column-gap: 40px;
+  grid-template-columns: repeat(2, 590px);
 }

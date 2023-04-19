@@ -1,0 +1,70 @@
+.content{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  box-sizing: border-box;
+  max-width: 640px;
+  max-height: 620px;
+}
+
+.number{
+  max-width: 580px;
+}
+
+.numberSinglePage{
+  text-align: center;
+}
+
+.bottom{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.list{
+  margin: 0;
+  padding: 0 24px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  list-style: none;
+  overflow-y: scroll;
+  max-height: 312px;
+}
+
+.list::-webkit-scrollbar {
+  width: 8px;
+  box-sizing: border-box;
+  background: #2F2F37;
+  margin-bottom: 52px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  height: 292px;
+  background: #8585AD;
+}
+
+.listContent{
+  max-height: 366px;
+}
+
+.name{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.total{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.done{
+  color: #00CCCC;
+}
+
+.canceled{
+  color: #CD3D2A;
+}

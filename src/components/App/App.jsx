@@ -15,7 +15,10 @@ import ProtectedRouteElement from '../ProtectedRouteElement/ProtectedRouteElemen
 import LogoutPage from '../../pages/LogoutPage/LogoutPage';
 import IngridientsPage from '../../pages/IngridientsPage/IngridientsPage';
 import UnauthRouteElement from '../UnauthRouteElement/UnauthRouteElement';
-import { ANOTHER_PAGE, FORGOT_PAGE, INGRIDIENTS_PAGE, LOGIN_PAGE, LOGOUT_PAGE, MAIN_PAGE, ORDERS_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PAGE } from '../../utils/const';
+import { ANOTHER_PAGE, FEED_PAGE, FORGOT_PAGE, INGRIDIENTS_PAGE, LOGIN_PAGE, LOGOUT_PAGE, MAIN_PAGE, ORDERS_PAGE, PROFILE_PAGE, REGISTER_PAGE, RESET_PAGE } from '../../utils/const';
+import FeedPage from '../../pages/FeedPage/FeedPage';
+import OrderDetailsPage from '../../pages/OrderDetailsPage/OrderDetailsPage';
+import UserOrderFeed from '../UserOrderFeed/UserOrderFeed';
 
 function App() {
 
@@ -29,7 +32,7 @@ function App() {
     <BrowserRouter>
       <AppHeader />
       <Routes>
-        <Route exact path={MAIN_PAGE} element={<StartPage />}>
+        <Route path={MAIN_PAGE} element={<StartPage />}>
           <Route path={`${INGRIDIENTS_PAGE}/:id`} element={<IngridientsPage />}/>
         </Route>
         <Route path={LOGIN_PAGE} element={<UnauthRouteElement element={<LoginPage />}/>}/>
@@ -39,7 +42,12 @@ function App() {
         <Route path={RESET_PAGE} element={<UnauthRouteElement element={<ResetPassword />}/>}/>
         <Route path={PROFILE_PAGE} element={<ProtectedRouteElement element={<AccountPage/>}/>}>
           <Route path="" element={<ProfilePage/>}/>
-          <Route path={ORDERS_PAGE} element={<></>}/>
+          <Route path={ORDERS_PAGE} element={<UserOrderFeed />}>
+            <Route path={`:id`} element={<OrderDetailsPage />}/>
+          </Route>
+        </Route>
+        <Route path={FEED_PAGE} element={<FeedPage />}>
+          <Route path={`${FEED_PAGE}/:id`} element={<OrderDetailsPage />}/>
         </Route>
         <Route path={ANOTHER_PAGE} element={<NotFoundPage />}/>
       </Routes>

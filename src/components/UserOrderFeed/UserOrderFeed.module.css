@@ -1,10 +1,13 @@
 .content{
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  width: 100%;
+  gap: 16px;
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
   overflow-y: scroll;
-  max-height: calc(100vh - 340px);
+  max-height: 650px;
+  flex-shrink: 1;
 }
 
 .content::-webkit-scrollbar {
@@ -17,8 +20,4 @@
 .content::-webkit-scrollbar-thumb {
   height: 292px;
   background: #8585AD;
-}
-
-.contentWrapper{
-  display: flex;
 }

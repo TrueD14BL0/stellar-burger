@@ -3,7 +3,7 @@ import styles from './HeaderButton.module.css';
 import { NavLink } from 'react-router-dom';
 
 const HeaderButton = (props) => {
-  const classes = `${styles.button} p-5 pt-4 pb-4`
+  const classes = `${styles.button} p-5 pt-4 pb-4 ${styles[props.addClass]}`;
   return (
     <NavLink
       to={props.linkTo}
@@ -19,6 +19,7 @@ HeaderButton.propTypes = {
   text: PropTypes.string.isRequired,
   linkTo: PropTypes.string.isRequired,
   children: PropTypes.element,
+  addClass: PropTypes.string,
 };
 
 export default HeaderButton;

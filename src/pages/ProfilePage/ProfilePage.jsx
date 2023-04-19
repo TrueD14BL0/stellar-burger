@@ -75,7 +75,7 @@ const ProfilePage = () => {
   }
 
   return (
-    <form onSubmit={(e)=>{
+    <form className={styles.profileForm}  onSubmit={(e)=>{
       e.preventDefault();
       submitHandler();
     }}>

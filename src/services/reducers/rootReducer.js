@@ -9,6 +9,8 @@ import resetPasswordReducer from './resetPasswordReducer';
 import loginReducer from './loginReducer';
 import userReducer from './userReducer';
 import logoutReducer from './logoutReducer';
+import ordersReducer from './ordersReducer';
+import userOrdersReducer from './userOrdersReducer';
 
 const rootReducer = combineReducers({
   constructorListReducer,
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   loginReducer,
   userReducer,
   logoutReducer,
+  ordersReducer,
+  userOrdersReducer,
 });
 
 export default rootReducer;

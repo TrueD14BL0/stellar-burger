@@ -14,3 +14,7 @@
 .headerInactiveBtn {
   color: #8585AD;
 }
+
+.toRight{
+  justify-self: end;
+}
