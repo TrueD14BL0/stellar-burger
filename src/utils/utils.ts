@@ -1,6 +1,6 @@
-import { FEED_PAGE, ORDERS_PAGE, ORDER_REDUCER, PROFILE_PAGE, USER_ORDER_REDUCER } from "./const";
+import { PAGES, ORDER_REDUCERS } from "./const";
 
-export function setCookie(name, value, options = {}) {
+export function setCookie(name: string, value: string | number | boolean, options: { [key: string]: Date | string | number | boolean } = {}):void {
 
   options = {
     path: '/',
@@ -24,31 +24,31 @@ export function setCookie(name, value, options = {}) {
   document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export function getCookie(name: string) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([.$?*|{}()[]\/+^])/g, '\\$1') + "=([^;]*)"
   ));
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function deleteCookie(name) {
+export function deleteCookie(name:string):void {
   setCookie(name, "", {
     'max-age': -1
   })
 }
 
-export function setTokenCookies(token, refreshToken){
+export function setTokenCookies(token: string, refreshToken: string){
   setCookie('token', token, {
     'max-age': 1200
   });
   setCookie('refreshToken', refreshToken);
 }
 
-export function diffDateInDays(first, second) {
+export function diffDateInDays(first:number, second:number): number {
   return Math.round((second - first) / (1000 * 60 * 60 * 24));
 }
 
-export function diffToString(diff){
+export function diffToString(diff:number): string{
   switch (diff) {
     case 0:
       return 'Сегодня';
@@ -59,11 +59,11 @@ export function diffToString(diff){
   }
 }
 
-export function chooseOrderReducer(location){
-  if(location.pathname.startsWith(`${PROFILE_PAGE}/${ORDERS_PAGE}`)){
-    return USER_ORDER_REDUCER;
-  }else if(location.pathname.startsWith(`${FEED_PAGE}`)){
-    return ORDER_REDUCER;
+export function chooseOrderReducer(location: Location){
+  if(location.pathname.startsWith(`${PAGES.PROFILE_PAGE}/${PAGES.ORDERS_PAGE}`)){
+    return ORDER_REDUCERS.USER_ORDER_REDUCER;
+  }else if(location.pathname.startsWith(`${PAGES.FEED_PAGE}`)){
+    return ORDER_REDUCERS.ORDER_REDUCER;
   }
   return null;
 }

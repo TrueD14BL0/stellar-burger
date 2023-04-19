@@ -2,12 +2,12 @@ const apiAddress = "https://norma.nomoreparties.space/api";
 
 export default class Api{
 
-  static _request(url, options) {
+  static _request<T>(url: string, options?: any):Promise<T> {
     return fetch(url, options)
       .then((res)=>{return this._testRes(res)});
   }
 
-  static _testRes(res) {
+  static _testRes<T>(res:Response): Promise<T> {
     if (res.ok) {
       return res.json();
     }
@@ -18,7 +18,7 @@ export default class Api{
     return this._request(`${apiAddress}/ingredients`);
   }
 
-  static forgotPassword(email){
+  static forgotPassword(email: string){
     return this._request(`${apiAddress}/password-reset`, {
       method: "POST",
       headers: {
