@@ -1,3 +1,5 @@
+import { TApiGetIngredients, TForgotPassword, TIngredient, TLoginData, TLoginResponse, TLogoutResponse, TOrderResponse, TPatchUserData, TRefresh, TRegUserData, TResetData, TResetResponse, TUserSuccess } from "../../services/types/types";
+
 const apiAddress = "https://norma.nomoreparties.space/api";
 
 export default class Api{
@@ -11,14 +13,14 @@ export default class Api{
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(res.status);
+    return Promise.reject(res.status.toString);
   }
 
-  static getIngredients(){
+  static getIngredients(): Promise<TApiGetIngredients>{
     return this._request(`${apiAddress}/ingredients`);
   }
 
-  static forgotPassword(email: string){
+  static forgotPassword(email: string): Promise<TForgotPassword> {
     return this._request(`${apiAddress}/password-reset`, {
       method: "POST",
       headers: {
@@ -30,7 +32,7 @@ export default class Api{
     });
   }
 
-  static registerUser(registrObj){
+  static registerUser(registrObj: TRegUserData): Promise<TLoginResponse>{
     return this._request(`${apiAddress}/auth/register`, {
       method: "POST",
       headers: {
@@ -40,7 +42,7 @@ export default class Api{
     });
   }
 
-  static resetPassword(resetData){
+  static resetPassword(resetData: TResetData): Promise<TResetResponse>{
     return this._request(`${apiAddress}/password-reset/reset`, {
       method: "POST",
       headers: {
@@ -50,7 +52,7 @@ export default class Api{
     });
   }
 
-  static postOrders(ingredients, token){
+  static postOrders(ingredients: string[], token: string): Promise<TOrderResponse>{
     return this._request(`${apiAddress}/orders`, {
       method: "POST",
       headers: {
@@ -63,7 +65,7 @@ export default class Api{
     });
   }
 
-  static getAuthLogin(loginData){
+  static getAuthLogin(loginData: TLoginData): Promise<TLoginResponse>{
     return this._request(`${apiAddress}/auth/login`, {
       method: "POST",
       headers: {
@@ -73,19 +75,7 @@ export default class Api{
     });
   }
 
-  static getAuthRegistration(ingredients){
-    return this._request(`${apiAddress}/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ingredients: ingredients,
-      }),
-    });
-  }
-
-  static getLogout(refreshToken){
+  static getLogout(refreshToken: string): Promise<TLogoutResponse>{
     return this._request(`${apiAddress}/auth/logout`, {
       method: "POST",
       headers: {
@@ -97,7 +87,7 @@ export default class Api{
     });
   }
 
-  static getAccessToken(refreshToken){
+  static getAccessToken(refreshToken: string): Promise<TRefresh>{
     return this._request(`${apiAddress}/auth/token`, {
       method: "POST",
       headers: {
@@ -109,7 +99,7 @@ export default class Api{
     });
   }
 
-  static getUserInfo(token){
+  static getUserInfo(token: string): Promise<TUserSuccess>{
     return this._request(`${apiAddress}/auth/user`, {
       method: "GET",
       headers: {
@@ -119,7 +109,7 @@ export default class Api{
     });
   }
 
-  static patchUserInfo(token, userData){
+  static patchUserInfo(token: string, userData: TPatchUserData): Promise<TUserSuccess>{
     return this._request(`${apiAddress}/auth/user`, {
       method: "PATCH",
       headers: {

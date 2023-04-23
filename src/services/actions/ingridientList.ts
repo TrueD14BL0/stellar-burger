@@ -1,31 +1,53 @@
 import Api from "../../components/Api/Api";
-import { DECRIMENT_INGRIDIENT_COUNT, INGRIDIENTS_LIST_ERROR, INGRIDIENTS_LIST_REQUEST, INGRIDIENTS_LIST_SUCCESS } from "../../utils/const";
+import { DECRIMENT_INGREDIENT_COUNT, INGREDIENTS_LIST_ERROR, INGREDIENTS_LIST_REQUEST, INGREDIENTS_LIST_SUCCESS } from "../../utils/const";
+import { AppThunk, TIngredient } from "../types/types";
 
-export function getIngridientsList(){
+export interface IDecrimentIngridientCount{
+  readonly type: typeof DECRIMENT_INGREDIENT_COUNT;
+  ingredient: TIngredient;
+}
+
+export interface IIngredientListRequest{
+  readonly type: typeof INGREDIENTS_LIST_REQUEST;
+}
+
+export interface IIngredientListSuccess{
+  readonly type: typeof INGREDIENTS_LIST_SUCCESS;
+  ingredientList: TIngredient[];
+}
+
+export interface IIngredientListError{
+  readonly type: typeof INGREDIENTS_LIST_ERROR;
+  err: string;
+}
+
+export const getIngridientsList: AppThunk<void> = () => {
   return (dispatch) => {
     dispatch({
-      type: INGRIDIENTS_LIST_REQUEST,
+      type: INGREDIENTS_LIST_REQUEST,
     })
 
     Api.getIngredients()
       .then((data)=>{
         dispatch({
-          type: INGRIDIENTS_LIST_SUCCESS,
-          ingridientList: data.data,
+          type: INGREDIENTS_LIST_SUCCESS,
+          ingredientList: data.data,
         });
       })
-      .catch((err)=>{
+      .catch((err: string)=>{
         dispatch({
-          type: INGRIDIENTS_LIST_ERROR,
+          type: INGREDIENTS_LIST_ERROR,
           err,
         });
       });
   }
 }
 
-export function decrimentIngridientCount(ingridient){
+export const decrimentIngridientCount = (ingredient: TIngredient): IDecrimentIngridientCount => {
   return {
-      type: DECRIMENT_INGRIDIENT_COUNT,
-      ingridient
+      type: DECRIMENT_INGREDIENT_COUNT,
+      ingredient
   }
 }
+
+export type TIngredientListActions = IDecrimentIngridientCount|IIngredientListRequest|IIngredientListSuccess|IIngredientListError;

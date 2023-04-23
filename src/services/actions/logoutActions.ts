@@ -1,14 +1,28 @@
 import Api from "../../components/Api/Api";
 import { getCookie } from "../../utils/utils";
 import { LOGOUT_ERROR, LOGOUT_REQUEST, LOGOUT_SUCCESS } from "../../utils/const";
+import { AppThunk } from "../types/types";
 
-export function logoutAction(){
+export interface ILogoutRequest{
+  readonly type: typeof LOGOUT_REQUEST;
+}
+
+export interface ILogoutSuccess{
+  readonly type: typeof LOGOUT_SUCCESS;
+}
+
+export interface ILogoutErr{
+  readonly type: typeof LOGOUT_ERROR;
+  err: string;
+}
+
+export const logoutAction: AppThunk<void> = () => {
   return (dispatch) => {
     dispatch({
       type: LOGOUT_REQUEST,
     })
 
-    Api.getLogout(getCookie('refreshToken'))
+    Api.getLogout(getCookie('refreshToken')||'')
     .then((data)=>{
       if(data.success){
         dispatch(logoutSuccess());
@@ -16,21 +30,23 @@ export function logoutAction(){
         dispatch(logoutErr('Some trouble with received data.'))
       }
     })
-    .catch((err)=>{
+    .catch((err: string)=>{
       dispatch(logoutErr(err))
     });
   }
 }
 
-export function logoutSuccess(){
+export const logoutSuccess = (): ILogoutSuccess => {
   return {
       type: LOGOUT_SUCCESS,
   }
 }
 
-export function logoutErr(err){
+export const logoutErr = (err: string): ILogoutErr => {
   return {
       type: LOGOUT_ERROR,
       err,
   }
 }
+
+export type TLogoutActions = ILogoutRequest|ILogoutSuccess|ILogoutErr;

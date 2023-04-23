@@ -1,21 +1,40 @@
 import Api from "../../components/Api/Api";
 import { ORDER_CLEAR, ORDER_ERROR, ORDER_REQUEST, ORDER_SUCCESS } from "../../utils/const"
 import { deleteCookie, getCookie, setTokenCookies } from "../../utils/utils";
+import { AppThunk, TIngredientList, TOrder } from "../types/types";
 
-export function getOrderInfo(constructorList){
+export interface IOrderRequest{
+  readonly type: typeof ORDER_REQUEST;
+}
+
+export interface IOrderSuccess{
+  readonly type: typeof ORDER_SUCCESS;
+  order:  TOrder;
+}
+
+export interface IOrderError{
+  readonly type: typeof ORDER_ERROR;
+  err:string;
+}
+
+export interface IOrderClear{
+  readonly type: typeof ORDER_CLEAR;
+}
+
+export const getOrderInfo: AppThunk<void> = (constructorList: TIngredientList) => {
   return (dispatch) => {
     dispatch({
       type: ORDER_REQUEST,
     })
 
-    function refreshToken(){
+    const refreshToken: AppThunk<void> = () => {
       return (dispatch) => {
-        Api.getAccessToken(getCookie('refreshToken'))
+        Api.getAccessToken(getCookie('refreshToken')||'')
         .then((data)=>{
           setTokenCookies(data.accessToken, data.refreshToken)
           dispatch(getOrderInfo(constructorList));
         })
-        .catch((err)=>{
+        .catch((err: string)=>{
           deleteCookie('token');
           deleteCookie('refreshToken');
           dispatch(setOrderErr(err));
@@ -28,7 +47,7 @@ export function getOrderInfo(constructorList){
           constructorList.bun._id,
           ...constructorList.content.map(item=>item._id),
           constructorList.bun._id,
-        ], getCookie('token'))
+        ], getCookie('token')||'')
         .then((data)=>{
           if(data.success){
             dispatch(setOrder(data.order));
@@ -58,22 +77,24 @@ export function getOrderInfo(constructorList){
   }
 }
 
-export function setOrder(order){
+export const setOrder = (order: TOrder) => {
   return {
       type: ORDER_SUCCESS,
       order,
   }
 }
 
-export function setOrderErr(err){
+export const setOrderErr = (err:string) => {
   return {
       type: ORDER_ERROR,
       err,
   }
 }
 
-export function clearOrder(){
+export const clearOrder = () => {
   return {
       type: ORDER_CLEAR,
   }
 }
+
+export type TOrderActions = IOrderRequest|IOrderSuccess|IOrderError|IOrderClear;

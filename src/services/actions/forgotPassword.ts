@@ -1,8 +1,22 @@
 import Api from "../../components/Api/Api";
 import { PASSWORD_FORGOT_ERROR, PASSWORD_FORGOT_REQUEST, PASSWORD_FORGOT_SUCCESS } from "../../utils/const";
+import { AppDispatch, AppThunk } from "../types/types";
 
-export function forgotPasswordAction(email){
-  return (dispatch) => {
+export interface IForgotPasswordRequest{
+  readonly type: typeof PASSWORD_FORGOT_REQUEST;
+}
+
+export interface IForgotPasswordSuccess{
+  readonly type: typeof PASSWORD_FORGOT_SUCCESS;
+}
+
+export interface IForgotPasswordErr{
+  readonly type: typeof PASSWORD_FORGOT_ERROR;
+  err: string;
+}
+
+export const forgotPasswordAction: AppThunk<void> = (email: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: PASSWORD_FORGOT_REQUEST,
     })
@@ -15,21 +29,23 @@ export function forgotPasswordAction(email){
         dispatch(forgotPasswordErr('Some trouble with received data.'))
       }
     })
-    .catch((err)=>{
+    .catch((err: string)=>{
       dispatch(forgotPasswordErr(err))
     });
   }
 }
 
-export function forgotPasswordSuccess(){
+export const forgotPasswordSuccess = (): IForgotPasswordSuccess => {
   return {
       type: PASSWORD_FORGOT_SUCCESS,
   }
 }
 
-export function forgotPasswordErr(err){
+export const forgotPasswordErr = (err: string): IForgotPasswordErr => {
   return {
       type: PASSWORD_FORGOT_ERROR,
       err,
   }
 }
+
+export type TForgotPasswordActions = IForgotPasswordSuccess|IForgotPasswordErr|IForgotPasswordRequest;

@@ -1,14 +1,26 @@
-import { CLOSE_INGRIDIENT, OPEN_INGRIDIENT } from "../../utils/const";
+import { CLOSE_INGREDIENT, OPEN_INGREDIENT } from "../../utils/const";
+import { TIngredient } from "../types/types";
 
-export function openIngridient(ingridient){
+export interface IOpenIngredient{
+  readonly type: typeof OPEN_INGREDIENT;
+  ingredient: TIngredient;
+}
+
+export interface ICloseIngredient{
+  readonly type: typeof CLOSE_INGREDIENT;
+}
+
+export const openIngridient = (ingredient: TIngredient): IOpenIngredient => {
   return {
-      type: OPEN_INGRIDIENT,
-      ingridient
+      type: OPEN_INGREDIENT,
+      ingredient
   }
 }
 
-export function closeIngridient(){
+export const closeIngridient = (): ICloseIngredient => {
   return {
-      type: CLOSE_INGRIDIENT,
+      type: CLOSE_INGREDIENT,
   }
 }
+
+export type TIngredientObjActions = IOpenIngredient|ICloseIngredient;

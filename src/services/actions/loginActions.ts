@@ -1,7 +1,23 @@
 import Api from "../../components/Api/Api";
 import { LOGIN_ERROR, LOGIN_REQUEST, LOGIN_SUCCESS } from "../../utils/const";
+import { AppThunk, TLoginData } from "../types/types";
 
-export function loginAction(loginData){
+export interface ILoginRequest{
+  readonly type: typeof LOGIN_REQUEST;
+}
+
+export interface ILoginSuccess{
+  readonly type: typeof LOGIN_SUCCESS;
+  token: string;
+  refreshToken: string;
+}
+
+export interface ILoginErr{
+  readonly type: typeof LOGIN_ERROR;
+  err: string;
+}
+
+export const loginAction: AppThunk<void> = (loginData: TLoginData) => {
   return (dispatch) => {
     dispatch({
       type: LOGIN_REQUEST,
@@ -15,13 +31,13 @@ export function loginAction(loginData){
         dispatch(loginErr('Some trouble with received data.'))
       }
     })
-    .catch((err)=>{
+    .catch((err: string)=>{
       dispatch(loginErr(err))
     });
   }
 }
 
-export function loginSuccess(token, refreshToken){
+export const loginSuccess = (token: string, refreshToken: string): ILoginSuccess => {
   return {
       type: LOGIN_SUCCESS,
       token,
@@ -29,9 +45,11 @@ export function loginSuccess(token, refreshToken){
   }
 }
 
-export function loginErr(err){
+export const loginErr = (err: string): ILoginErr => {
   return {
       type: LOGIN_ERROR,
       err,
   }
 }
+
+export type TLoginActions = ILoginRequest|ILoginSuccess|ILoginErr;
