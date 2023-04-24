@@ -77,3 +77,10 @@ export enum ORDER_REDUCERS{
   ORDER_REDUCER = 'ordersReducer',
   USER_ORDER_REDUCER = 'userOrdersReducer',
 }
+
+export enum ordersStatus {
+  'done' = 'Выполнен',
+  'created' = 'Создан',
+  'pending' = 'Готовится',
+  'canceled' = 'Отменен',
+}

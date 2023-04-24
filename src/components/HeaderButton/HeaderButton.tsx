@@ -1,25 +1,26 @@
-import PropTypes from 'prop-types';
 import styles from './HeaderButton.module.css';
 import { NavLink } from 'react-router-dom';
+import { FC, ReactNode } from 'react';
 
-const HeaderButton = (props) => {
-  const classes = `${styles.button} p-5 pt-4 pb-4 ${styles[props.addClass]}`;
+interface IHeaderButton {
+  text: string,
+  linkTo: string,
+  children?: ReactNode,
+  addClass?: string,
+}
+
+const HeaderButton:FC<IHeaderButton> = ({ text, linkTo, children, addClass }) => {
+  const addingClass: string = addClass ? styles[addClass] : '';
+  const classes = `${styles.button} p-5 pt-4 pb-4 ${addingClass}`;
   return (
     <NavLink
-      to={props.linkTo}
+      to={linkTo}
       className={({ isActive }) => isActive ? `${styles.headerActiveBtn} ${classes}` : `${styles.headerInactiveBtn} ${classes}`}
     >
-      {props.children}
-      <p className='text text_type_main-default'>{props.text}</p>
+      {children}
+      <p className='text text_type_main-default'>{text}</p>
     </NavLink>
   )
 }
-
-HeaderButton.propTypes = {
-  text: PropTypes.string.isRequired,
-  linkTo: PropTypes.string.isRequired,
-  children: PropTypes.element,
-  addClass: PropTypes.string,
-};
 
 export default HeaderButton;

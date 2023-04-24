@@ -1,4 +1,7 @@
+import { Location } from "react-router-dom";
 import { PAGES, ORDER_REDUCERS } from "./const";
+import userOrdersReducer from "../services/reducers/userOrdersReducer";
+import ordersReducer from "../services/reducers/ordersReducer";
 
 export function setCookie(name: string, value: string | number | boolean, options: { [key: string]: Date | string | number | boolean } = {}):void {
 
@@ -59,11 +62,10 @@ export function diffToString(diff:number): string{
   }
 }
 
-export function chooseOrderReducer(location: Location){
+export const chooseOrderReducer = (location: Location) =>{
   if(location.pathname.startsWith(`${PAGES.PROFILE_PAGE}/${PAGES.ORDERS_PAGE}`)){
     return ORDER_REDUCERS.USER_ORDER_REDUCER;
   }else if(location.pathname.startsWith(`${PAGES.FEED_PAGE}`)){
     return ORDER_REDUCERS.ORDER_REDUCER;
   }
-  return null;
 }

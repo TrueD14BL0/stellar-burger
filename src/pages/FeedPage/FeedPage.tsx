@@ -1,17 +1,18 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Location, Outlet, Params, useLocation, useParams } from 'react-router-dom';
 import MainContent from '../../components/MainContent/MainContent';
 import OrderFeed from '../../components/OrderFeed/OrderFeed';
 import OrdersInfo from '../../components/OrdersInfo/OrdersInfo';
 import { CLOSE_ORDERS_SOCKET, INIT_ORDERS_SOCKET } from '../../services/actions/OrdersActions';
-import { MAIN_CONTENT_GAP_FEED } from '../../utils/const';
+import { MAIN_CONTENT_GAP } from '../../utils/const';
 import styles from './FeedPage.module.css';
+import { AppThunk } from '../../services/types/types';
 
-const FeedPage = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const params = useParams();
+const FeedPage: FC = () => {
+  const dispatch: AppThunk = useDispatch();
+  const location: Location = useLocation();
+  const params: Readonly<Params<string>> = useParams();
 
   useEffect(() => {
     dispatch({ type: INIT_ORDERS_SOCKET });
@@ -24,7 +25,7 @@ const FeedPage = () => {
     (<Outlet/>):(
     <>
       <h1 className={`text text_type_main-large ${styles.title} mt-10 mb-5`}>Лента заказов</h1>
-      <MainContent gap={MAIN_CONTENT_GAP_FEED}>
+      <MainContent gap={MAIN_CONTENT_GAP.MAIN_CONTENT_GAP_FEED}>
         <OrderFeed />
         <OrdersInfo />
       </MainContent>

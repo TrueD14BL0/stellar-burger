@@ -1,12 +1,13 @@
-import { NavLink, Outlet, useLocation, useParams} from 'react-router-dom';
-import { LOGOUT_PAGE, ORDERS_PAGE, PROFILE_PAGE } from '../../utils/const';
+import { Location, NavLink, Outlet, Params, useLocation, useParams} from 'react-router-dom';
+import { PAGES } from '../../utils/const';
 import styles from './AccountPage.module.css';
+import { FC } from 'react';
 
-const AccountPage = () => {
-  const activeClass = `${styles.headerActiveBtn} ${styles.link} ${'text text_type_main-medium'}`;
-  const inactiveClass = `${'text text_type_main-medium text_color_inactive'} ${styles.link}`;
-  const location = useLocation();
-  const params = useParams();
+const AccountPage: FC = () => {
+  const activeClass: string = `${styles.headerActiveBtn} ${styles.link} ${'text text_type_main-medium'}`;
+  const inactiveClass: string = `${'text text_type_main-medium text_color_inactive'} ${styles.link}`;
+  const location: Location = useLocation();
+  const params: Readonly<Params<string>> = useParams();
 
   return (params.id&&!(location.state&&location.state.modal))?
     (<Outlet/>):
@@ -15,17 +16,17 @@ const AccountPage = () => {
         <div className={styles.navbar}>
           <ul className={styles.navLinks}>
             <NavLink
-              end to={PROFILE_PAGE}
+              end to={PAGES.PROFILE_PAGE}
               className={({ isActive }) => isActive ? activeClass : inactiveClass}>
               Профиль
             </NavLink>
             <NavLink
-              end to={ORDERS_PAGE}
+              end to={PAGES.ORDERS_PAGE}
               className={({ isActive }) => isActive ? activeClass : inactiveClass}>
               История заказов
             </NavLink>
             <NavLink
-              end to={LOGOUT_PAGE}
+              end to={PAGES.LOGOUT_PAGE}
               className={({ isActive }) => isActive ? activeClass : inactiveClass}>
               Выход
             </NavLink>

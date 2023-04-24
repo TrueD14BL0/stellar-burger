@@ -3,7 +3,7 @@ import BurgerConstructorBottom from '../BurgerConstructorBottom/BurgerConstructo
 import styles from './BurgerConstructor.module.css';
 import { useDrop } from 'react-dnd/dist/hooks';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { addIngridientToConstructor } from '../../services/actions/constructorList';
+import { addIngredientToConstructor } from '../../services/actions/constructorList';
 import { decrimentIngridientCount } from '../../services/actions/ingridientList';
 import BurgerElement from '../BurgerElement/BurgerElement';
 import { FC } from 'react';
@@ -25,7 +25,7 @@ const BurgerConstructor: FC = () =>{
         };
       }
     }
-    dispatch(addIngridientToConstructor(item));
+    dispatch(addIngredientToConstructor(item));
   }
 
   const [, dropTarget] = useDrop(

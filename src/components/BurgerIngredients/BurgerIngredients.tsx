@@ -1,23 +1,23 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
 import { useMemo, useState, useRef, Ref, RefObject, UIEventHandler } from 'react';
-import IngridientType from '../IngridientType/IngridientType';
+import IngridientType from '../IngredientType/IngredientType';
 import Modal from '../Modal/Modal';
-import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, shallowEqual } from 'react-redux';
 import { PAGES, Tabs } from '../../utils/const';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Location, NavigateFunction, Params, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { RootState, TIngredient } from '../../services/types/types';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = useState('bun');
-  const bunsRef = useRef<HTMLDivElement>(null);
-  const saucesRef = useRef<HTMLDivElement>(null);
-  const mainsRef = useRef<HTMLDivElement>(null);
-  const navigation = useNavigate();
-  const params = useParams();
-  const location = useLocation();
-  const modal = params.id&&location.state&&location.state.modal;
+  const [current, setCurrent] = useState<string>('bun');
+  const bunsRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const saucesRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const mainsRef: RefObject<HTMLDivElement> = useRef<HTMLDivElement>(null);
+  const navigation: NavigateFunction = useNavigate();
+  const params: Readonly<Params<string>> = useParams();
+  const location: Location = useLocation();
+  const modal: boolean = params.id&&location.state&&location.state.modal;
 
   const { ingredientsList } = useSelector((store:RootState) => ({
     ingredientsList: store.ingredientsListReducer,
@@ -96,7 +96,7 @@ const BurgerIngredients = () => {
       </div>
       {modal &&
         <Modal close={closeModal}>
-          <IngridientDetails/>
+          <IngredientDetails/>
         </Modal>}
     </section>
   )

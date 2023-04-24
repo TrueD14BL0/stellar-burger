@@ -102,6 +102,14 @@ export type TIngredientList = {
   bun: TIngredient,
 }
 
+export type TIngredientSmall = {
+  id: string,
+  name: string,
+  url: string,
+  qty: number,
+  price: number,
+}
+
 export type TDNDObj = {
   index: number,
 }
@@ -113,6 +121,7 @@ export type TOrdersFeed = {
   number: number,
   createdAt: string,
   updatedAt: string,
+  name?:string,
 }
 
 export type TOrdersResponse = {
@@ -154,8 +163,12 @@ export type TFetchOptions = {
   body?: string,
 }
 
+interface IStringIndex {
+  [key: string]: any
+}
+
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>&IStringIndex;
 export type TApplicationActions = TConstructorListActions|TForgotPasswordActions|TIngredientListActions|TIngredientObjActions|TLoginActions|TLogoutActions
   |TOrderActions|TUserOrderSocketActions|TOrderSocketActions|TUserRegisterActions|TResetActions|TUserInfosActions;
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TApplicationActions>>;
