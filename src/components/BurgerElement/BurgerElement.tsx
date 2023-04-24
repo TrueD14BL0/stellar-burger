@@ -1,10 +1,10 @@
 import styles from './BurgerElement.module.css'
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
-import { delIngridientFromConstructor, swapIngridient } from '../../services/actions/constructorList';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TDNDObj, TIngredient } from '../../services/types/types';
 import { FC } from 'react';
+import { delIngredientFromConstructor, swapIngredient } from '../../services/actions/constructorList';
 
 interface IBurgerElement {
   index: number,
@@ -24,14 +24,14 @@ const BurgerElement: FC<IBurgerElement> = ({index, item}) =>{
   const [{isOver}, dropRef] = useDrop({
     accept:'constructor_ingredient',
     drop(dropElIdex: TDNDObj) {
-      dispatch(swapIngridient(dropElIdex, {index}));
+      dispatch(swapIngredient(dropElIdex, {index}));
     },
     collect: monitor =>({
       isOver: monitor.isOver()
     }),
   });
   const handleDel = (index: number, item: TIngredient)=>{
-    dispatch(delIngridientFromConstructor(item, index));
+    dispatch(delIngredientFromConstructor(item, index));
   }
 
   const style = isOver ? styles.highlighted : null;

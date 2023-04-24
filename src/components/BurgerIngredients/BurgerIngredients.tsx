@@ -1,19 +1,19 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import { useMemo, useState, useRef } from 'react';
+import { useMemo, useState, useRef, Ref, RefObject, UIEventHandler } from 'react';
 import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, shallowEqual } from 'react-redux';
-import { Tabs } from '../../utils/const';
+import { PAGES, Tabs } from '../../utils/const';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { RootState, TIngredient } from '../../services/types/types';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
-  const bunsRef = useRef<HTMLInputElement>(null);
-  const saucesRef = useRef<HTMLElement>(null);
-  const mainsRef = useRef<HTMLElement>(null);
+  const bunsRef = useRef<HTMLDivElement>(null);
+  const saucesRef = useRef<HTMLDivElement>(null);
+  const mainsRef = useRef<HTMLDivElement>(null);
   const navigation = useNavigate();
   const params = useParams();
   const location = useLocation();
@@ -47,16 +47,19 @@ const BurgerIngredients = () => {
     [ingredientsList]
   );
 
-  const setCurrentScroll = (elToScroll: Event) =>{
-    elToScroll.current.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+  const setCurrentScroll = (elToScroll: RefObject<HTMLDivElement>) =>{
+    if(elToScroll && elToScroll.current){
+      elToScroll.current.scrollIntoView({ block: 'start',  behavior: 'smooth' });
+    }
   }
 
-  const scrollHandler = (evt)=>{
-    const parentTop = evt.target.offsetTop;
-    const scrollSize = evt.target.scrollTop;
-    const bunsTop = Math.abs(bunsRef.current.offsetTop - scrollSize - parentTop);
-    const saucesTop = Math.abs(saucesRef.current.offsetTop - scrollSize - parentTop);
-    const mainsTop = Math.abs(mainsRef.current.offsetTop - scrollSize - parentTop);
+  const scrollHandler: UIEventHandler<HTMLDivElement> = (evt) =>{
+    const parentDiv: HTMLDivElement = evt.target as HTMLDivElement;
+    const parentTop: number = parentDiv.offsetTop;
+    const scrollSize: number = parentDiv.scrollTop;
+    const bunsTop = Math.abs(bunsRef.current?.offsetTop||0 - scrollSize - parentTop);
+    const saucesTop = Math.abs(saucesRef.current?.offsetTop||0 - scrollSize - parentTop);
+    const mainsTop = Math.abs(mainsRef.current?.offsetTop||0 - scrollSize - parentTop);
     const minCoord = Math.min(bunsTop, saucesTop, mainsTop)
 
     if(minCoord===bunsTop){
@@ -69,7 +72,7 @@ const BurgerIngredients = () => {
   }
 
   const closeModal = ()=>{
-    navigation(MAIN_PAGE);
+    navigation(PAGES.MAIN_PAGE);
   }
 
   return (
