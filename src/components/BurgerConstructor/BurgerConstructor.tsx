@@ -6,16 +6,18 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addIngridientToConstructor } from '../../services/actions/constructorList';
 import { decrimentIngridientCount } from '../../services/actions/ingridientList';
 import BurgerElement from '../BurgerElement/BurgerElement';
+import { FC } from 'react';
+import { AppThunk, RootState, TIngredient } from '../../services/types/types';
 
-const BurgerConstructor = () =>{
+const BurgerConstructor: FC = () =>{
 
-  const dispatch = useDispatch();
+  const dispatch: AppThunk = useDispatch();
 
-  const { constructorList } = useSelector(store => ({
+  const { constructorList } = useSelector((store:RootState) => ({
     constructorList: store.constructorListReducer,
   }), shallowEqual);
 
-  const handleAddIngridient = (item)=>{
+  const handleAddIngredient = (item: TIngredient)=>{
     if(item.type === 'bun'){
       if(item !== constructorList.bun){
         if(constructorList.bun){
@@ -28,9 +30,9 @@ const BurgerConstructor = () =>{
 
   const [, dropTarget] = useDrop(
     {
-      accept:'ingridient',
-      drop(item) {
-        handleAddIngridient(item);
+      accept:'ingredient',
+      drop(item: TIngredient) {
+        handleAddIngredient(item);
       },
     }
   );

@@ -1,5 +1,7 @@
+import { Middleware } from "redux";
 import Api from "../../components/Api/Api";
 import { deleteCookie, getCookie, setTokenCookies } from "../../utils/utils";
+import { RootState, TWSActions } from "../types/types";
 
 /*
   TODO: Исправить перед следующим спринтом!!!
@@ -13,10 +15,10 @@ import { deleteCookie, getCookie, setTokenCookies } from "../../utils/utils";
   (в некоторымх моментах) можно проверять какой из двух типов экшенов содержится в данном ключе
 */
 
-export const socketMiddleware = (wsUrl, wsActions) => {
+export const socketMiddleware = (wsUrl: string, wsActions: TWSActions)=> {
   return store => {
-    let socket = null;
-    let userSocket = null;
+    let socket: WebSocket|null = null;
+    let userSocket: WebSocket|null = null;
     return next => action => {
       const { dispatch } = store;
       const { type } = action;
@@ -24,7 +26,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         initUserOrder, onOpenUserOrder, onCloseUserOrder, closeUserOrder,onErrorUserOrder, onMessageUserOrder } = wsActions;
 
       const updateToken = () =>{
-        Api.getAccessToken(getCookie('refreshToken'))
+        Api.getAccessToken(getCookie('refreshToken')||'')
           .then((data)=>{
             setTokenCookies(data.accessToken, data.refreshToken)
             dispatch({ type: initUserOrder, payload:`` });
@@ -42,7 +44,8 @@ export const socketMiddleware = (wsUrl, wsActions) => {
       };
       if(type === initUserOrder){
         if(getCookie('token')){
-          userSocket = new WebSocket(`${wsUrl}?token=${getCookie('token').replace(`Bearer `,'')}`);
+          const token:string = getCookie('token')||'Bearer ';
+          userSocket = new WebSocket(`${wsUrl}?token=${token.replace(`Bearer `,'')}`);
         }else{
           updateToken();
         }

@@ -1,12 +1,19 @@
 import { LOGIN_CLEAR, LOGIN_ERROR, LOGIN_SUCCESS } from "../../utils/const";
+import { TLoginActions } from "../actions/loginActions";
 
-const initialState = {
-  status: null,
+type TLoginState = {
+  status: boolean,
+  token: string|null,
+  refreshToken: string|null,
+};
+
+const initialState: TLoginState = {
+  status: false,
   token: null,
   refreshToken: null,
 };
 
-export const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = initialState, action: TLoginActions): TLoginState => {
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {

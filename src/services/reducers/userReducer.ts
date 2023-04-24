@@ -1,11 +1,17 @@
 import { SET_USER, CLEAR_USER, USER_REQUEST_ERROR } from "../../utils/const";
+import { TUserInfosActions } from "../actions/userActions";
 
-const initialState = {
-    email: null,
-    name: null,
+type TUserState = {
+  email: string,
+  name: string,
 };
 
-export const userReducer = (state = initialState, action) => {
+const initialState: TUserState = {
+    email: '',
+    name: '',
+};
+
+export const userReducer = (state = initialState, action: TUserInfosActions): TUserState => {
   switch (action.type) {
     case SET_USER:
       return {

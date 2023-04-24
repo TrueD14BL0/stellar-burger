@@ -1,10 +1,15 @@
 import { LOGOUT_SUCCESS, LOGOUT_ERROR } from "../../utils/const";
+import { TLogoutActions } from "../actions/logoutActions";
 
-const initialState = {
-  status: null,
+type TLogoutState = {
+  status: boolean,
 };
 
-export const logoutReducer = (state = initialState, action) => {
+const initialState: TLogoutState = {
+  status: false,
+};
+
+export const logoutReducer = (state = initialState, action: TLogoutActions): TLogoutState => {
   switch (action.type) {
     case LOGOUT_SUCCESS:
       return {

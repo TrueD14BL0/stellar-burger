@@ -1,6 +1,6 @@
 import { ADD_INGREDIENT_TO_CONSTRUCTOR, DEL_INGREDIENT_FROM_CONSTRUCTOR, SWAP_INGREDIENT_IN_CONSTRUCTOR } from "../../utils/const";
 import { v4 as uuidv4 } from 'uuid';
-import { TIngredient } from "../types/types";
+import { TDNDObj, TIngredient } from "../types/types";
 
 export interface IAddIngridientToConstructor{
   readonly type: typeof ADD_INGREDIENT_TO_CONSTRUCTOR;
@@ -15,12 +15,12 @@ export interface IDelIngridientFromConstructor{
 
 export interface ISwapIngridient{
   readonly type: typeof SWAP_INGREDIENT_IN_CONSTRUCTOR;
-  readonly firstEl: number;
-  readonly secondEl: number;
+  readonly firstEl: TDNDObj;
+  readonly secondEl: TDNDObj;
 }
 
 export const addIngridientToConstructor = (ingredient: TIngredient): IAddIngridientToConstructor => {
-  const uuid = uuidv4();
+  const uuid: string = uuidv4();
   return {
       type: ADD_INGREDIENT_TO_CONSTRUCTOR,
       ingredient: {
@@ -38,7 +38,7 @@ export const delIngridientFromConstructor = (ingredient: TIngredient, index: num
   }
 }
 
-export const swapIngridient = (firstEl: number, secondEl: number): ISwapIngridient => {
+export const swapIngridient = (firstEl: TDNDObj, secondEl: TDNDObj): ISwapIngridient => {
   return {
       type: SWAP_INGREDIENT_IN_CONSTRUCTOR,
       firstEl,

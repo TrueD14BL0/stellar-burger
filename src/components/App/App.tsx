@@ -1,5 +1,5 @@
 import AppHeader from '../AppHeader/AppHeader';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getIngridientsList } from '../../services/actions/ingridientList';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -19,10 +19,11 @@ import { PAGES } from '../../utils/const';
 import FeedPage from '../../pages/FeedPage/FeedPage';
 import OrderDetailsPage from '../../pages/OrderDetailsPage/OrderDetailsPage';
 import UserOrderFeed from '../UserOrderFeed/UserOrderFeed';
+import { AppThunk } from '../../services/types/types';
 
-function App() {
+const App:FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch: AppThunk = useDispatch();
 
   useEffect(()=>{
     dispatch(getIngridientsList());
@@ -33,7 +34,7 @@ function App() {
       <AppHeader />
       <Routes>
         <Route path={PAGES.MAIN_PAGE} element={<StartPage />}>
-          <Route path={`${PAGES.INGRIDIENTS_PAGE}/:id`} element={<IngridientsPage />}/>
+          <Route path={`${PAGES.INGREDIENTS_PAGE}/:id`} element={<IngridientsPage />}/>
         </Route>
         <Route path={PAGES.LOGIN_PAGE} element={<UnauthRouteElement element={<LoginPage />}/>}/>
         <Route path={PAGES.LOGOUT_PAGE} element={<LogoutPage />}/>

@@ -15,30 +15,30 @@ const initialState: TConstructorListState = {
 const constructorListReducer = (state = initialState, action: TConstructorListActions): TConstructorListState => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_CONSTRUCTOR:
-      const ingridient = action.ingredient;
-      if(ingridient.type==='bun'){
+      const ingredient: TIngredient = action.ingredient;
+      if(ingredient.type==='bun'){
         return {...state,
-                  bun: ingridient,
+                  bun: ingredient,
                 }
       }else{
         return {...state,
                 content: [
                   ...state.content,
-                  ingridient,
+                  ingredient,
                 ],
               }
       }
     case DEL_INGREDIENT_FROM_CONSTRUCTOR:
-      const copy = [...state.content];
+      const copy: TIngredient[] = [...state.content];
       copy.splice(action.index,1);
       return {
         ...state,
         content: copy
       }
     case SWAP_INGREDIENT_IN_CONSTRUCTOR:
-      const copyArr = [...state.content];
-      const firstEl = copyArr[action.firstEl.index];
-      const secondEl = copyArr[action.secondEl.index];
+      const copyArr: TIngredient[] = [...state.content];
+      const firstEl: TIngredient = copyArr[action.firstEl.index];
+      const secondEl: TIngredient = copyArr[action.secondEl.index];
       copyArr.splice(action.secondEl.index,1,firstEl);
       copyArr.splice(action.firstEl.index,1,secondEl);
       return {

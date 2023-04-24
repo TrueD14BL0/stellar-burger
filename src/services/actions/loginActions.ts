@@ -1,9 +1,13 @@
 import Api from "../../components/Api/Api";
-import { LOGIN_ERROR, LOGIN_REQUEST, LOGIN_SUCCESS } from "../../utils/const";
+import { LOGIN_CLEAR, LOGIN_ERROR, LOGIN_REQUEST, LOGIN_SUCCESS } from "../../utils/const";
 import { AppThunk, TLoginData } from "../types/types";
 
 export interface ILoginRequest{
   readonly type: typeof LOGIN_REQUEST;
+}
+
+export interface ILoginClear{
+  readonly type: typeof LOGIN_CLEAR;
 }
 
 export interface ILoginSuccess{
@@ -52,4 +56,4 @@ export const loginErr = (err: string): ILoginErr => {
   }
 }
 
-export type TLoginActions = ILoginRequest|ILoginSuccess|ILoginErr;
+export type TLoginActions = ILoginRequest|ILoginSuccess|ILoginErr|ILoginClear;

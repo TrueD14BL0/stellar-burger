@@ -5,48 +5,49 @@ import IngridientType from '../IngridientType/IngridientType';
 import Modal from '../Modal/Modal';
 import IngridientDetails from '../IngredientDetails/IngredientDetails';
 import { useSelector, shallowEqual } from 'react-redux';
-import { MAIN_PAGE, Tabs } from '../../utils/const';
+import { Tabs } from '../../utils/const';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { RootState, TIngredient } from '../../services/types/types';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState('bun');
-  const bunsRef = useRef(null);
-  const saucesRef = useRef(null);
-  const mainsRef = useRef(null);
+  const bunsRef = useRef<HTMLInputElement>(null);
+  const saucesRef = useRef<HTMLElement>(null);
+  const mainsRef = useRef<HTMLElement>(null);
   const navigation = useNavigate();
   const params = useParams();
   const location = useLocation();
   const modal = params.id&&location.state&&location.state.modal;
 
-  const { ingridientsList } = useSelector(store => ({
-    ingridientsList: store.ingridientsListReducer,
+  const { ingredientsList } = useSelector((store:RootState) => ({
+    ingredientsList: store.ingredientsListReducer,
   }), shallowEqual);
 
   const buns = useMemo(
     () =>
-    ingridientsList.content.filter((item) => {
+    ingredientsList.content.filter((item: TIngredient) => {
         return item.type === "bun"
       }),
-    [ingridientsList]
+    [ingredientsList]
   );
 
   const sauce = useMemo(
     () =>
-    ingridientsList.content.filter((item) => {
+    ingredientsList.content.filter((item: TIngredient) => {
         return item.type === "sauce"
       }),
-    [ingridientsList]
+    [ingredientsList]
   );
 
   const main = useMemo(
     () =>
-    ingridientsList.content.filter((item) => {
+    ingredientsList.content.filter((item: TIngredient) => {
         return item.type === "main"
       }),
-    [ingridientsList]
+    [ingredientsList]
   );
 
-  const setCurrentScroll = (elToScroll) =>{
+  const setCurrentScroll = (elToScroll: Event) =>{
     elToScroll.current.scrollIntoView({ block: 'start',  behavior: 'smooth' });
   }
 

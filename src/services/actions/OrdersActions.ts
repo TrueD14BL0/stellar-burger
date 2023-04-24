@@ -1,3 +1,5 @@
+import { TOrdersResponse } from "../types/types";
+
 export const INIT_ORDERS_SOCKET: 'INIT_ORDERS_SOCKET' = "INIT_ORDERS_SOCKET";
 export const SUCCESS_ORDERS_SOCKET: 'SUCCESS_ORDERS_SOCKET' = "SUCCESS_ORDERS_SOCKET";
 export const CLOSE_ORDERS_SOCKET: 'CLOSE_ORDERS_SOCKET' = "CLOSE_ORDERS_SOCKET";
@@ -5,14 +7,34 @@ export const GET_ORDERS_DATA: 'GET_ORDERS_DATA' = "GET_ORDERS_DATA";
 export const ON_ERROR_SOCKET: 'ON_ERROR_SOCKET' = "ON_ERROR_SOCKET";
 export const ON_CLOSE_SOCKET: 'ON_CLOSE_SOCKET' = "ON_CLOSE_SOCKET";
 
-export const wsOrdersActions = {
-  init: INIT_ORDERS_SOCKET,
-  onOpen: SUCCESS_ORDERS_SOCKET,
-  onMessage: GET_ORDERS_DATA,
-  close: CLOSE_ORDERS_SOCKET,
-  onClose: ON_CLOSE_SOCKET,
-  onError: ON_ERROR_SOCKET,
-};
+export interface IOrderSocketInit{
+  readonly type: typeof INIT_ORDERS_SOCKET;
+}
+
+export interface IOrderSocketSuccess{
+  readonly type: typeof SUCCESS_ORDERS_SOCKET;
+}
+
+export interface IOrderSocketClose{
+  readonly type: typeof CLOSE_ORDERS_SOCKET;
+}
+
+export interface IOrderSocketGetData{
+  readonly type: typeof GET_ORDERS_DATA;
+  payload: string;
+}
+
+export interface IOrderSocketError{
+  readonly type: typeof ON_ERROR_SOCKET;
+  payload: string;
+}
+
+export interface IOrderSocketOnClose{
+  readonly type: typeof ON_CLOSE_SOCKET;
+}
+
+export type TOrderSocketActions = IOrderSocketClose|IOrderSocketError|IOrderSocketGetData
+  |IOrderSocketInit|IOrderSocketOnClose|IOrderSocketSuccess;
 
 export const INIT_USER_ORDERS_SOCKET: 'INIT_USER_ORDERS_SOCKET' = "INIT_USER_ORDERS_SOCKET";
 export const SUCCESS_USER_ORDERS_SOCKET: 'SUCCESS_USER_ORDERS_SOCKET' = "SUCCESS_USER_ORDERS_SOCKET";
@@ -21,11 +43,31 @@ export const GET_USER_ORDERS_DATA: 'GET_USER_ORDERS_DATA' = "GET_USER_ORDERS_DAT
 export const ON_USER_ERROR_SOCKET: 'ON_USER_ERROR_SOCKET' = "ON_USER_ERROR_SOCKET";
 export const ON_USER_CLOSE_SOCKET: 'ON_USER_CLOSE_SOCKET' = "ON_USER_CLOSE_SOCKET";
 
-export const wsUserOrdersActions = {
-  initUserOrder: INIT_USER_ORDERS_SOCKET,
-  onOpenUserOrder: SUCCESS_USER_ORDERS_SOCKET,
-  onMessageUserOrder: GET_USER_ORDERS_DATA,
-  closeUserOrder: CLOSE_USER_ORDERS_SOCKET,
-  onCloseUserOrder: ON_USER_CLOSE_SOCKET,
-  onErrorUserOrder: ON_USER_ERROR_SOCKET,
-};
+export interface IUserOrderSocketInit{
+  readonly type: typeof INIT_USER_ORDERS_SOCKET;
+}
+
+export interface IUserOrderSocketSuccess{
+  readonly type: typeof SUCCESS_USER_ORDERS_SOCKET;
+}
+
+export interface IUserOrderSocketClose{
+  readonly type: typeof CLOSE_USER_ORDERS_SOCKET;
+}
+
+export interface IUserOrderSocketGetData{
+  readonly type: typeof GET_USER_ORDERS_DATA;
+  payload: TOrdersResponse;
+}
+
+export interface IUserOrderSocketError{
+  readonly type: typeof ON_USER_ERROR_SOCKET;
+  payload: string;
+}
+
+export interface IUserOrderSocketOnClose{
+  readonly type: typeof ON_USER_CLOSE_SOCKET;
+}
+
+export type TUserOrderSocketActions = IUserOrderSocketClose|IUserOrderSocketError|IUserOrderSocketGetData
+  |IUserOrderSocketInit|IUserOrderSocketOnClose|IUserOrderSocketSuccess;

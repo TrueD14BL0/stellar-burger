@@ -1,6 +1,7 @@
-import { CLOSE_USER_ORDERS_SOCKET, GET_USER_ORDERS_DATA, INIT_USER_ORDERS_SOCKET, ON_USER_CLOSE_SOCKET, ON_USER_ERROR_SOCKET, SUCCESS_USER_ORDERS_SOCKET } from "../actions/OrdersActions";
+import { CLOSE_USER_ORDERS_SOCKET, GET_USER_ORDERS_DATA, INIT_USER_ORDERS_SOCKET, ON_USER_CLOSE_SOCKET, ON_USER_ERROR_SOCKET, SUCCESS_USER_ORDERS_SOCKET, TUserOrderSocketActions } from "../actions/OrdersActions";
+import { TOrdersState } from "../types/types";
 
-const initialState = {
+const initialState: TOrdersState = {
   connected: false,
   orders: [],
   total: 0,
@@ -8,7 +9,7 @@ const initialState = {
   error: null,
 };
 
-const userOrdersReducer = (state = initialState, action) => {
+const userOrdersReducer = (state = initialState, action: TUserOrderSocketActions): TOrdersState => {
   switch (action.type) {
     case INIT_USER_ORDERS_SOCKET:
       return initialState;

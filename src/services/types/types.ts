@@ -11,6 +11,7 @@ import { TOrderActions } from "../actions/orderObj";
 import { TUserRegisterActions } from "../actions/registerUser";
 import { TResetActions } from "../actions/resetPassword";
 import { TUserInfosActions } from "../actions/userActions";
+import { TOrderSocketActions, TUserOrderSocketActions } from "../actions/OrdersActions";
 
 export type TIngredient = {
   _id:string,
@@ -101,8 +102,60 @@ export type TIngredientList = {
   bun: TIngredient,
 }
 
+export type TDNDObj = {
+  index: number,
+}
+
+export type TOrdersFeed = {
+  ingredients: string[],
+  _id: string,
+  status: string,
+  number: number,
+  createdAt: string,
+  updatedAt: string,
+}
+
+export type TOrdersResponse = {
+  success: boolean,
+  total: number,
+  totalToday: number,
+  orders: TOrdersFeed[],
+}
+
+export type TOrdersState = {
+  connected: boolean,
+  orders: TOrdersFeed[],
+  total: number,
+  totalToday: number,
+  error: any,
+};
+
+export type TWSActions = {
+  init: string,
+  onOpen: string,
+  onClose: string,
+  close: string,
+  onError: string,
+  onMessage: string,
+  initUserOrder: string,
+  onOpenUserOrder: string,
+  onCloseUserOrder: string,
+  closeUserOrder: string,
+  onErrorUserOrder: string,
+  onMessageUserOrder: string,
+}
+
+export type TFetchOptions = {
+  method: "POST"|"GET"|"PATCH",
+  headers: {
+    "Content-Type": string,
+    authorization?: string,
+  },
+  body?: string,
+}
+
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type TApplicationActions = TConstructorListActions|TForgotPasswordActions|TIngredientListActions|TIngredientObjActions|TLoginActions|TLogoutActions|TOrderActions
-  |TUserRegisterActions|TResetActions|TUserInfosActions;
+export type TApplicationActions = TConstructorListActions|TForgotPasswordActions|TIngredientListActions|TIngredientObjActions|TLoginActions|TLogoutActions
+  |TOrderActions|TUserOrderSocketActions|TOrderSocketActions|TUserRegisterActions|TResetActions|TUserInfosActions;
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TApplicationActions>>;

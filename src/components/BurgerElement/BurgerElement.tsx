@@ -1,38 +1,43 @@
 import styles from './BurgerElement.module.css'
-import PropTypes from 'prop-types';
-import { burgerIngredientProps } from '../../utils/propTypes';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { delIngridientFromConstructor, swapIngridient } from '../../services/actions/constructorList';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TDNDObj, TIngredient } from '../../services/types/types';
+import { FC } from 'react';
 
-const BurgerElement = ({index, item}) =>{
+interface IBurgerElement {
+  index: number,
+  item: TIngredient
+}
+
+const BurgerElement: FC<IBurgerElement> = ({index, item}) =>{
 
   const dispatch = useDispatch();
   const [{isDrag}, dragRef] = useDrag({
-    type:'constructor_ingridient',
+    type:'constructor_ingredient',
     item: {index},
     collect: monitor => ({
       isDrag: monitor.isDragging(),
     })
   });
   const [{isOver}, dropRef] = useDrop({
-    accept:'constructor_ingridient',
-    drop(dropElIdex) {
+    accept:'constructor_ingredient',
+    drop(dropElIdex: TDNDObj) {
       dispatch(swapIngridient(dropElIdex, {index}));
     },
     collect: monitor =>({
       isOver: monitor.isOver()
     }),
   });
-  const handleDel = (index, item)=>{
+  const handleDel = (index: number, item: TIngredient)=>{
     dispatch(delIngridientFromConstructor(item, index));
   }
 
   const style = isOver ? styles.highlighted : null;
 
   return (
-    !isDrag &&
+    !isDrag ?
     <div className={`${styles.elementContent} ${style}`} ref={(node)=>dragRef(dropRef(node))}>
       <div className={styles.dragBtn}>
         <DragIcon type="primary" />
@@ -46,12 +51,8 @@ const BurgerElement = ({index, item}) =>{
         handleClose={()=>handleDel(index, item)}
       />
     </div>
+    : null
   )
 }
-
-BurgerElement.propTypes = {
-  item: burgerIngredientProps,
-  index: PropTypes.number.isRequired,
-};
 
 export default BurgerElement;

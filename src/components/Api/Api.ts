@@ -1,10 +1,10 @@
-import { TApiGetIngredients, TForgotPassword, TIngredient, TLoginData, TLoginResponse, TLogoutResponse, TOrderResponse, TPatchUserData, TRefresh, TRegUserData, TResetData, TResetResponse, TUserSuccess } from "../../services/types/types";
+import { TApiGetIngredients, TFetchOptions, TForgotPassword, TIngredient, TLoginData, TLoginResponse, TLogoutResponse, TOrderResponse, TPatchUserData, TRefresh, TRegUserData, TResetData, TResetResponse, TUserSuccess } from "../../services/types/types";
 
 const apiAddress = "https://norma.nomoreparties.space/api";
 
 export default class Api{
 
-  static _request<T>(url: string, options?: any):Promise<T> {
+  static _request<T>(url: string, options?: TFetchOptions):Promise<T> {
     return fetch(url, options)
       .then((res)=>{return this._testRes(res)});
   }

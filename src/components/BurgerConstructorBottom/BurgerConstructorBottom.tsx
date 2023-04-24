@@ -5,28 +5,30 @@ import OrderDetails from '../OrderDetails/OrderDetails';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { clearOrder, getOrderInfo } from "../../services/actions/orderObj";
 import { getCookie } from "../../utils/utils";
-import { useLocation, useNavigate } from "react-router-dom";
-import { LOGIN_PAGE } from "../../utils/const";
+import { Location, NavigateFunction, useLocation, useNavigate } from "react-router-dom";
+import { PAGES } from "../../utils/const";
+import { FC } from 'react';
+import { AppThunk, RootState } from "../../services/types/types";
 
-const BurgerConstructorBottom = () => {
+const BurgerConstructorBottom: FC = () => {
 
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigation = useNavigate();
+  const dispatch: AppThunk = useDispatch();
+  const location: Location = useLocation();
+  const navigation: NavigateFunction = useNavigate();
 
-  const { constructorList, sum } = useSelector(store => ({
+  const { constructorList, sum } = useSelector((store: RootState) => ({
     constructorList: store.constructorListReducer,
     sum: store.constructorListReducer.content.reduce((partialSum, a) => partialSum + a.price, 0)
       + (store.constructorListReducer.bun ? store.constructorListReducer.bun.price*2 : 0),
   }), shallowEqual);
 
-  const { orderObj } = useSelector(store => ({
+  const { orderObj } = useSelector((store: RootState) => ({
     orderObj: store.orderObjReducer,
   }), shallowEqual);
 
   const onClickHandler = () => {
     if(!getCookie('refreshToken')){
-      navigation(LOGIN_PAGE, {
+      navigation(PAGES.LOGIN_PAGE, {
         replace:true,
         state:{prev: location.pathname}
       });

@@ -1,10 +1,15 @@
 import { USER_REGISTRATION_ERROR, USER_REGISTRATION_SUCCESS } from "../../utils/const";
+import { TUserRegisterActions } from "../actions/registerUser";
 
-const initialState = {
-  status: null
+type TRegisterUserState = {
+  status: boolean,
 };
 
-export const registerUserReducer = (state = initialState, action) => {
+const initialState: TRegisterUserState = {
+  status: false
+};
+
+export const registerUserReducer = (state = initialState, action: TUserRegisterActions): TRegisterUserState => {
   switch (action.type) {
     case USER_REGISTRATION_SUCCESS:
       //переходим на логин

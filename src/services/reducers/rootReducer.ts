@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import constructorListReducer from './constructorListReducer';
-import ingridientObjReducer from './ingridientObjReducer';
-import ingridientsListReducer from './ingridientsListReducer';
+import ingredientObjReducer from './ingredientObjReducer';
+import ingredientsListReducer from './ingredientsListReducer';
 import orderObjReducer from './orderObjReducer';
 import forgotPasswordReducer from './forgotPasswordReducer';
 import registerUserReducer from './registerUserReducer';
@@ -14,8 +14,8 @@ import userOrdersReducer from './userOrdersReducer';
 
 const rootReducer = combineReducers({
   constructorListReducer,
-  ingridientObjReducer,
-  ingridientsListReducer,
+  ingredientObjReducer,
+  ingredientsListReducer,
   orderObjReducer,
   forgotPasswordReducer,
   registerUserReducer,

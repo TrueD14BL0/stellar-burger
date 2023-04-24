@@ -1,12 +1,19 @@
 import { ORDER_CLEAR, ORDER_ERROR, ORDER_REQUEST, ORDER_SUCCESS } from "../../utils/const";
+import { TOrderActions } from "../actions/orderObj";
 
-const initialState = {
+type TOrderObjState = {
+  loading: boolean,
+  error: boolean,
+  number: number|null,
+}
+
+const initialState: TOrderObjState = {
   loading: false,
   error: false,
   number: null
 }
 
-const orderObjReducer = (state = initialState, action) => {
+const orderObjReducer = (state = initialState, action: TOrderActions): TOrderObjState => {
   switch (action.type) {
     case ORDER_REQUEST:
       return {
