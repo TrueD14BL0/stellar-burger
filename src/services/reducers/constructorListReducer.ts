@@ -1,14 +1,21 @@
-import { ADD_INGRIDIENT_TO_CONSTRUCTOR, DEL_INGRIDIENT_FROM_CONSTRUCTOR, SWAP_INGRIDIENT_IN_CONSTRUCTOR } from "../../utils/const";
+import { ADD_INGREDIENT_TO_CONSTRUCTOR, DEL_INGREDIENT_FROM_CONSTRUCTOR, SWAP_INGREDIENT_IN_CONSTRUCTOR } from "../../utils/const";
+import { TConstructorListActions } from "../actions/constructorList";
+import { TIngredient } from "../types/types";
 
-const initialState = {
+type TConstructorListState = {
+  content: TIngredient[],
+  bun: TIngredient|null,
+}
+
+const initialState: TConstructorListState = {
   content: [],
   bun: null,
 };
 
-const constructorListReducer = (state = initialState, action) => {
+const constructorListReducer = (state = initialState, action: TConstructorListActions): TConstructorListState => {
   switch (action.type) {
-    case ADD_INGRIDIENT_TO_CONSTRUCTOR:
-      const ingridient = action.ingridient;
+    case ADD_INGREDIENT_TO_CONSTRUCTOR:
+      const ingridient = action.ingredient;
       if(ingridient.type==='bun'){
         return {...state,
                   bun: ingridient,
@@ -21,14 +28,14 @@ const constructorListReducer = (state = initialState, action) => {
                 ],
               }
       }
-    case DEL_INGRIDIENT_FROM_CONSTRUCTOR:
+    case DEL_INGREDIENT_FROM_CONSTRUCTOR:
       const copy = [...state.content];
       copy.splice(action.index,1);
       return {
         ...state,
         content: copy
       }
-    case SWAP_INGRIDIENT_IN_CONSTRUCTOR:
+    case SWAP_INGREDIENT_IN_CONSTRUCTOR:
       const copyArr = [...state.content];
       const firstEl = copyArr[action.firstEl.index];
       const secondEl = copyArr[action.secondEl.index];
