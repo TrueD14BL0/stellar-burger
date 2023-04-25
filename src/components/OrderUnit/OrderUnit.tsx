@@ -3,17 +3,22 @@ import { diffDateInDays, diffToString } from "../../utils/utils";
 import styles from './OrderUnit.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { orderProps } from "../../utils/propTypes";
-import { useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import OrderUnitThumbnail from "../OrderUnitThumbnail/OrderUnitThumbnail";
-import PropTypes from 'prop-types';
-import { ordersStatus } from "../../utils/data";
-import { MAX_VISIBLE_INGREDIENTS_IN_ORDER } from "../../utils/const";
-import { useMemo } from "react";
+import { MAX_VISIBLE_INGREDIENTS_IN_ORDER, ordersStatus } from "../../utils/const";
+import { FC, useMemo } from "react";
+import { TOrdersFeed } from "../../services/types/types";
+import { RootState } from "../../services/types/types";
 
-const OrderUnit = ({ itemInfo, page, withStatus }) => {
+interface IOrderUnit {
+  itemInfo: TOrdersFeed,
+  page: string,
+  withStatus?: boolean,
+};
 
-  const ingredientsList = useSelector(store => store.ingridientsListReducer, shallowEqual);
+const OrderUnit: FC<IOrderUnit> = ({ itemInfo, page, withStatus }) => {
+
+  const ingredientsList = useSelector((store: RootState) => store.ingredientsListReducer, shallowEqual);
   const orderSum = useMemo(() => {
     let sum = 0;
     itemInfo.ingredients.forEach(element => {
@@ -27,10 +32,10 @@ const OrderUnit = ({ itemInfo, page, withStatus }) => {
     [ingredientsList.content, itemInfo.ingredients]
   );
 
-  const navigation = useNavigate();
-  const orderDate = new Date(Date.parse(itemInfo.createdAt));
-  const today = new Date();
-  const differenceDate = diffDateInDays(orderDate, today);
+  const navigation: NavigateFunction = useNavigate();
+  const orderDate: Date = new Date(Date.parse(itemInfo.createdAt));
+  const today: Date = new Date();
+  const differenceDate = diffDateInDays(orderDate.getDate(), today.getDate());
 
   const orderIngridients = useMemo(()=>{
     return itemInfo.ingredients.map((element, index) => {
@@ -72,7 +77,7 @@ const OrderUnit = ({ itemInfo, page, withStatus }) => {
       <div>
         <p className={`text text_type_main-medium`}>{itemInfo.name}</p>
         {withStatus&&
-          <p className={`text text_type_main-small pt-2 pb-5 ${styles[itemInfo.status]}`}>{ordersStatus[itemInfo.status]}</p>
+          <p className={`text text_type_main-small pt-2 pb-5 ${styles[itemInfo.status]}`}>{ordersStatus[itemInfo.status as keyof typeof ordersStatus]}</p>
         }
       </div>
       <div className={styles.bottom}>
@@ -87,11 +92,5 @@ const OrderUnit = ({ itemInfo, page, withStatus }) => {
     </li>
   );
 }
-
-OrderUnit.propTypes = {
-  itemInfo: orderProps,
-  page: PropTypes.string.isRequired,
-  withStatus: PropTypes.bool,
-};
 
 export default OrderUnit;

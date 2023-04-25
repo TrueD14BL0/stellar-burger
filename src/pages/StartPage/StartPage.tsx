@@ -4,11 +4,12 @@ import BurgerConstructor from "../../components/BurgerConstructor/BurgerConstruc
 import BurgerIngredients from "../../components/BurgerIngredients/BurgerIngredients";
 import MainContent from "../../components/MainContent/MainContent";
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Location, Outlet, Params, useLocation, useParams } from 'react-router-dom';
+import { FC } from 'react';
 
-const StartPage = () => {
-  const location = useLocation();
-  const params = useParams();
+const StartPage: FC = () => {
+  const location: Location = useLocation();
+  const params: Readonly<Params<string>> = useParams();
 
   return (params.id&&!(location.state&&location.state.modal))?
   (<Outlet/>):

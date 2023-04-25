@@ -1,22 +1,24 @@
 import { shallowEqual, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { FEED_PAGE } from "../../utils/const";
+import { Location, NavigateFunction, Params, useLocation, useNavigate, useParams } from "react-router-dom";
+import { PAGES } from "../../utils/const";
 import Modal from "../Modal/Modal";
 import OrderDetailInfo from "../OrderDetailInfo/OrderDetailInfo";
 import OrderUnit from "../OrderUnit/OrderUnit";
 import styles from './OrderFeed.module.css'
+import { RootState } from "../../services/types/types";
+import { FC } from "react";
 
-const OrderFeed = () => {
+const OrderFeed: FC = () => {
 
-  const params = useParams();
-  const location = useLocation();
-  const navigation = useNavigate();
-  const modal = params.id&&location.state&&location.state.modal;
-  const orders = useSelector(store => store.ordersReducer.orders, shallowEqual);
-  const connected = useSelector(store => store.ordersReducer.connected, shallowEqual);
+  const params: Readonly<Params<string>> = useParams();
+  const location: Location = useLocation();
+  const navigation: NavigateFunction = useNavigate();
+  const modal: boolean = params.id&&location.state&&location.state.modal;
+  const orders = useSelector((store: RootState) => store.ordersReducer.orders, shallowEqual);
+  const connected = useSelector((store: RootState) => store.ordersReducer.connected, shallowEqual);
 
   const closeModal = ()=>{
-    navigation(FEED_PAGE);
+    navigation(PAGES.FEED_PAGE);
   }
 
   return !connected ?
@@ -27,7 +29,7 @@ const OrderFeed = () => {
           {orders.map(
             (item) => {
               return(
-                <OrderUnit itemInfo={item} key={item._id} page={FEED_PAGE}/>
+                <OrderUnit itemInfo={item} key={item._id} page={PAGES.FEED_PAGE}/>
               )
             }
           )}

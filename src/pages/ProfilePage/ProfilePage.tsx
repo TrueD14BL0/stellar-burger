@@ -1,19 +1,20 @@
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, RefObject, FC } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { userDataPatch, userRequest } from '../../services/actions/userActions';
 import styles from './ProfilePage.module.css';
+import { AppThunk, RootState, TPatchUserData, TUserData } from '../../services/types/types';
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
 
-  const nameRef = useRef(null);
-  const [nameVal, setNameVal] = useState('');
-  const [emailVal, setEmailVal] = useState('');
-  const [passVal, setPassVal] = useState('*************');
-  const [userDataChange, setUserDataChange] = useState(null);
-  const [values, setValues] = useState({});
-  const dispatch = useDispatch();
-  const { userData } = useSelector(store => ({
+  const nameRef: RefObject<HTMLInputElement> = useRef(null);
+  const [nameVal, setNameVal] = useState<string>('');
+  const [emailVal, setEmailVal] = useState<string>('');
+  const [passVal, setPassVal] = useState<string>('*************');
+  const [userDataChange, setUserDataChange] = useState<boolean>(false);
+  const [values, setValues] = useState<TPatchUserData>({});
+  const dispatch: AppThunk = useDispatch();
+  const { userData } = useSelector((store:RootState) => ({
     userData: store.userReducer,
   }), shallowEqual);
 
@@ -35,13 +36,15 @@ const ProfilePage = () => {
       }
     );
     setValuesFromUserData();
-    setUserDataChange(null);
+    setUserDataChange(false);
   }, [userData])
 
-  const inputClickHandler = (curRef) => {
-    curRef.current.disabled = false;
-    curRef.current.focus();
-    curRef.current.classList.remove('input__textfield-disabled');
+  const inputClickHandler = (curRef: RefObject<HTMLInputElement>) => {
+    if(curRef.current){
+      curRef.current.disabled = false;
+      curRef.current.focus();
+      curRef.current.classList.remove('input__textfield-disabled');
+    }
   }
 
   const onFocusHandler = () => {
@@ -50,18 +53,18 @@ const ProfilePage = () => {
     }
   }
 
-  const onChangeHandler = (val, func) => {
+  const onChangeHandler = (val: string, func: (val: string)=>void) => {
     setUserDataChange(true);
     func(val);
   }
 
   const cancelBtnHandler = () => {
     setValuesFromUserData();
-    setUserDataChange(null);
+    setUserDataChange(false);
   }
 
   const submitHandler = () => {
-    const newUserData = {};
+    const newUserData: TPatchUserData = {};
     if(nameVal!==values.name){
       newUserData.name = nameVal;
     }
@@ -91,8 +94,10 @@ const ProfilePage = () => {
         onChange={e => onChangeHandler(e.target.value, setNameVal)}
         onIconClick={()=>inputClickHandler(nameRef)}
         onBlur={()=>{
-          nameRef.current.disabled = true;
-          nameRef.current.classList.add('input__textfield-disabled');
+          if(nameRef.current){
+            nameRef.current.disabled = true;
+            nameRef.current.classList.add('input__textfield-disabled');
+          }
         }}
       />
       <EmailInput

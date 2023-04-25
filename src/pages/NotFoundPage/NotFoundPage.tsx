@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import styles from './NotFoundPage.module.css';
 
-const NotFoundPage = () => {
+const NotFoundPage: FC = () => {
   return (
     <div className={styles.content}>
       <p className={`${styles.paragraph} text text_type_main-large`}>Страница не найдена</p>

@@ -1,24 +1,25 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import { CLOSE_USER_ORDERS_SOCKET, INIT_USER_ORDERS_SOCKET } from "../../services/actions/OrdersActions";
-import { ORDERS_PAGE, PROFILE_PAGE } from "../../utils/const";
+import { Location, NavigateFunction, Outlet, Params, useLocation, useNavigate, useParams } from "react-router-dom";
+import { CLOSE_USER_ORDERS_SOCKET, INIT_USER_ORDERS_SOCKET, TOrderSocketActions } from "../../services/actions/OrdersActions";
+import { PAGES } from "../../utils/const";
 import Modal from "../Modal/Modal";
 import OrderDetailInfo from "../OrderDetailInfo/OrderDetailInfo";
 import OrderUnit from "../OrderUnit/OrderUnit";
 import styles from './UserOrderFeed.module.css'
+import { AppThunk, RootState, TOrdersFeed } from "../../services/types/types";
 
-const UserOrderFeed = () => {
+const UserOrderFeed: FC = () => {
 
-  const params = useParams();
-  const location = useLocation();
-  const navigation = useNavigate();
-  const dispatch = useDispatch();
+  const params: Readonly<Params<string>> = useParams();
+  const location: Location = useLocation();
+  const navigation: NavigateFunction = useNavigate();
+  const dispatch: AppThunk = useDispatch();
 
-  const modal = params.id&&location.state&&location.state.modal;
+  const modal: boolean = params.id&&location.state&&location.state.modal;
 
-  const connected = useSelector(store => (store.userOrdersReducer.connected), shallowEqual);
-  const userOrders = useSelector(store => (store.userOrdersReducer.orders), shallowEqual);
+  const connected: boolean = useSelector((store: RootState) => (store.userOrdersReducer.connected), shallowEqual);
+  const userOrders: TOrdersFeed[] = useSelector((store: RootState) => (store.userOrdersReducer.orders), shallowEqual);
 
   useEffect(() => {
     if(!connected){
@@ -29,8 +30,8 @@ const UserOrderFeed = () => {
     };
   }, []);
 
-  const closeModal = ()=>{
-    navigation(`${PROFILE_PAGE}/${ORDERS_PAGE}`);
+  const closeModal: () => void = ()=>{
+    navigation(`${PAGES.PROFILE_PAGE}/${PAGES.ORDERS_PAGE}`);
   }
   return (params.id&&!(location.state&&location.state.modal))?
     (<Outlet/>):
@@ -42,7 +43,7 @@ const UserOrderFeed = () => {
             {userOrders&&userOrders.map(
               (item) => {
                 return(
-                  <OrderUnit itemInfo={item} key={item._id} page={`${PROFILE_PAGE}/${ORDERS_PAGE}`} withStatus={true} />
+                  <OrderUnit itemInfo={item} key={item._id} page={`${PAGES.PROFILE_PAGE}/${PAGES.ORDERS_PAGE}`} withStatus={true} />
                 )
               }
             )}
@@ -52,7 +53,7 @@ const UserOrderFeed = () => {
               <OrderDetailInfo />
             </Modal>}
         </>
-);
+  );
 }
 
 export default UserOrderFeed;

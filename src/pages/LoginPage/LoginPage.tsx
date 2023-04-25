@@ -1,29 +1,30 @@
 import styles from './LoginPage.module.css';
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, Location, Navigate, NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect, FC } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { loginAction } from '../../services/actions/loginActions';
 import { getCookie, setTokenCookies } from '../../utils/utils';
-import { FORGOT_PAGE, LOGIN_CLEAR, MAIN_PAGE, REGISTER_PAGE } from '../../utils/const';
+import { LOGIN_CLEAR, PAGES } from '../../utils/const';
+import { AppThunk, RootState, TLoginData } from '../../services/types/types';
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
 
   const initState = {
     email:'',
     password:'',
   };
 
-  const [value, setValue] = useState(initState);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [value, setValue] = useState<TLoginData>(initState);
+  const dispatch: AppThunk = useDispatch();
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
 
-  const { loginData } = useSelector(store => ({
+  const { loginData } = useSelector((store: RootState) => ({
     loginData: store.loginReducer,
   }), shallowEqual);
 
-  const [isLogin, setLogin] = useState(false);
+  const [isLogin, setLogin] = useState<boolean>(false);
 
   useEffect(()=>{
     if(getCookie('refreshToken')){
@@ -33,9 +34,9 @@ const LoginPage = () => {
 
   useEffect(()=>{
     if(loginData.status){
-      setTokenCookies(loginData.token, loginData.refreshToken);
+      setTokenCookies(loginData.token||'', loginData.refreshToken||'');
       dispatch({type: LOGIN_CLEAR,});
-      navigate(location.state&&location.state.prev ? location.state.prev : MAIN_PAGE);
+      navigate(location.state&&location.state.prev ? location.state.prev : PAGES.MAIN_PAGE);
     }
   }, [loginData]);
 
@@ -66,8 +67,8 @@ const LoginPage = () => {
         <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
           Войти
         </Button>
-        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вы - новый пользователь? </span><Link to={REGISTER_PAGE} className={styles.link}>Зарегистрироваться</Link></p>
-        <p className={`${styles.text} pt-4`}><span className={`text text_type_main-default text_color_inactive`}>Забыли пароль? </span><Link to={FORGOT_PAGE} className={styles.link}>Восстановить пароль</Link></p>
+        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вы - новый пользователь? </span><Link to={PAGES.REGISTER_PAGE} className={styles.link}>Зарегистрироваться</Link></p>
+        <p className={`${styles.text} pt-4`}><span className={`text text_type_main-default text_color_inactive`}>Забыли пароль? </span><Link to={PAGES.FORGOT_PAGE} className={styles.link}>Восстановить пароль</Link></p>
       </form>
     )
     : <Navigate to="/" replace/>;

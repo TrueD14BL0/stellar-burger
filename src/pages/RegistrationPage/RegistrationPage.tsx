@@ -1,29 +1,31 @@
 import styles from './RegistrationPage.module.css';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../services/actions/registerUser';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { LOGIN_PAGE } from '../../utils/const';
+import { FC, useEffect, useState } from 'react';
+import { PAGES } from '../../utils/const';
+import { AppThunk, RootState, TRegUserData } from '../../services/types/types';
 
-const RegistrationPage = () => {
+const RegistrationPage: FC = () => {
 
   const initState = {
     name:'',
     email:'',
     password:'',
   };
-  const [value, setValue] = useState(initState);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const { registrationStatus } = useSelector(store => ({
+  const [value, setValue] = useState<TRegUserData>(initState);
+  const navigate: NavigateFunction = useNavigate();
+  const dispatch: AppThunk = useDispatch();
+
+  const { registrationStatus } = useSelector((store: RootState) => ({
     registrationStatus: store.registerUserReducer,
   }), shallowEqual);
 
   useEffect(()=>{
     if(registrationStatus.status){
-      navigate(LOGIN_PAGE);
+      navigate(PAGES.LOGIN_PAGE);
       setValue(initState);
     }
   }, [registrationStatus])
@@ -68,7 +70,7 @@ const RegistrationPage = () => {
       <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
         Зарегистрироваться
       </Button>
-      <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Уже зарегистрированы? </span><Link to={LOGIN_PAGE} className={styles.link}>Войти</Link></p>
+      <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Уже зарегистрированы? </span><Link to={PAGES.LOGIN_PAGE} className={styles.link}>Войти</Link></p>
     </form>
   )
 }

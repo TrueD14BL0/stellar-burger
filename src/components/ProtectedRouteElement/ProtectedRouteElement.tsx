@@ -1,20 +1,20 @@
-import PropTypes from 'prop-types';
 import { Navigate, useLocation } from 'react-router-dom';
-import { LOGIN_PAGE } from '../../utils/const';
+import { PAGES } from '../../utils/const';
 import { getCookie } from '../../utils/utils';
+import { FC, ReactElement } from "react";
 
-const ProtectedRouteElement = ({element}) =>{
+interface IProtectedRouteElement {
+  element: ReactElement,
+};
+
+const ProtectedRouteElement: FC<IProtectedRouteElement> = ({element}) =>{
 
   const location = useLocation();
 
   const isLogin = getCookie('refreshToken');
 
-  return isLogin ? element : <Navigate to={LOGIN_PAGE} state={{prev: location.pathname}} replace={true}/>;
+  return isLogin ? element : <Navigate to={PAGES.LOGIN_PAGE} state={{prev: location.pathname}} replace={true}/>;
 
 }
-
-ProtectedRouteElement.propTypes = {
-  element: PropTypes.element.isRequired,
-};
 
 export default ProtectedRouteElement

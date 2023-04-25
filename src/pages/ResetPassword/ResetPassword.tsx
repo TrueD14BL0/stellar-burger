@@ -1,29 +1,31 @@
 import styles from './ResetPassword.module.css';
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, Location, Navigate, NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect, FC } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { resetPasswordAction } from '../../services/actions/resetPassword';
-import { FORGOT_PAGE, LOGIN_PAGE } from '../../utils/const';
+import { PAGES } from '../../utils/const';
+import { AppThunk, RootState, TResetData } from '../../services/types/types';
 
-const ResetPassword = () => {
+const ResetPassword: FC = () => {
 
   const initState = {
     password:'',
     token:'',
   };
-  const [value, setValue] = useState(initState);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const accessGranted = location.state&&location.state.reset;
-  const { resetPassStatus } = useSelector(store => ({
+
+  const [value, setValue] = useState<TResetData>(initState);
+  const dispatch: AppThunk = useDispatch();
+  const navigate: NavigateFunction = useNavigate();
+  const location: Location = useLocation();
+  const accessGranted: boolean = location.state&&location.state.reset;
+  const { resetPassStatus } = useSelector((store: RootState) => ({
     resetPassStatus: store.resetPasswordReducer,
   }), shallowEqual);
 
   useEffect(()=>{
     if(resetPassStatus.status){
-      navigate(LOGIN_PAGE);
+      navigate(PAGES.LOGIN_PAGE);
       setValue(initState);
     }
   }, [resetPassStatus])
@@ -56,9 +58,9 @@ const ResetPassword = () => {
         <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
           Сохранить
         </Button>
-        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to={LOGIN_PAGE} className={styles.link}>Войти</Link></p>
+        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to={PAGES.LOGIN_PAGE} className={styles.link}>Войти</Link></p>
       </form>:
-      <Navigate to={FORGOT_PAGE} replace/>
+      <Navigate to={PAGES.FORGOT_PAGE} replace/>
 }
 
 export default ResetPassword;

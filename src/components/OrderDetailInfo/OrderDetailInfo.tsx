@@ -5,7 +5,7 @@ import { Location, Params, useLocation, useParams } from "react-router-dom";
 import { chooseOrderReducer, diffDateInDays, diffToString } from "../../utils/utils";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetailInfoUnit from "../OrderDetailInfoUnit/OrderDetailInfoUnit";
-import { RootState, TIngredient, TIngredientSmall, TOrdersFeed, TOrdersState } from "../../services/types/types";
+import { RootState, TIngredientSmall, TOrdersFeed, TOrdersState } from "../../services/types/types";
 import { ordersStatus } from "../../utils/const";
 
 const OrderDetailInfo: FC = () => {

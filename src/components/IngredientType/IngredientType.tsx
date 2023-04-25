@@ -1,6 +1,6 @@
 import styles from './IngridientType.module.css'
 import IngridientItem from "../IngredientItem/IngredientItem";
-import { TIngredient, TIngredientList } from '../../services/types/types';
+import { TIngredient } from '../../services/types/types';
 import { FC, RefObject } from 'react';
 
 interface IIngredientType {

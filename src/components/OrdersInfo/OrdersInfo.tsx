@@ -1,10 +1,11 @@
 import { shallowEqual, useSelector } from "react-redux";
 import styles from './OrdersInfo.module.css';
-import { v4 as uuidv4 } from 'uuid';
+import { FC } from "react";
+import { RootState } from "../../services/types/types";
 
-const OrdersInfo = () => {
+const OrdersInfo: FC = () => {
 
-  const { total, totalToday, connected, done, pending } = useSelector(store => ({
+  const { total, totalToday, connected, done, pending } = useSelector((store: RootState) => ({
     pending: store.ordersReducer.orders.filter(item=>item.status==='pending'),
     done: store.ordersReducer.orders.filter(item=>item.status==='done'),
     total: store.ordersReducer.total,
@@ -20,9 +21,8 @@ const OrdersInfo = () => {
           <h2 className="text text_type_main-medium">Готовы:</h2>
           <ul className={`${styles.list} pt-6`}>
             {done.map(element => {
-              const uuid = uuidv4();
               return (
-                <li className={`text text_type_digits-default ${styles.done}`} key={uuid}>
+                <li className={`text text_type_digits-default ${styles.done}`} key={element.number}>
                   {element.number}
                 </li>
               )
@@ -33,9 +33,8 @@ const OrdersInfo = () => {
           <h2 className="text text_type_main-medium">В работе:</h2>
           <ul className={`${styles.list} pt-6`}>
             {pending.map(element => {
-              const uuid = uuidv4();
               return (
-                <li className={`text text_type_digits-default`} key={uuid}>
+                <li className={`text text_type_digits-default`} key={element.number}>
                   {element.number}
                 </li>
               )

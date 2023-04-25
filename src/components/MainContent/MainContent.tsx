@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react';
 
 interface IMainContent {
   children: ReactNode[],
-  gap: string,
+  gap?: string,
 }
 
 const MainContent: FC<IMainContent> = ({children, gap = MAIN_CONTENT_GAP.MAIN_CONTENT_GAP_STD}) => {

@@ -1,26 +1,27 @@
 import styles from './ForgotPassword.module.css';
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { forgotPasswordAction } from '../../services/actions/forgotPassword';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/Loader/Loader';
-import { LOGIN_PAGE, RESET_PAGE } from '../../utils/const';
+import { AppThunk, RootState } from '../../services/types/types';
+import { PAGES } from '../../utils/const';
 
-const ForgotPassword = () => {
+const ForgotPassword: FC = () => {
 
-  const [value, setValue] = useState('')
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { forgotPassStatus } = useSelector(store => ({
+  const [value, setValue] = useState<string>('')
+  const dispatch: AppThunk = useDispatch();
+  const navigate: NavigateFunction = useNavigate();
+  const { forgotPassStatus } = useSelector((store: RootState) => ({
     forgotPassStatus: store.forgotPasswordReducer,
   }), shallowEqual);
 
   useEffect(()=>{
     if(forgotPassStatus.status){
       setValue('');
-      navigate(RESET_PAGE, {state:{reset:true}});
+      navigate(PAGES.RESET_PAGE, {state:{reset:true}});
     }
   }, [forgotPassStatus])
 
@@ -42,10 +43,10 @@ const ForgotPassword = () => {
         <Button htmlType="submit" type="primary" size="large" extraClass="mt-6">
           Восстановить
         </Button>
-        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to={LOGIN_PAGE} className={styles.link}>Войти</Link></p>
+        <p className={`${styles.text} pt-20`}><span className={`text text_type_main-default text_color_inactive`}>Вспомнили пароль? </span><Link to={PAGES.LOGIN_PAGE} className={styles.link}>Войти</Link></p>
       </form>
       {forgotPassStatus.loading &&
-        <Modal close={null}>
+        <Modal>
           <Loader/>
         </Modal>}
     </>

@@ -1,10 +1,12 @@
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./OrderDetails.module.css"
 import { shallowEqual, useSelector } from "react-redux";
+import { RootState } from "../../services/types/types";
+import { FC } from "react";
 
-const OrderDetails = () => {
+const OrderDetails: FC = () => {
 
-  const { orderObj } = useSelector(store => ({
+  const { orderObj } = useSelector((store: RootState) => ({
     orderObj: store.orderObjReducer,
   }), shallowEqual);
 

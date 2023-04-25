@@ -1,9 +1,16 @@
 import styles from "./OrderDetailInfoUnit.module.css";
 import OrderUnitThumbnail from "../OrderUnitThumbnail/OrderUnitThumbnail";
-import PropTypes from 'prop-types';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { FC } from "react";
 
-const OrderDetailInfoUnit = ({name, url, qty, price}) => {
+interface IOrderDetailInfoUnit {
+  name: string,
+  url: string,
+  qty: number,
+  price: number,
+}
+
+const OrderDetailInfoUnit: FC<IOrderDetailInfoUnit> = ({name, url, qty, price}) => {
 
   return (
     <div className={styles.content}>
@@ -14,13 +21,5 @@ const OrderDetailInfoUnit = ({name, url, qty, price}) => {
   );
 
 }
-
-OrderDetailInfoUnit.propTypes = {
-  name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  qty: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-}
-
 
 export default OrderDetailInfoUnit;
