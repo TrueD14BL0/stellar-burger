@@ -5,7 +5,7 @@ import { Location, Params, useLocation, useParams } from "react-router-dom";
 import { chooseOrderReducer, diffDateInDays, diffToString } from "../../utils/utils";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetailInfoUnit from "../OrderDetailInfoUnit/OrderDetailInfoUnit";
-import { RootState, TIngredientSmall, TOrdersFeed, TOrdersState } from "../../services/types/types";
+import { RootState, TIngredientSmall, TOrdersFeed } from "../../services/types/types";
 import { ordersStatus } from "../../utils/const";
 
 const OrderDetailInfo: FC = () => {
@@ -15,8 +15,8 @@ const OrderDetailInfo: FC = () => {
   let orderReducer: string = chooseOrderReducer(location)||'';
 
   const order: TOrdersFeed | undefined = useSelector((store: RootState) => {
-      const orders: TOrdersState = store[orderReducer].orders;
-      return orders.orders.find(element=>element._id===params.id);
+      const orders: TOrdersFeed[] = store[orderReducer].orders;
+      return orders.find(element=>element._id===params.id);
     }
     , shallowEqual
   );

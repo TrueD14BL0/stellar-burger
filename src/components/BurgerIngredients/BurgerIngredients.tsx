@@ -1,6 +1,6 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './BurgerIngredients.module.css'
-import { useMemo, useState, useRef, Ref, RefObject, UIEventHandler } from 'react';
+import { useMemo, useState, useRef, RefObject, UIEventHandler } from 'react';
 import IngridientType from '../IngredientType/IngredientType';
 import Modal from '../Modal/Modal';
 import { useSelector, shallowEqual } from 'react-redux';

@@ -1,7 +1,7 @@
 import { Middleware } from "redux";
 import Api from "../../components/Api/Api";
 import { deleteCookie, getCookie, setTokenCookies } from "../../utils/utils";
-import { RootState, TWSActions } from "../types/types";
+import { TWSActions } from "../types/types";
 
 /*
   TODO: Исправить перед следующим спринтом!!!
@@ -15,7 +15,7 @@ import { RootState, TWSActions } from "../types/types";
   (в некоторымх моментах) можно проверять какой из двух типов экшенов содержится в данном ключе
 */
 
-export const socketMiddleware = (wsUrl: string, wsActions: TWSActions)=> {
+export const socketMiddleware = (wsUrl: string, wsActions: TWSActions): Middleware => {
   return store => {
     let socket: WebSocket|null = null;
     let userSocket: WebSocket|null = null;
@@ -58,7 +58,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSActions)=> {
         };
 
         userSocket.onerror = event => {
-          if(event==='401'){
+          if(event as unknown as string==='401'){
             updateToken();
           }else{
             dispatch({ type: onErrorUserOrder, payload: event });
@@ -74,8 +74,8 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSActions)=> {
           }
         };
 
-        userSocket.onclose = event => {
-          dispatch({ type: onCloseUserOrder, payload: event.data });
+        userSocket.onclose = () => {
+          dispatch({ type: onCloseUserOrder });
         };
 
         if (type === closeUserOrder) {
@@ -97,8 +97,8 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSActions)=> {
           dispatch({ type: onMessage, payload: event.data });
         };
 
-        socket.onclose = event => {
-          dispatch({ type: onClose, payload: event.data });
+        socket.onclose = () => {
+          dispatch({ type: onClose });
         };
 
         if (type === close) {

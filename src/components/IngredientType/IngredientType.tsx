@@ -1,4 +1,4 @@
-import styles from './IngridientType.module.css'
+import styles from './IngredientType.module.css'
 import IngridientItem from "../IngredientItem/IngredientItem";
 import { TIngredient } from '../../services/types/types';
 import { FC, RefObject } from 'react';

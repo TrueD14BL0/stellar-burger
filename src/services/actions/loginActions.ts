@@ -35,7 +35,7 @@ export const loginAction: AppThunk<void> = (loginData: TLoginData) => {
         dispatch(loginErr('Some trouble with received data.'))
       }
     })
-    .catch((err: string)=>{
+    .catch((err: any)=>{
       dispatch(loginErr(err))
     });
   }
@@ -49,7 +49,7 @@ export const loginSuccess = (token: string, refreshToken: string): ILoginSuccess
   }
 }
 
-export const loginErr = (err: string): ILoginErr => {
+export const loginErr = (err: any): ILoginErr => {
   return {
       type: LOGIN_ERROR,
       err,

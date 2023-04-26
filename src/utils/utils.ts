@@ -1,7 +1,5 @@
 import { Location } from "react-router-dom";
 import { PAGES, ORDER_REDUCERS } from "./const";
-import userOrdersReducer from "../services/reducers/userOrdersReducer";
-import ordersReducer from "../services/reducers/ordersReducer";
 
 export function setCookie(name: string, value: string | number | boolean, options: { [key: string]: Date | string | number | boolean } = {}):void {
 

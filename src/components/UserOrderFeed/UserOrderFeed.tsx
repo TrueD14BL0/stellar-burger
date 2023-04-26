@@ -1,7 +1,7 @@
 import { FC, useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Location, NavigateFunction, Outlet, Params, useLocation, useNavigate, useParams } from "react-router-dom";
-import { CLOSE_USER_ORDERS_SOCKET, INIT_USER_ORDERS_SOCKET, TOrderSocketActions } from "../../services/actions/OrdersActions";
+import { CLOSE_USER_ORDERS_SOCKET, INIT_USER_ORDERS_SOCKET } from "../../services/actions/OrdersActions";
 import { PAGES } from "../../utils/const";
 import Modal from "../Modal/Modal";
 import OrderDetailInfo from "../OrderDetailInfo/OrderDetailInfo";

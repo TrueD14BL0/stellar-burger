@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, RefObject, FC } from 'react';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { userDataPatch, userRequest } from '../../services/actions/userActions';
 import styles from './ProfilePage.module.css';
-import { AppThunk, RootState, TPatchUserData, TUserData } from '../../services/types/types';
+import { AppThunk, RootState, TPatchUserData } from '../../services/types/types';
 
 const ProfilePage: FC = () => {
 

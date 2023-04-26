@@ -1,5 +1,5 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './IngridientItem.module.css'
+import styles from './IngredientItem.module.css'
 import { useDrag } from 'react-dnd';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { PAGES } from '../../utils/const';
@@ -11,7 +11,7 @@ interface IIngredientItem{
 }
 
 const IngredientItem: FC<IIngredientItem> = ({item}) => {
-  const [, dragRef] = useDrag({type:'ingridient',
+  const [, dragRef] = useDrag({type:'ingredient',
                               item});
   const navigation: NavigateFunction = useNavigate();
 

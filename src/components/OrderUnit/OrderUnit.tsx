@@ -39,7 +39,7 @@ const OrderUnit: FC<IOrderUnit> = ({ itemInfo, page, withStatus }) => {
 
   const orderIngridients = useMemo(()=>{
     return itemInfo.ingredients.map((element, index) => {
-      const uuid = uuidv4(); {/* А вот тут все таки uuid - так как здесь могут попасться полностью идентичные экземпляры */}
+      const uuid = uuidv4(); /* А вот тут все таки uuid - так как здесь могут попасться полностью идентичные экземпляры */
       const ingredientEl = ingredientsList.content.find(ingr => ingr._id === element);
       let el = null;
       if(ingredientEl){

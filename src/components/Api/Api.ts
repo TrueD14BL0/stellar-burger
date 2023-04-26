@@ -1,4 +1,4 @@
-import { TApiGetIngredients, TFetchOptions, TForgotPassword, TIngredient, TLoginData, TLoginResponse, TLogoutResponse, TOrderResponse, TPatchUserData, TRefresh, TRegUserData, TResetData, TResetResponse, TUserSuccess } from "../../services/types/types";
+import { TApiGetIngredients, TFetchOptions, TForgotPassword, TLoginData, TLoginResponse, TLogoutResponse, TOrderResponse, TPatchUserData, TRefresh, TRegUserData, TResetData, TResetResponse, TUserSuccess } from "../../services/types/types";
 
 const apiAddress = "https://norma.nomoreparties.space/api";
 
