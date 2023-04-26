@@ -57,10 +57,10 @@ const BurgerIngredients = () => {
     const parentDiv: HTMLDivElement = evt.target as HTMLDivElement;
     const parentTop: number = parentDiv.offsetTop;
     const scrollSize: number = parentDiv.scrollTop;
-    const bunsTop = Math.abs(bunsRef.current?.offsetTop||0 - scrollSize - parentTop);
-    const saucesTop = Math.abs(saucesRef.current?.offsetTop||0 - scrollSize - parentTop);
-    const mainsTop = Math.abs(mainsRef.current?.offsetTop||0 - scrollSize - parentTop);
-    const minCoord = Math.min(bunsTop, saucesTop, mainsTop)
+    const bunsTop = Math.abs((bunsRef.current?.offsetTop||0) - scrollSize - parentTop);
+    const saucesTop = Math.abs((saucesRef.current?.offsetTop||0) - scrollSize - parentTop);
+    const mainsTop = Math.abs((mainsRef.current?.offsetTop||0) - scrollSize - parentTop);
+    const minCoord = Math.min(bunsTop, saucesTop, mainsTop);
 
     if(minCoord===bunsTop){
       setCurrent(Tabs.BUN);
@@ -79,7 +79,7 @@ const BurgerIngredients = () => {
     <section className={`mt-10`}>
       <h1 className='text text_type_main-large'>Соберите бургер</h1>
       <div className={`mt-5 ${styles.contentWrapper}`}>
-        <Tab value={Tabs.BUN} active={current === Tabs.BUN} onClick={()=>setCurrentScroll(bunsRef)}>
+        <Tab value={Tabs.BUN} active={current === Tabs.BUN} onClick={()=>{setCurrentScroll(bunsRef)}}>
           Булки
         </Tab>
         <Tab value={Tabs.SAUCE} active={current === Tabs.SAUCE} onClick={()=>setCurrentScroll(saucesRef)}>
