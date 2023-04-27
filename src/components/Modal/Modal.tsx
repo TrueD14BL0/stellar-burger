@@ -11,7 +11,7 @@ interface IModal {
 
 const Modal: FC<IModal> = ({children, close}) =>{
 
-  const root: HTMLElement|null = document.getElementById("root");
+  const root: HTMLElement|null = document.getElementById("modals");
 
   const escCloseHandler = (ev: KeyboardEvent) => {
     if (ev.key === "Escape") {
