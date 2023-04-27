@@ -2,10 +2,11 @@ import styles from './RegistrationPage.module.css';
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../services/actions/registerUser';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { FC, useEffect, useState } from 'react';
 import { PAGES } from '../../utils/const';
-import { AppThunk, RootState, TRegUserData } from '../../services/types/types';
+import { TRegUserData } from '../../services/types/types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/customHooks';
 
 const RegistrationPage: FC = () => {
 
@@ -17,9 +18,9 @@ const RegistrationPage: FC = () => {
 
   const [value, setValue] = useState<TRegUserData>(initState);
   const navigate: NavigateFunction = useNavigate();
-  const dispatch: AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { registrationStatus } = useSelector((store: RootState) => ({
+  const { registrationStatus } = useAppSelector(store => ({
     registrationStatus: store.registerUserReducer,
   }), shallowEqual);
 

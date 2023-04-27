@@ -2,10 +2,11 @@ import styles from './ResetPassword.module.css';
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Location, Navigate, NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect, FC } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { resetPasswordAction } from '../../services/actions/resetPassword';
 import { PAGES } from '../../utils/const';
-import { AppThunk, RootState, TResetData } from '../../services/types/types';
+import { TResetData } from '../../services/types/types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/customHooks';
 
 const ResetPassword: FC = () => {
 
@@ -15,11 +16,11 @@ const ResetPassword: FC = () => {
   };
 
   const [value, setValue] = useState<TResetData>(initState);
-  const dispatch: AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate: NavigateFunction = useNavigate();
   const location: Location = useLocation();
   const accessGranted: boolean = location.state&&location.state.reset;
-  const { resetPassStatus } = useSelector((store: RootState) => ({
+  const { resetPassStatus } = useAppSelector(store => ({
     resetPassStatus: store.resetPasswordReducer,
   }), shallowEqual);
 

@@ -3,11 +3,12 @@ import styles from './BurgerIngredients.module.css'
 import { useMemo, useState, useRef, RefObject, UIEventHandler } from 'react';
 import IngridientType from '../IngredientType/IngredientType';
 import Modal from '../Modal/Modal';
-import { useSelector, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { PAGES, Tabs } from '../../utils/const';
 import { Location, NavigateFunction, Params, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { RootState, TIngredient } from '../../services/types/types';
+import { TIngredient } from '../../services/types/types';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import { useAppSelector } from '../../services/hooks/customHooks';
 
 const BurgerIngredients = () => {
   const [current, setCurrent] = useState<string>('bun');
@@ -19,7 +20,7 @@ const BurgerIngredients = () => {
   const location: Location = useLocation();
   const modal: boolean = params.id&&location.state&&location.state.modal;
 
-  const { ingredientsList } = useSelector((store:RootState) => ({
+  const { ingredientsList } = useAppSelector(store => ({
     ingredientsList: store.ingredientsListReducer,
   }), shallowEqual);
 

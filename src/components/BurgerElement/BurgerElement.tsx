@@ -1,10 +1,10 @@
 import styles from './BurgerElement.module.css'
-import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TDNDObj, TIngredient } from '../../services/types/types';
 import { FC } from 'react';
 import { delIngredientFromConstructor, swapIngredient } from '../../services/actions/constructorList';
+import { useAppDispatch } from '../../services/hooks/customHooks';
 
 interface IBurgerElement {
   index: number,
@@ -13,7 +13,7 @@ interface IBurgerElement {
 
 const BurgerElement: FC<IBurgerElement> = ({index, item}) =>{
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [{isDrag}, dragRef] = useDrag({
     type:'constructor_ingredient',
     item: {index},

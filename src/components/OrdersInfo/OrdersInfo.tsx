@@ -1,11 +1,11 @@
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual } from "react-redux";
 import styles from './OrdersInfo.module.css';
 import { FC } from "react";
-import { RootState } from "../../services/types/types";
+import { useAppSelector } from "../../services/hooks/customHooks";
 
 const OrdersInfo: FC = () => {
 
-  const { total, totalToday, connected, done, pending } = useSelector((store: RootState) => ({
+  const { total, totalToday, connected, done, pending } = useAppSelector(store => ({
     pending: store.ordersReducer.orders.filter(item=>item.status==='pending'),
     done: store.ordersReducer.orders.filter(item=>item.status==='done'),
     total: store.ordersReducer.total,

@@ -2,18 +2,19 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import BurgerConstructorBottom from '../BurgerConstructorBottom/BurgerConstructorBottom';
 import styles from './BurgerConstructor.module.css';
 import { useDrop } from 'react-dnd/dist/hooks';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { addIngredientToConstructor } from '../../services/actions/constructorList';
 import { decrimentIngridientCount } from '../../services/actions/ingridientList';
 import BurgerElement from '../BurgerElement/BurgerElement';
 import { FC } from 'react';
-import { AppThunk, RootState, TIngredient } from '../../services/types/types';
+import { TIngredient } from '../../services/types/types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/customHooks';
+import { shallowEqual } from 'react-redux';
 
 const BurgerConstructor: FC = () =>{
 
-  const dispatch: AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { constructorList } = useSelector((store:RootState) => ({
+  const { constructorList } = useAppSelector(store => ({
     constructorList: store.constructorListReducer,
   }), shallowEqual);
 

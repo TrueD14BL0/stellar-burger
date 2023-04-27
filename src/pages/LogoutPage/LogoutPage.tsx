@@ -1,20 +1,20 @@
 import { FC, useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import Loader from '../../components/Loader/Loader';
 import { deleteCookie, getCookie } from "../../utils/utils";
 import { logoutAction } from '../../services/actions/logoutActions';
-import { AppThunk, RootState } from '../../services/types/types';
 import { PAGES } from '../../utils/const';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/customHooks';
 
 const LogoutPage: FC = () => {
 
   const refreshToken: string|undefined = getCookie('refreshToken');
 
-  const dispatch:AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate: NavigateFunction = useNavigate();
 
-  const { logoutData } = useSelector((store: RootState) => ({
+  const { logoutData } = useAppSelector(store => ({
     logoutData: store.logoutReducer,
   }), shallowEqual);
 

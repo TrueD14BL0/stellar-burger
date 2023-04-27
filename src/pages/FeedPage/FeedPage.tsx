@@ -1,5 +1,4 @@
 import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { Location, Outlet, Params, useLocation, useParams } from 'react-router-dom';
 import MainContent from '../../components/MainContent/MainContent';
 import OrderFeed from '../../components/OrderFeed/OrderFeed';
@@ -7,10 +6,10 @@ import OrdersInfo from '../../components/OrdersInfo/OrdersInfo';
 import { CLOSE_ORDERS_SOCKET, INIT_ORDERS_SOCKET } from '../../services/actions/OrdersActions';
 import { MAIN_CONTENT_GAP } from '../../utils/const';
 import styles from './FeedPage.module.css';
-import { AppThunk } from '../../services/types/types';
+import { useAppDispatch } from '../../services/hooks/customHooks';
 
 const FeedPage: FC = () => {
-  const dispatch: AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
   const location: Location = useLocation();
   const params: Readonly<Params<string>> = useParams();
 

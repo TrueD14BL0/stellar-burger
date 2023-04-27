@@ -1,9 +1,10 @@
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState, useRef, RefObject, FC } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { userDataPatch, userRequest } from '../../services/actions/userActions';
 import styles from './ProfilePage.module.css';
-import { AppThunk, RootState, TPatchUserData } from '../../services/types/types';
+import { TPatchUserData } from '../../services/types/types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/customHooks';
 
 const ProfilePage: FC = () => {
 
@@ -13,8 +14,8 @@ const ProfilePage: FC = () => {
   const [passVal, setPassVal] = useState<string>('*************');
   const [userDataChange, setUserDataChange] = useState<boolean>(false);
   const [values, setValues] = useState<TPatchUserData>({});
-  const dispatch: AppThunk = useDispatch();
-  const { userData } = useSelector((store:RootState) => ({
+  const dispatch = useAppDispatch();
+  const { userData } = useAppSelector(store => ({
     userData: store.userReducer,
   }), shallowEqual);
 

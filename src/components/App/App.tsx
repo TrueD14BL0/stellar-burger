@@ -1,6 +1,5 @@
 import AppHeader from '../AppHeader/AppHeader';
 import { FC, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { getIngridientsList } from '../../services/actions/ingridientList';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from '../../pages/LoginPage/LoginPage';
@@ -19,11 +18,11 @@ import { PAGES } from '../../utils/const';
 import FeedPage from '../../pages/FeedPage/FeedPage';
 import OrderDetailsPage from '../../pages/OrderDetailsPage/OrderDetailsPage';
 import UserOrderFeed from '../UserOrderFeed/UserOrderFeed';
-import { AppThunk } from '../../services/types/types';
+import { useAppDispatch } from '../../services/hooks/customHooks';
 
 const App:FC = () => {
 
-  const dispatch: AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(()=>{
     dispatch(getIngridientsList());

@@ -1,4 +1,4 @@
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { diffDateInDays, diffToString } from "../../utils/utils";
 import styles from './OrderUnit.module.css';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,7 +8,7 @@ import OrderUnitThumbnail from "../OrderUnitThumbnail/OrderUnitThumbnail";
 import { MAX_VISIBLE_INGREDIENTS_IN_ORDER, ordersStatus } from "../../utils/const";
 import { FC, useMemo } from "react";
 import { TOrdersFeed } from "../../services/types/types";
-import { RootState } from "../../services/types/types";
+import { useAppSelector } from "../../services/hooks/customHooks";
 
 interface IOrderUnit {
   itemInfo: TOrdersFeed,
@@ -18,7 +18,7 @@ interface IOrderUnit {
 
 const OrderUnit: FC<IOrderUnit> = ({ itemInfo, page, withStatus }) => {
 
-  const ingredientsList = useSelector((store: RootState) => store.ingredientsListReducer, shallowEqual);
+  const ingredientsList = useAppSelector(store => store.ingredientsListReducer, shallowEqual);
   const orderSum = useMemo(() => {
     let sum = 0;
     itemInfo.ingredients.forEach(element => {

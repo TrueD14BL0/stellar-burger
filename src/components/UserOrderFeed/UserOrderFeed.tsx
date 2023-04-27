@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { Location, NavigateFunction, Outlet, Params, useLocation, useNavigate, useParams } from "react-router-dom";
 import { CLOSE_USER_ORDERS_SOCKET, INIT_USER_ORDERS_SOCKET } from "../../services/actions/OrdersActions";
 import { PAGES } from "../../utils/const";
@@ -7,19 +7,20 @@ import Modal from "../Modal/Modal";
 import OrderDetailInfo from "../OrderDetailInfo/OrderDetailInfo";
 import OrderUnit from "../OrderUnit/OrderUnit";
 import styles from './UserOrderFeed.module.css'
-import { AppThunk, RootState, TOrdersFeed } from "../../services/types/types";
+import { TOrdersFeed } from "../../services/types/types";
+import { useAppDispatch, useAppSelector } from "../../services/hooks/customHooks";
 
 const UserOrderFeed: FC = () => {
 
   const params: Readonly<Params<string>> = useParams();
   const location: Location = useLocation();
   const navigation: NavigateFunction = useNavigate();
-  const dispatch: AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
 
   const modal: boolean = params.id&&location.state&&location.state.modal;
 
-  const connected: boolean = useSelector((store: RootState) => (store.userOrdersReducer.connected), shallowEqual);
-  const userOrders: TOrdersFeed[] = useSelector((store: RootState) => (store.userOrdersReducer.orders), shallowEqual);
+  const connected: boolean = useAppSelector(store => (store.userOrdersReducer.connected), shallowEqual);
+  const userOrders: TOrdersFeed[] = useAppSelector(store => (store.userOrdersReducer.orders), shallowEqual);
 
   useEffect(() => {
     if(!connected){

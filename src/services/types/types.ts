@@ -167,8 +167,10 @@ interface IStringIndex {
   [key: string]: any
 }
 
-export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>&IStringIndex;
 export type TApplicationActions = TConstructorListActions|TForgotPasswordActions|TIngredientListActions|TIngredientObjActions|TLoginActions|TLogoutActions
-  |TOrderActions|TUserOrderSocketActions|TOrderSocketActions|TUserRegisterActions|TResetActions|TUserInfosActions;
-export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, Action, RootState, TApplicationActions>>;
+|TOrderActions|TUserOrderSocketActions|TOrderSocketActions|TUserRegisterActions|TResetActions|TUserInfosActions;
+export type AppDispatch = typeof store.dispatch;
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, RootState, Action, TApplicationActions>
+>;

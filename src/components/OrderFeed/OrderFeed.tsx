@@ -1,12 +1,12 @@
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { Location, NavigateFunction, Params, useLocation, useNavigate, useParams } from "react-router-dom";
 import { PAGES } from "../../utils/const";
 import Modal from "../Modal/Modal";
 import OrderDetailInfo from "../OrderDetailInfo/OrderDetailInfo";
 import OrderUnit from "../OrderUnit/OrderUnit";
 import styles from './OrderFeed.module.css'
-import { RootState } from "../../services/types/types";
 import { FC } from "react";
+import { useAppSelector } from "../../services/hooks/customHooks";
 
 const OrderFeed: FC = () => {
 
@@ -14,8 +14,8 @@ const OrderFeed: FC = () => {
   const location: Location = useLocation();
   const navigation: NavigateFunction = useNavigate();
   const modal: boolean = params.id&&location.state&&location.state.modal;
-  const orders = useSelector((store: RootState) => store.ordersReducer.orders, shallowEqual);
-  const connected = useSelector((store: RootState) => store.ordersReducer.connected, shallowEqual);
+  const orders = useAppSelector(store => store.ordersReducer.orders, shallowEqual);
+  const connected = useAppSelector(store => store.ordersReducer.connected, shallowEqual);
 
   const closeModal = ()=>{
     navigation(PAGES.FEED_PAGE);

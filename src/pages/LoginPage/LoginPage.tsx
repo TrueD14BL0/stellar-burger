@@ -2,11 +2,12 @@ import styles from './LoginPage.module.css';
 import { Button, EmailInput, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Location, Navigate, NavigateFunction, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect, FC } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { loginAction } from '../../services/actions/loginActions';
 import { getCookie, setTokenCookies } from '../../utils/utils';
 import { LOGIN_CLEAR, PAGES } from '../../utils/const';
-import { AppThunk, RootState, TLoginData } from '../../services/types/types';
+import { TLoginData } from '../../services/types/types';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/customHooks';
 
 const LoginPage: FC = () => {
 
@@ -16,11 +17,11 @@ const LoginPage: FC = () => {
   };
 
   const [value, setValue] = useState<TLoginData>(initState);
-  const dispatch: AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate: NavigateFunction = useNavigate();
   const location: Location = useLocation();
 
-  const { loginData } = useSelector((store: RootState) => ({
+  const { loginData } = useAppSelector(store => ({
     loginData: store.loginReducer,
   }), shallowEqual);
 

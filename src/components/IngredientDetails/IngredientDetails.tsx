@@ -1,8 +1,9 @@
 import styles from "./IngredientDetails.module.css";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { useEffect, useState } from "react";
 import { Location, Params, useLocation, useParams } from "react-router-dom";
-import { RootState, TIngredient } from "../../services/types/types";
+import { TIngredient } from "../../services/types/types";
+import { useAppSelector } from "../../services/hooks/customHooks";
 
 const IngredientDetails = () => {
 
@@ -10,7 +11,7 @@ const IngredientDetails = () => {
   const params:Readonly<Params<string>> = useParams();
   const location: Location = useLocation();
 
-  const { ingredientsList } = useSelector((store:RootState) => ({
+  const { ingredientsList } = useAppSelector(store => ({
     ingredientsList: store.ingredientsListReducer,
   }), shallowEqual);
 

@@ -1,12 +1,13 @@
 import styles from "./OrderDetailInfo.module.css";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual } from "react-redux";
 import { FC, useMemo } from "react";
 import { Location, Params, useLocation, useParams } from "react-router-dom";
 import { chooseOrderReducer, diffDateInDays, diffToString } from "../../utils/utils";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderDetailInfoUnit from "../OrderDetailInfoUnit/OrderDetailInfoUnit";
-import { RootState, TIngredientSmall, TOrdersFeed } from "../../services/types/types";
+import { TIngredientSmall, TOrdersFeed } from "../../services/types/types";
 import { ordersStatus } from "../../utils/const";
+import { useAppSelector } from "../../services/hooks/customHooks";
 
 const OrderDetailInfo: FC = () => {
 
@@ -14,13 +15,13 @@ const OrderDetailInfo: FC = () => {
   const location: Location = useLocation();
   let orderReducer: string = chooseOrderReducer(location)||'';
 
-  const order: TOrdersFeed | undefined = useSelector((store: RootState) => {
+  const order: TOrdersFeed | undefined = useAppSelector(store => {
       const orders: TOrdersFeed[] = store[orderReducer].orders;
       return orders.find(element=>element._id===params.id);
     }
     , shallowEqual
   );
-  const ingredientsList = useSelector((store: RootState) => store.ingredientsListReducer, shallowEqual);
+  const ingredientsList = useAppSelector(store => store.ingredientsListReducer, shallowEqual);
 
   const orderDate = order ? new Date(Date.parse(order.createdAt)) : new Date();
   const today = new Date();

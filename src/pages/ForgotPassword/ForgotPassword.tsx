@@ -1,20 +1,20 @@
 import styles from './ForgotPassword.module.css';
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { forgotPasswordAction } from '../../services/actions/forgotPassword';
 import { useState, useEffect, FC } from 'react';
 import Modal from '../../components/Modal/Modal';
 import Loader from '../../components/Loader/Loader';
-import { AppThunk, RootState } from '../../services/types/types';
 import { PAGES } from '../../utils/const';
+import { useAppDispatch, useAppSelector } from '../../services/hooks/customHooks';
 
 const ForgotPassword: FC = () => {
 
   const [value, setValue] = useState<string>('')
-  const dispatch: AppThunk = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate: NavigateFunction = useNavigate();
-  const { forgotPassStatus } = useSelector((store: RootState) => ({
+  const { forgotPassStatus } = useAppSelector(store => ({
     forgotPassStatus: store.forgotPasswordReducer,
   }), shallowEqual);
 
