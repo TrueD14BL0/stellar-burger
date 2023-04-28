@@ -9,6 +9,7 @@ import OrderUnit from "../OrderUnit/OrderUnit";
 import styles from './UserOrderFeed.module.css'
 import { TOrdersFeed } from "../../services/types/types";
 import { useAppDispatch, useAppSelector } from "../../services/hooks/customHooks";
+import { getCookie } from "../../utils/utils";
 
 const UserOrderFeed: FC = () => {
 
@@ -24,7 +25,9 @@ const UserOrderFeed: FC = () => {
 
   useEffect(() => {
     if(!connected){
-      dispatch({ type: INIT_USER_ORDERS_SOCKET });
+      const token:string = getCookie('token')||'Bearer ';
+      const payload:string = `?token=${token.replace('Bearer ','')}`;
+      dispatch({ type: INIT_USER_ORDERS_SOCKET, payload: payload });
     }
     return () => {
       dispatch({ type: CLOSE_USER_ORDERS_SOCKET });

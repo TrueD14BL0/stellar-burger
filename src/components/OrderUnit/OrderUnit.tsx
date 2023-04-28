@@ -39,19 +39,18 @@ const OrderUnit: FC<IOrderUnit> = ({ itemInfo, page, withStatus }) => {
 
   const orderIngridients = useMemo(()=>{
     return itemInfo.ingredients.map((element, index) => {
-      const uuid = uuidv4(); /* А вот тут все таки uuid - так как здесь могут попасться полностью идентичные экземпляры */
       const ingredientEl = ingredientsList.content.find(ingr => ingr._id === element);
       let el = null;
       if(ingredientEl){
         if(index < MAX_VISIBLE_INGREDIENTS_IN_ORDER){
           el = (
-            <li key={uuid} className={`${styles.ingridientsImageContainer} ${styles.roundedBorder} p-1`}>
+            <li key={index} className={`${styles.ingridientsImageContainer} ${styles.roundedBorder} p-1`}>
               <OrderUnitThumbnail image={ingredientEl.image} name={ingredientEl.name} />
             </li>
           );
         }else if(index===MAX_VISIBLE_INGREDIENTS_IN_ORDER){
           el =  (
-            <li key={uuid} className={`${styles.ingridientsImageContainer} p-1`}>
+            <li key={index} className={`${styles.ingridientsImageContainer} p-1`}>
               <OrderUnitThumbnail image={ingredientEl.image} name={ingredientEl.name} />
               <div className={styles.mask}></div>
               <p className={`${styles.remainsQty} ${styles.mainPosition} text text_type_main-small`}>+{itemInfo.ingredients.length-5}</p>

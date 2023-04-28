@@ -21,7 +21,7 @@ const ordersReducer = (state = initialState, action: TOrderSocketActions): TOrde
         connected: true
       };
     case GET_ORDERS_DATA:
-      const payload: TOrdersResponse = JSON.parse(action.payload);
+      const payload: TOrdersResponse = JSON.parse(action.payload.data);
       return {
         ...state,
         total: payload.total,

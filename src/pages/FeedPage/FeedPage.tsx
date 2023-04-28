@@ -14,7 +14,7 @@ const FeedPage: FC = () => {
   const params: Readonly<Params<string>> = useParams();
 
   useEffect(() => {
-    dispatch({ type: INIT_ORDERS_SOCKET });
+    dispatch({ type: INIT_ORDERS_SOCKET, payload: '/all' });
     return () => {
       dispatch({ type: CLOSE_ORDERS_SOCKET });
     };

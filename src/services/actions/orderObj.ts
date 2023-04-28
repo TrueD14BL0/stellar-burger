@@ -77,21 +77,21 @@ export const getOrderInfo: AppThunk<void> = (constructorList: TIngredientList) =
   }
 }
 
-export const setOrder = (order: TOrder) => {
+export const setOrder = (order: TOrder): IOrderSuccess => {
   return {
       type: ORDER_SUCCESS,
       order,
   }
 }
 
-export const setOrderErr = (err:string) => {
+export const setOrderErr = (err:string): IOrderError => {
   return {
       type: ORDER_ERROR,
       err,
   }
 }
 
-export const clearOrder = () => {
+export const clearOrder = (): IOrderClear => {
   return {
       type: ORDER_CLEAR,
   }

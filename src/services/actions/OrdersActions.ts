@@ -1,5 +1,3 @@
-import { TOrdersResponse } from "../types/types";
-
 export const INIT_ORDERS_SOCKET: 'INIT_ORDERS_SOCKET' = "INIT_ORDERS_SOCKET";
 export const SUCCESS_ORDERS_SOCKET: 'SUCCESS_ORDERS_SOCKET' = "SUCCESS_ORDERS_SOCKET";
 export const CLOSE_ORDERS_SOCKET: 'CLOSE_ORDERS_SOCKET' = "CLOSE_ORDERS_SOCKET";
@@ -9,6 +7,7 @@ export const ON_CLOSE_SOCKET: 'ON_CLOSE_SOCKET' = "ON_CLOSE_SOCKET";
 
 export interface IOrderSocketInit{
   readonly type: typeof INIT_ORDERS_SOCKET;
+  payload: string;
 }
 
 export interface IOrderSocketSuccess{
@@ -21,12 +20,12 @@ export interface IOrderSocketClose{
 
 export interface IOrderSocketGetData{
   readonly type: typeof GET_ORDERS_DATA;
-  payload: string;
+  payload: MessageEvent;
 }
 
 export interface IOrderSocketError{
   readonly type: typeof ON_ERROR_SOCKET;
-  payload: string;
+  payload: Event;
 }
 
 export interface IOrderSocketOnClose{
@@ -57,12 +56,12 @@ export interface IUserOrderSocketClose{
 
 export interface IUserOrderSocketGetData{
   readonly type: typeof GET_USER_ORDERS_DATA;
-  payload: TOrdersResponse;
+  payload: MessageEvent;
 }
 
 export interface IUserOrderSocketError{
   readonly type: typeof ON_USER_ERROR_SOCKET;
-  payload: string;
+  payload: Event;
 }
 
 export interface IUserOrderSocketOnClose{
@@ -70,4 +69,4 @@ export interface IUserOrderSocketOnClose{
 }
 
 export type TUserOrderSocketActions = IUserOrderSocketClose|IUserOrderSocketError|IUserOrderSocketGetData
-  |IUserOrderSocketInit|IUserOrderSocketOnClose|IUserOrderSocketSuccess;
+|IUserOrderSocketInit|IUserOrderSocketOnClose|IUserOrderSocketSuccess;

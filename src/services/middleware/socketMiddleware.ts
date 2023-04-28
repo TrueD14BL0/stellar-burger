@@ -1,7 +1,5 @@
-import { Middleware } from "redux";
-import Api from "../../components/Api/Api";
-import { deleteCookie, getCookie, setTokenCookies } from "../../utils/utils";
-import { TWSActions } from "../types/types";
+import { Middleware, MiddlewareAPI } from "redux";
+import { AppDispatch, RootState, TWSActions } from "../types/types";
 
 /*
   TODO: Исправить перед следующим спринтом!!!
@@ -16,72 +14,16 @@ import { TWSActions } from "../types/types";
 */
 
 export const socketMiddleware = (wsUrl: string, wsActions: TWSActions): Middleware => {
-  return store => {
+  return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket|null = null;
-    let userSocket: WebSocket|null = null;
     return next => action => {
       const { dispatch } = store;
-      const { type } = action;
-      const { init, onOpen, onClose, close, onError, onMessage,
-        initUserOrder, onOpenUserOrder, onCloseUserOrder, closeUserOrder,onErrorUserOrder, onMessageUserOrder } = wsActions;
-
-      const updateToken = () =>{
-        Api.getAccessToken(getCookie('refreshToken')||'')
-          .then((data)=>{
-            setTokenCookies(data.accessToken, data.refreshToken)
-            dispatch({ type: initUserOrder, payload:`` });
-          })
-          .catch((err)=>{
-            deleteCookie('token');
-            deleteCookie('refreshToken');
-            dispatch({ type: onErrorUserOrder, payload: err });
-          }
-        );
-      }
+      const { type, payload } = action;
+      const { init, onOpen, onClose, close, onError, onMessage } = wsActions;
 
       if (type === init) {
-        socket = new WebSocket(`${wsUrl}/all`);
+        socket = new WebSocket(`${wsUrl}${payload}`);
       };
-      if(type === initUserOrder){
-        if(getCookie('token')){
-          const token:string = getCookie('token')||'Bearer ';
-          userSocket = new WebSocket(`${wsUrl}?token=${token.replace(`Bearer `,'')}`);
-        }else{
-          updateToken();
-        }
-      }
-
-      if (userSocket) {
-
-        userSocket.onopen = event => {
-          dispatch({ type: onOpenUserOrder, payload: event });
-        };
-
-        userSocket.onerror = event => {
-          if(event as unknown as string==='401'){
-            updateToken();
-          }else{
-            dispatch({ type: onErrorUserOrder, payload: event });
-          }
-        };
-
-        userSocket.onmessage = event => {
-          const message = JSON.parse(event.data);
-          if(message.success){
-            dispatch({ type: onMessageUserOrder, payload: message });
-          }else{
-            updateToken();
-          }
-        };
-
-        userSocket.onclose = () => {
-          dispatch({ type: onCloseUserOrder });
-        };
-
-        if (type === closeUserOrder) {
-          userSocket.close(1000, 'work done');
-        }
-      }
 
       if (socket) {
 
@@ -94,7 +36,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: TWSActions): Middlewa
         };
 
         socket.onmessage = event => {
-          dispatch({ type: onMessage, payload: event.data });
+          dispatch({ type: onMessage, payload: event });
         };
 
         socket.onclose = () => {

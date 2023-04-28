@@ -140,18 +140,12 @@ export type TOrdersState = {
 };
 
 export type TWSActions = {
-  init: string,
-  onOpen: string,
-  onClose: string,
-  close: string,
-  onError: string,
-  onMessage: string,
-  initUserOrder: string,
-  onOpenUserOrder: string,
-  onCloseUserOrder: string,
-  closeUserOrder: string,
-  onErrorUserOrder: string,
-  onMessageUserOrder: string,
+  init: any,
+  onOpen: any,
+  onClose: any,
+  close: any,
+  onError: any,
+  onMessage: any,
 }
 
 export type TFetchOptions = {
@@ -167,9 +161,14 @@ interface IStringIndex {
   [key: string]: any
 }
 
+export type TWSResponse = {
+  type: TUserOrderSocketActions|TOrderSocketActions,
+  payload: Event,
+}
+
 export type RootState = ReturnType<typeof store.getState>&IStringIndex;
 export type TApplicationActions = TConstructorListActions|TForgotPasswordActions|TIngredientListActions|TIngredientObjActions|TLoginActions|TLogoutActions
-|TOrderActions|TUserOrderSocketActions|TOrderSocketActions|TUserRegisterActions|TResetActions|TUserInfosActions;
+|TOrderActions|TUserOrderSocketActions|TOrderSocketActions|TUserRegisterActions|TResetActions|TUserInfosActions|TWSResponse;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, RootState, Action, TApplicationActions>

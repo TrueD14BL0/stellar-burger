@@ -1,4 +1,4 @@
-import { TypedUseSelectorHook, useSelector as useSelectorReact, useDispatch as useDispatchReactor, useDispatch } from "react-redux";
+import { TypedUseSelectorHook, useSelector as useSelectorReact, useDispatch as useDispatchReactor } from "react-redux";
 import { AppDispatch, AppThunk, RootState } from "../types/types";
 
 type DispatchFunc = () => AppDispatch|AppThunk;

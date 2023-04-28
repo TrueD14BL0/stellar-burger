@@ -14,14 +14,17 @@ const wsActions: TWSActions ={
   close: CLOSE_ORDERS_SOCKET,
   onError: ON_ERROR_SOCKET,
   onMessage: GET_ORDERS_DATA,
-  initUserOrder: INIT_USER_ORDERS_SOCKET,
-  onOpenUserOrder: SUCCESS_USER_ORDERS_SOCKET,
-  onCloseUserOrder: ON_USER_CLOSE_SOCKET,
-  closeUserOrder: CLOSE_USER_ORDERS_SOCKET,
-  onErrorUserOrder: ON_USER_ERROR_SOCKET,
-  onMessageUserOrder: GET_USER_ORDERS_DATA,
 };
-const enhancer = composeEnhanters(applyMiddleware(thunk, socketMiddleware(WS_URL, wsActions)));
+
+const wsUserActions: TWSActions ={
+  init: INIT_USER_ORDERS_SOCKET,
+  onOpen: SUCCESS_USER_ORDERS_SOCKET,
+  onClose: ON_USER_CLOSE_SOCKET,
+  close: CLOSE_USER_ORDERS_SOCKET,
+  onError: ON_USER_ERROR_SOCKET,
+  onMessage: GET_USER_ORDERS_DATA,
+};
+const enhancer = composeEnhanters(applyMiddleware(thunk, socketMiddleware(WS_URL, wsActions), socketMiddleware(WS_URL, wsUserActions)));
 const store = createStore(rootReducer, enhancer);
 
 export default store;
