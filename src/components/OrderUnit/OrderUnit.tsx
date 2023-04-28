@@ -1,7 +1,6 @@
 import { shallowEqual } from "react-redux";
 import { diffDateInDays, diffToString } from "../../utils/utils";
 import styles from './OrderUnit.module.css';
-import { v4 as uuidv4 } from 'uuid';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import OrderUnitThumbnail from "../OrderUnitThumbnail/OrderUnitThumbnail";
