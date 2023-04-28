@@ -9,28 +9,6 @@ const initialState: TOrdersState = {
   error: null,
 };
 
-/*const updateToken = () =>{
-  Api.getAccessToken(getCookie('refreshToken')||'')
-    .then((data)=>{
-      setTokenCookies(data.accessToken, data.refreshToken)
-      dispatch({ type: initUserOrder, payload:`` });
-    })
-    .catch((err)=>{
-      deleteCookie('token');
-      deleteCookie('refreshToken');
-      dispatch({ type: onErrorUserOrder, payload: err });
-    }
-  );
-}
-
-userSocket.onerror = event => {
-  if(event as unknown as string==='401'){
-    updateToken();
-  }else{
-    dispatch({ type: onErrorUserOrder, payload: event });
-  }
-};*/
-
 const userOrdersReducer = (state = initialState, action: TUserOrderSocketActions): TOrdersState => {
   switch (action.type) {
     case INIT_USER_ORDERS_SOCKET:
@@ -43,17 +21,19 @@ const userOrdersReducer = (state = initialState, action: TUserOrderSocketActions
       };
     case GET_USER_ORDERS_DATA:
       const payload: TOrdersResponse = JSON.parse(action.payload.data);
-      return {
-        ...state,
-        total: payload.total,
-        totalToday: payload.totalToday,
-        orders: payload.orders.reverse(),
-      };
+      return payload.success?
+        {
+          ...state,
+          total: payload.total||0,
+          totalToday: payload.totalToday||0,
+          orders: (payload.orders||[]).reverse(),
+        }:
+        {
+          ...initialState,
+          error: payload.message,
+        };
     case ON_USER_ERROR_SOCKET:
-      console.log(action);
-      console.log(action.payload);
-      console.log(action.payload);
-      console.log("Cannot get user orders, error: ", action);
+      console.log("Cannot get user orders, error: ", action.payload);
       return {
         ...state,
         error: action.payload,

@@ -126,9 +126,10 @@ export type TOrdersFeed = {
 
 export type TOrdersResponse = {
   success: boolean,
-  total: number,
-  totalToday: number,
-  orders: TOrdersFeed[],
+  total?: number,
+  totalToday?: number,
+  orders?: TOrdersFeed[],
+  message: string,
 }
 
 export type TOrdersState = {

@@ -22,12 +22,17 @@ const ordersReducer = (state = initialState, action: TOrderSocketActions): TOrde
       };
     case GET_ORDERS_DATA:
       const payload: TOrdersResponse = JSON.parse(action.payload.data);
-      return {
-        ...state,
-        total: payload.total,
-        totalToday: payload.totalToday,
-        orders: payload.orders,
-      };
+      return  payload.success?
+        {
+          ...state,
+          total: payload.total||0,
+          totalToday: payload.totalToday||0,
+          orders: payload.orders||[],
+        }:
+        {
+          ...initialState,
+          error: payload.message,
+        };
     case ON_ERROR_SOCKET:
       return {
         ...state,

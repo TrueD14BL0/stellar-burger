@@ -39,6 +39,7 @@ export const LOGOUT_SUCCESS: 'LOGOUT_SUCCESS' = 'LOGOUT_SUCCESS';
 export const LOGIN_CLEAR: 'LOGIN_CLEAR' = 'LOGIN_CLEAR';
 export const WS_URL: string = 'wss://norma.nomoreparties.space/orders';
 export const MAX_VISIBLE_INGREDIENTS_IN_ORDER: number = 5;
+export const WS_ERROR_WRONG_USER: string = 'Invalid or missing token';
 
 /* Pages Constants*/
 export enum PAGES{
